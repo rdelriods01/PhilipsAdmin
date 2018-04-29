@@ -1,0 +1,39 @@
+@import '~@angular/material/theming';
+@import 'app/css/theme-custom-components.scss'; //importar los custom components
+@include mat-core();
+// Define the default theme.
+$primary: mat-palette($mat-blue);
+$accent: mat-palette($mat-lime, 500, 100, 700);
+$warn: mat-palette($mat-deep-orange);
+$default-theme: mat-light-theme($primary, $accent, $warn);
+// Include the default theme styles.
+@include angular-material-theme($default-theme);
+// Include los custom components para light theme
+@include theme-custom-components($default-theme);
+// INDIGO
+$indigo-primary: mat-palette($mat-indigo);
+$indigo-accent: mat-palette($mat-red, A200, A100, A400);
+$indigo-warn: mat-palette($mat-deep-purple);
+$indigo-theme: mat-light-theme($indigo-primary, $indigo-accent, $indigo-warn);
+.indigo-theme {
+    @include angular-material-theme($indigo-theme);
+    @include theme-custom-components($indigo-theme);
+}
+// PURPLE
+$purple-theme-primary: mat-palette($mat-purple);
+$purple-theme-accent: mat-palette($mat-light-blue, A200, A100, A400);
+$purple-theme-warn: mat-palette($mat-red);
+$purple-theme: mat-light-theme($purple-theme-primary, $purple-theme-accent, $purple-theme-warn);
+.purple-theme {
+    @include angular-material-theme($purple-theme);
+    @include theme-custom-components($purple-theme);
+}
+// GREEN
+$green-theme-primary: mat-palette($mat-green);
+$green-theme-accent: mat-palette($mat-deep-orange, A200, A100, A400);
+$green-theme-warn: mat-palette($mat-red);
+$green-theme: mat-light-theme($green-theme-primary, $green-theme-accent, $green-theme-warn);
+.green-theme {
+    @include angular-material-theme($green-theme);
+    @include theme-custom-components($green-theme);
+}

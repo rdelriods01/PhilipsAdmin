@@ -1,0 +1,29 @@
+<div class="bg">
+    <div class="logo">
+        <img class="Milogo" src="../../assets/images/logo.png" alt="logo">
+    </div>
+    <mat-card class="loginCard">
+        <div>
+            <div class="textSup">
+                <h1>Inicia Sesion</h1>
+            </div>
+            <div class="inputs">
+                <p>
+                    <mat-icon class="icons">mail</mat-icon>
+                </p>
+                <mat-form-field>
+                    <input matInput [(ngModel)]="email" placeholder="email.." required>
+                </mat-form-field>
+                <p>
+                    <mat-icon class="icons">lock</mat-icon>
+                </p>
+                <mat-form-field>
+                    <input matInput type="password" [(ngModel)]="pass" placeholder="pass.." required>
+                </mat-form-field>
+            </div>
+            <div class="btnLogin">
+                <button mat-raised-button id="btn-login" color="primary" (click)="login(email,pass)">Login</button>
+            </div>
+        </div>
+    </mat-card>
+</div>

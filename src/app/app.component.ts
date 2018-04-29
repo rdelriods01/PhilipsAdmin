@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+
+  constructor(
+    public router: Router,
+    public afAuth: AngularFireAuth,
+  ){
+
+    this.afAuth.authState.subscribe(us=>{
+      if(us){
+        this.router.navigate(['']);
+      }
+      else{
+        console.log('No hay usuario');
+        this.router.navigate(['login']);
+      }
+    })
+  }
+
 }
+
+
+

@@ -1,0 +1,68 @@
+<mat-toolbar class="tb" color="primary">
+    <mat-toolbar-row>
+        <!-- boton toggle sidenav -->
+        <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+        <!-- EMPRESA -->
+        <div class="empresa">
+            <!-- <img class="empresaLogo" src="{{cliente.logoURL}}" alt="{{cliente.logoURL}}"> -->
+            <a class="empresaText" [routerLink]="['/']">PHILIPS</a>
+        </div>
+        <!-- separador -->
+        <span class="spacer"></span>
+        <!-- buscar -->
+        <div class="buscar">
+            <button mat-button id="bSidenav" (click)="toggleBuscar(searchInput)"><mat-icon>search</mat-icon></button>
+            <mat-form-field floatLabel="never" [ngClass]='showBtn'>
+                <input matInput id="buscarInput" #searchInput type="text" [(ngModel)]=buscado (keyup)="filter();showResBus()" placeholder="Buscar...">
+            </mat-form-field>
+        </div>
+
+        <div class="resBusqueda" [ngClass]='showRes'>
+            <button mat-button class="busElement" [ngClass]='showItm' *ngFor=" let item of filteredList" [routerLink]="['/paciente']" (click)="resetQuery();hideResBus()">{{item.nombre}} </button>
+        </div>
+        <!-- usuario -->
+        <div *ngIf="auth.user | async as user" class="usuario" (click)="auth.logout()">
+            <p> {{user.displayName}} </p>
+            <img mat-card-image src="{{user.photoURL}}" alt="PP">
+        </div>
+    </mat-toolbar-row>
+
+</mat-toolbar>
+
+<mat-sidenav-container class="sideb" (click)="hideResBus()">
+    <mat-sidenav #snav mode="side">
+        <ul class="sb-list-items">
+            <li>
+                <a [routerLink]="['/']">
+                    <mat-icon class="icon">dashboard</mat-icon>Dashboard</a>
+            </li>
+            <li>
+                <a [routerLink]="['/pacientes']">
+                    <mat-icon class="icon">face</mat-icon>Pacientes</a>
+            </li>
+            <li>
+                <a [routerLink]="['/pacientes']">
+                    <mat-icon class="icon">restaurant</mat-icon>Menús</a>
+            </li>
+            <li>
+                <a [routerLink]="['/test']">
+                    <mat-icon class="icon">dashboard</mat-icon>Test</a>
+            </li>
+            <span class="spacer"></span>
+            <li>
+                <a [routerLink]="['/config']">
+                    <mat-icon class="icon">settings</mat-icon>Configuración</a>
+            </li>
+            <li>
+                <a (click)="auth.logout()">
+                    <mat-icon class="icon">exit_to_app</mat-icon>Cerrar Sesión</a>
+            </li>
+        </ul>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="rutas">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<button mat-fab class="btn-floating" (click)="newPaciente()"><mat-icon>add</mat-icon></button>

@@ -1,0 +1,62 @@
+.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #fafafa;
+    zoom: 80%;
+}
+.logo {
+    text-align: center;
+}
+.Milogo {
+    height: 12em;
+}
+.loginCard {
+    margin: 0 auto;
+    margin-top: 2em;
+    width: 30em;
+    height: 25em;
+    background: rgba(255, 255, 255, 0.16);
+    text-align: center;
+    border-top: 5px solid primary;
+}
+.textSup {
+    color: #444;
+    margin: 2em 0;
+}
+.inputs {
+    width: 24em;
+    margin: auto;
+}
+.inputs p {
+    float: left;
+    margin: 18px 5px;
+}
+.inputs .mat-input-container {
+    margin: 0.6em 0;
+    width: 20em;
+}
+.icons {
+    color: #9e9e9e;
+    font-size: 34px;
+}
+.btnLogin button {
+    width: 21em;
+    /* background-color: #eb1b35; */
+    height: 3em;
+    border-radius: 8px;
+    font-size: 1.1em;
+    color: #fafafa;
+    margin-top: 2em;
+}
+@media only screen and (max-device-width: 800px) and (-webkit-min-device-pixel-ratio: 2) {
+    .loginCard {
+        zoom: 95%;
+        max-width: fit-content;
+    }
+}
