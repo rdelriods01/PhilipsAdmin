@@ -14,7 +14,6 @@ export class AppComponent {
     public router: Router,
     public afAuth: AngularFireAuth,
   ){
-
     this.afAuth.authState.subscribe(us=>{
       if(us){
         this.router.navigate(['']);

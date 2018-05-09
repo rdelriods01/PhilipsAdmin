@@ -1,8 +1,8 @@
 export interface ICliente {
-    id: string;
+    id?: string;
     nombre: string;
     direccion: string,
-    ciudad: string,
+    ciudad: string, 
     estado: string,
     telefono?: string,
     correo?: string,
@@ -10,11 +10,13 @@ export interface ICliente {
  }
 
  export interface IEquipo{
+    id?:string,
     serie: string,
     tipo: string,
     modelo: string,
     sw?: string,
     marca?: string,
     ubicacion: string,
-    accesoriode?:string
+    accesoriode?:string,
+    cliente:string
 }

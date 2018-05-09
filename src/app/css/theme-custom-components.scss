@@ -16,7 +16,8 @@
     .resBusqueda {
         border: 4px solid mat-color($primary);
     }
-    #btn-newPaciente-guardar:hover {
+    // NEWCLIENTE
+    #btn-newCliente-guardar:hover {
         background-color: mat-color($accent, 700);
     }
 }

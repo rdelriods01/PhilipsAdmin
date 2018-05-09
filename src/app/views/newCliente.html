@@ -1,0 +1,49 @@
+<form #formNewCliente="ngForm">
+    <div style="margin-top: 1em">
+        <h2>Agregar nuevo Cliente</h2>
+        <div class="main">
+            <div class="nombreDiv">
+                <mat-form-field>
+                    <input matInput class="nombre" #nombre="ngModel" name="nombre" [(ngModel)]="cliente.nombre" placeholder="Nombre.." required>
+                </mat-form-field>
+            </div>
+
+            <div class="direccionDiv">
+
+                <mat-form-field>
+                    <textarea matInput class="direccion" matTextareaAutosize matAutosizeMinRows="2" #direccion="ngModel" name="direccion" [(ngModel)]="cliente.direccion" placeholder="Dirección..." required></textarea>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput class="ciudad" #ciudad="ngModel" name="ciudad" [(ngModel)]="cliente.ciudad" placeholder="Ciudad.." required>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput [formControl]="miEstado" [matAutocomplete]="auto" placeholder="Estado..." required>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)='getEstado($event.option.value)'>
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+            <div class="contactoDiv">
+                <mat-form-field>
+                    <input matInput class="telefono" #telefono="ngModel" name="telefono" [(ngModel)]="cliente.telefono" placeholder="Telefono..">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput class="correo" #correo="ngModel" name="correo" [(ngModel)]="cliente.correo" placeholder="Correo..">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput class="contacto" #contacto="ngModel" name="contacto" [(ngModel)]="cliente.contacto" placeholder="Nombre del contacto..">
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div class="guardar">
+            <button mat-raised-button color="accent" id="btn-newCliente-guardar" (click)="onSubmit()" [disabled]="!formNewCliente.form.valid">Guardar</button>
+        </div>
+    </div>
+</form>

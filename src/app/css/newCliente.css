@@ -1,0 +1,23 @@
+* {
+    font-family: 'Product Sans';
+}
+button {
+    font-size: 1.2em;
+    border-radius: 6px;
+    width: 280px;
+    height: 40px;
+    color: ghostwhite !important;
+}
+.guardar button {
+    width: 100%;
+    margin-top: 2em;
+}
+.nombre {
+    width: 350px;
+}
+::ng-deep .cdk-overlay-pane {
+    zoom: 80%;
+}
+::ng-deep .mat-dialog-container {
+    zoom: 100% !important;
+}

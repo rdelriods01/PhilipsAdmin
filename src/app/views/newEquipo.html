@@ -1,0 +1,48 @@
+<form #formNewEquipo="ngForm">
+    <div style="margin-top: 1em">
+        <h2>Agregar nuevo Equipo</h2>
+        <div class="main">
+            <div class="serieDiv">
+                <mat-form-field>
+                    <input matInput class="serie" #serie="ngModel" name="serie" [(ngModel)]="equipo.serie" placeholder="Serie.." required>
+                </mat-form-field>
+            </div>
+
+            <div class="tipoDiv">
+                <mat-form-field>
+                    <input matInput [formControl]="miTipo" [matAutocomplete]="auto" placeholder="Tipo..." required>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)='getTipo($event.option.value)'>
+                        <mat-option *ngFor="let opTipo of filteredTipo | async" [value]="opTipo">
+                            {{ opTipo }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput [formControl]="miModelo" [matAutocomplete]="auto2" placeholder="Modelo..." required>
+                    <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)='getModelo($event.option.value)'>
+                        <mat-option *ngFor="let opModelo of filteredModelo | async" [value]="opModelo">
+                            {{ opModelo }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+            <div class="otrosDiv">
+                <mat-form-field>
+                    <input matInput class="sw" #sw="ngModel" name="sw" [(ngModel)]="equipo.sw" placeholder="Version de Software..">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput class="ubicacion" #ubicacion="ngModel" name="ubicacion" [(ngModel)]="equipo.ubicacion" placeholder="Ubicación..">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput class="accesoriode" #accesoriode="ngModel" name="accesoriode" [(ngModel)]="equipo.accesoriode" placeholder="Pertenece al equipo con NS..">
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div class="guardar">
+            <button mat-raised-button color="accent" id="btn-newEquipo-guardar" (click)="onSubmit()" [disabled]="!formNewEquipo.form.valid">Guardar</button>
+        </div>
+    </div>
+</form>
