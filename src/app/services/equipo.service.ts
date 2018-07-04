@@ -18,6 +18,7 @@ export class EquipoService{
     saveEquipo (equipo:IEquipo){
         equipo.id=this.afs.createId();
         this.afs.collection('equipos').doc(equipo.id).set(equipo);
+        console.log(this.getUnEquipo(equipo.id))
     }
     // Leer todos los equipos
     getEquipos() {
@@ -46,7 +47,10 @@ export class EquipoService{
             })
         })
     }
-
+    // Leer un equipo en específico
+    getUnEquipo(idE){
+        return this.afs.collection('equipos').doc(idE).valueChanges()
+    }
     // Eliminar Equipo
     deleteEquipo(idE){
         this.afs.collection('equipos').doc(idE).delete();

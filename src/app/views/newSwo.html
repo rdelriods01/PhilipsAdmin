@@ -1,0 +1,63 @@
+<form #formNewSwo="ngForm">
+    <div style="margin-top: 1em">
+        <h2>Agregar nueva SWO</h2>
+        <div class="main">
+            <div class="swoDiv">
+                <mat-form-field>
+                    <input matInput class="swo" name="orden" [(ngModel)]="swo.swo" placeholder="SWO.." [readonly]=editFlag required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput class="op" name="op" [(ngModel)]="oper.op" placeholder="Operación..">
+                </mat-form-field>
+            </div>
+
+            <div class="clienteDiv">
+                <mat-form-field>
+                    <input matInput class="clie" name="cliente" [(ngModel)]="cliente" placeholder="Cliente.." disabled>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput class="equi" name="equipo" [(ngModel)]="equipo" placeholder="Equipo.." disabled>
+                </mat-form-field>
+            </div>
+
+            <div class="otrosDiv">
+                <mat-form-field>
+                    <mat-select placeholder="Status..." [(ngModel)]="oper.status" name="status" required>
+                        <mat-option *ngFor="let opStatus of states" [value]="opStatus">
+                            {{opStatus}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select placeholder="Actividad..." [(ngModel)]="oper.actividad" name="actividad" required>
+                        <mat-option *ngFor="let opActividad of actividades" [value]="opActividad">
+                            {{opActividad}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div *ngIf="oper.status=='Programado'" [formGroup]="pickerFormGroup">
+                    <ng2-flatpickr class="pickerNewSwo" [config]="pickerOptions" formControlName="pickerForm" required></ng2-flatpickr>
+                </div>
+
+                <mat-form-field *ngIf="oper.actividad=='DIAG' || oper.actividad=='CMAI'">
+                    <textarea matInput class="falla" name="falla" [(ngModel)]="swo.falla" placeholder="Falla..."></textarea>
+                </mat-form-field>
+            </div>
+
+            <div *ngIf="oper.status=='Concluido'" class="masDatosDiv">
+                <mat-form-field>
+                    <textarea matInput class="resultados" name="resultados" [(ngModel)]="oper.resultados" placeholder="Resultados..."></textarea>
+                </mat-form-field>
+                <mat-form-field>
+                    <textarea matInput class="observaciones" name="observaciones" [(ngModel)]="oper.observaciones" placeholder="Observaciones..."></textarea>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div class="guardar">
+            <button mat-raised-button color="accent" id="btn-newSwo-guardar" (click)="onSubmit()" [disabled]="!formNewSwo.form.valid">Guardar</button>
+        </div>
+    </div>
+</form>

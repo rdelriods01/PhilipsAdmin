@@ -36,7 +36,11 @@ export class ClienteService{
             return res;
         })
     }
-
+    // Leer un cliente en específico   
+    getUnCliente(idC){
+        return this.afs.collection('clientes').doc(idC).valueChanges();
+    }
+    // Eliminar Cliente
     deleteCliente(idC){
         this.afs.collection('clientes').doc(idC).delete();
     }

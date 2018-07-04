@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
@@ -28,6 +28,10 @@ export class NewClienteComponent{
             'Veracruz','Yucatán','Zacatecas'];
     filteredOptions: Observable<string[]>;
     
+    zonas = ['Norte-Occidente','Centro-Noreste','Metro-Sur'];
+    tipos=['V.I.P.', 'Privado', 'Gobierno'];
+
+
     constructor( public dialogRef: MatDialogRef<NewClienteComponent>,
                 private _clienteService: ClienteService,
                 ) {}
@@ -46,7 +50,7 @@ export class NewClienteComponent{
         this.cliente.estado=v;
     }
     onSubmit(){
-        this.cliente.nombre=this.toCapital(this.cliente.nombre);
+        // this.cliente.nombre=this.toCapital(this.cliente.nombre);
         this._clienteService.saveCliente(this.cliente);
         this.dialogRef.close();
     }

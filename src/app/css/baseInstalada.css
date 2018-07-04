@@ -3,7 +3,7 @@
 }
 .superior h1 {
     margin-top: 0;
-    color: #555;
+    color: #666;
 }
 .main {
     display: grid;
@@ -90,6 +90,7 @@
 }
 .derSuperior p {
     margin: auto 0;
+    color: cornflowerblue;
 }
 .tablaEquipos {
     zoom: 80%;

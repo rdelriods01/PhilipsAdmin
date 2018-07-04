@@ -7,20 +7,19 @@
                     <input matInput class="serie" #serie="ngModel" name="serie" [(ngModel)]="equipo.serie" placeholder="Serie.." required>
                 </mat-form-field>
             </div>
-
             <div class="tipoDiv">
                 <mat-form-field>
-                    <input matInput [formControl]="miTipo" [matAutocomplete]="auto" placeholder="Tipo..." required>
-                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)='getTipo($event.option.value)'>
-                        <mat-option *ngFor="let opTipo of filteredTipo | async" [value]="opTipo">
+                    <input matInput [formControl]="miTipo" [matAutocomplete]="auto" name="tipo" [(ngModel)]="equipo.tipo" placeholder="Tipo..." (keyup)="filtrarTipos(equipo.tipo)" required>
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getTipo($event.option.value)'>
+                        <mat-option *ngFor="let opTipo of filteredTipo" [value]="opTipo">
                             {{ opTipo }}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput [formControl]="miModelo" [matAutocomplete]="auto2" placeholder="Modelo..." required>
-                    <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)='getModelo($event.option.value)'>
-                        <mat-option *ngFor="let opModelo of filteredModelo | async" [value]="opModelo">
+                    <input matInput [formControl]="miModelo" [matAutocomplete]="auto2" name="modelo" [(ngModel)]="equipo.modelo" placeholder="Modelo..." (keyup)="filtrarModelos(equipo.modelo)" required>
+                    <mat-autocomplete #auto2="matAutocomplete" (optionSelected)='getModelo($event.option.value)'>
+                        <mat-option *ngFor="let opModelo of filteredModelo" [value]="opModelo">
                             {{ opModelo }}
                         </mat-option>
                     </mat-autocomplete>

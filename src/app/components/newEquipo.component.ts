@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-
 import { EquipoService } from '../services/equipo.service';
+import { ConfigService } from '../services/config.service';
 
 import { IEquipo } from '../models/interfaces';
 
@@ -21,39 +19,42 @@ export class NewEquipoComponent{
 
     // Variables para el TIPO
     miTipo: FormControl = new FormControl();
-    tipos = ['Monitor de Signos Vitales', 'Desfibrilador','Electrocardiografo','Modulo','Banda de Esfuerzo'];
-    filteredTipo: Observable<string[]>;
+    arrayTipos;
+    // Este array, deberá leerse desde firebase, habiendolo configurado en el componente CONFIG
+    tipos=[];
+    filteredTipo;
     // Variables para el MODELO
     miModelo:FormControl = new FormControl();
-    modelos = ['IntelliVue MP20', 'IntelliVue MP30', 'IntelliVue MP40', 'IntelliVue MP50', 'IntelliVue MP60',
-                'IntelliVue MP70', 'M3001A', 'HeartStar MRx', 'StressVue','PageWriter TC50'];
-    filteredModelo: Observable<string[]>;
+    modelos = [];
+    filteredModelo;
 
 
     constructor( public dialogRef: MatDialogRef<NewEquipoComponent>,
                 private _equipoService: EquipoService,
-                ) {}
+                public _configService:ConfigService
+                ) {
+                    this.leerConfig();
+                }
 
-    ngOnInit(){
-        this.filteredTipo = this.miTipo.valueChanges.pipe(
-            startWith(''),
-            map(val => this.filtrarTipos(val))
-            );
-        this.filteredModelo = this.miModelo.valueChanges.pipe(
-            startWith(''),
-            map(val => this.filtrarModelos(val))
-        );
-        
+    leerConfig(){
+        this._configService.getConfig().subscribe(res=>{
+            this.arrayTipos=res[0];
+            this.tipos=Object.keys(res[0]);
+            this.filteredTipo=this.tipos; 
+        })
     }
 
-    filtrarTipos(val: string): string[] {
-        return this.tipos.filter(option => option.toLowerCase().indexOf(val.toLowerCase()) === 0);
+    filtrarTipos(val: string) {
+        this.filteredTipo=this.tipos.filter(option => option.toLowerCase().indexOf(val.toLowerCase()) >= 0);
     }
     getTipo(v){
         this.equipo.tipo=v;
+        this.modelos=this.arrayTipos[v];
+        this.filteredModelo=this.modelos;
+        
     }   
-    filtrarModelos(val: string): string[]{
-        return this.modelos.filter(option => option.toLowerCase().indexOf(val.toLowerCase())===0);
+    filtrarModelos(val: string){
+        this.filteredModelo=this.modelos.filter(option => option.toLowerCase().indexOf(val.toLowerCase())>=0);
     }    
     getModelo(v){
         this.equipo.modelo=v;

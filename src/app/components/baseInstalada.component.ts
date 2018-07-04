@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, OnInit, ViewChild} from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild} from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MatSort, Sort , MatPaginator, PageEvent, MatDialog, MAT_SORT_HEADER_INTL_PROVIDER} from '@angular/material';
 
@@ -48,7 +49,8 @@ export class BaseInstaladaComponent {
   constructor( 
     public _clienteService:ClienteService,
     public _equipoService:EquipoService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public router: Router,
   ){
     this._clienteService.getClientes().subscribe(res=>{
       this.clientes=res;
@@ -101,7 +103,15 @@ datosTablaClientes(data){
     this.datosTablaEquipos(this.listaDeEquiposFiltrados);
   }
 
-
+  verPerfilEquipo(serie){
+    let idE;
+    this.equipos.forEach(el => {
+      if(el.serie==serie){
+        idE=el.id;
+      }
+    });
+    this.router.navigate(['equipo',idE]);
+  }
 
 
 
@@ -112,11 +122,19 @@ datosTablaClientes(data){
   agregarEquipo(){
     let dialogNewEquipos= this.dialog.open(NewEquipoComponent);
     dialogNewEquipos.componentInstance.idC=this.clienteActual.id;
+    // dialogNewEquipos.componentInstance.tipos=['Desfibrilador'];
   }
   eliminarCliente(idC){
     this._clienteService.deleteCliente(idC);
   }
-  eliminarEquipo(idE){
+  eliminarEquipo(serie){
+    let idE;
+    this.equipos.forEach(el => {
+      if(el.serie==serie){
+        idE=el.id;
+      }
+    });
+
     this._equipoService.deleteEquipo(idE);
   }
   // FUNCIONES UTILES

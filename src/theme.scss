@@ -2,7 +2,7 @@
 @import 'app/css/theme-custom-components.scss'; //importar los custom components
 @include mat-core();
 // Define the default theme.
-$primary: mat-palette($mat-blue);
+$primary: mat-palette($mat-light-blue, 700);
 $accent: mat-palette($mat-lime, 500, 100, 700);
 $warn: mat-palette($mat-deep-orange);
 $default-theme: mat-light-theme($primary, $accent, $warn);

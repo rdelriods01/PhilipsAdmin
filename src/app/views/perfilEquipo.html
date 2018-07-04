@@ -1,0 +1,85 @@
+<div *ngIf='equipo && cliente'>
+    <div class="main">
+        <div class="superior">
+            <div class="titulo">
+                <div class="tituloArriba">
+                    <h1>{{equipo.modelo}} </h1>
+                    <h1 id="eqSerie">{{equipo.serie}} </h1>
+                </div>
+                <div class="tituloAbajo">
+                    <h3>{{equipo.tipo}} </h3>
+                </div>
+            </div>
+            <div class="datosCliente">
+                <mat-card class="clienteCard">
+                    <h3>{{cliente.nombre}} </h3>
+                    <p>{{cliente.direccion}} {{cliente.ciudad}}, {{cliente.estado}} </p>
+                    <p> <strong>Ubicación:</strong> {{equipo.ubicacion}} </p>
+                </mat-card>
+            </div>
+        </div>
+        <div class="inferior">
+            <mat-card class="historialSWOs">
+                <div class="tablaSWOs">
+                    <div class="tablaSupS">
+                        <mat-form-field class="tablaBuscarS">
+                            <input matInput class="tablaInputBuscarS" type="text" [(ngModel)]=swoBuscado (keyup)="filtrarSWOs()" placeholder="Filtrar o buscar SWO...">
+                        </mat-form-field>
+                        <button mat-raised-button color="accent" (click)="agregarSWO()">Agregar nueva SWO</button>
+                    </div>
+
+                    <mat-accordion displayMode="flat" class="mat-table">
+                        <section matSort class="mat-elevation-z2 mat-header-row headerGrid6">
+                            <span class="mat-header-cell" mat-sort-header="swo">SWO</span>
+                            <span class="mat-header-cell" mat-sort-header="fechainicio">Fecha Inicio</span>
+                            <span class="mat-header-cell" mat-sort-header="status">Status</span>
+                            <span class="mat-header-cell" mat-sort-header="fechafin">Ultima actualización</span>
+                            <span class="mat-header-cell" mat-sort-header="actividad">Actividad</span>
+                            <span class="mat-header-cell">Falla</span>
+                        </section>
+
+                        <mat-expansion-panel *ngFor="let orden of displayedSWO$ | async" (opened)="leerOps(orden.id)">
+                            <mat-expansion-panel-header class="mat-row exp" [ngStyle]="{'background-color':getColor(orden.status)}">
+                                <span class="mat-cell">{{orden.swo}}</span>
+                                <span class="mat-cell">{{orden.fechainicio | date: 'dd/MM/yyyy'}}</span>
+                                <span class="mat-cell">{{orden.status}}</span>
+                                <span class="mat-cell">{{orden.fechafin | date: 'dd/MM/yyyy'}}</span>
+                                <span class="mat-cell">{{orden.actividad}}</span>
+                                <span class="mat-cell">{{orden.falla}}</span>
+                            </mat-expansion-panel-header>
+                            <div class="expan">
+                                <div>
+                                    <mat-tab-group>
+                                        <mat-tab *ngFor="let operacion of ops" label="Op {{operacion.op}}">
+                                            <div class="opGrid">
+                                                <div class="opDerecha">
+                                                    <div class="itemsOper">
+                                                        <h3>Fecha programado:</h3><span class="mat-cell">{{operacion.fechaprog | date: 'dd/MM/yyyy'}}</span></div>
+                                                    <div class="itemsOper">
+                                                        <h3>Status:</h3><span class="mat-cell">{{operacion.status}}</span></div>
+                                                    <div class="itemsOper">
+                                                        <h3>Fecha realizado:</h3><span class="mat-cell">{{operacion.fechafin | date: 'dd/MM/yyyy'}}</span></div>
+                                                    <div class="itemsOper">
+                                                        <h3>Actividad:</h3><span class="mat-cell">{{operacion.actividad }}</span></div>
+                                                    <div class="itemsOper">
+                                                        <h3>Resultados:</h3><span class="mat-cell">{{operacion.resultados }}</span></div>
+                                                    <div class="itemsOper">
+                                                        <h3>observaciones:</h3><span class="mat-cell">{{operacion.observaciones }}</span></div>
+                                                </div>
+
+                                                <div class="opBtns">
+                                                    <button mat-raised-button (click)="editarOP(orden,operacion)">Editar</button>
+                                                    <button mat-raised-button [routerLink]="['/swo', orden.id]">Ver</button>
+                                                </div>
+                                            </div>
+                                        </mat-tab>
+                                    </mat-tab-group>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

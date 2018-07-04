@@ -1,0 +1,137 @@
+.main {
+    display: grid;
+    height: 89vh;
+    grid-gap: 1em;
+    grid-template-rows: 1fr 2fr;
+}
+.superior {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+/* Datos del Equipo */
+
+.titulo {
+    margin-left: 2em;
+}
+.tituloArriba {
+    display: flex;
+}
+.tituloArriba h1 {
+    margin: 0;
+}
+#eqSerie {
+    margin-left: 1em;
+    font-size: 1.6em;
+    align-self: center;
+    color: dimgray;
+}
+.tituloAbajo h3 {
+    margin: 0;
+    margin-left: 2em;
+    color: cornflowerblue;
+}
+
+/* Datos del Cliente */
+
+.clienteCard {
+    border-radius: 10px;
+    zoom: 80%;
+}
+.clienteCard h3 {
+    color: darkcyan;
+}
+
+/* INFERIOR */
+
+.tablaSWOs {
+    zoom: 80%;
+}
+.tablaSupS {
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    display: flex;
+    background-color: white;
+    margin-bottom: 0.5em;
+}
+.tablaBuscarS {
+    background-color: white;
+    font-size: 0.8em;
+    flex: 1 1 auto;
+    margin: auto;
+    padding: 0.5em 2em 0 2em;
+}
+.tablaInputBuscarS {
+    zoom: 100%;
+}
+.mat-accordion .mat-header-row {
+    padding-left: 1.5rem;
+    padding-right: 2rem;
+    border-bottom: none;
+}
+.mat-expansion-panel-header.mat-row {
+    border-bottom: none;
+}
+.mat-table {
+    display: block;
+}
+.mat-header-row {
+    min-height: 56px;
+}
+.mat-row {
+    min-height: 48px;
+}
+.mat-row, .mat-header-row {
+    display: flex;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    align-items: center;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+.mat-row::after, .mat-header-row::after {
+    display: inline-block;
+    min-height: inherit;
+    content: '';
+}
+.mat-cell, .mat-header-cell {
+    flex: 1;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+.exp {
+    padding: 0 1em;
+    text-align: center;
+}
+.headerGrid6 {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    text-align: center;
+    grid-auto-flow: column;
+    padding: 0 1em !important;
+}
+.headerGrid6 span {
+    justify-self: center;
+}
+.expan {
+    background: #f0f0f0;
+    padding: 1em;
+}
+.opGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+.opDerecha {
+    padding: 1em 1em 0 4em;
+}
+.itemsOper {
+    display: flex;
+}
+.itemsOper span {
+    margin: auto;
+    padding-left: 1em;
+}
+.opBtns {
+    padding: 1em;
+    display: grid;
+    grid-gap: 1em;
+}

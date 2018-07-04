@@ -1,0 +1,43 @@
+.main {
+    display: grid;
+    height: 89vh;
+    grid-gap: 1em;
+    grid-template-rows: 1fr 2fr;
+}
+.superior {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+/* Datos de la SWO */
+
+.titulo {
+    margin-left: 2em;
+}
+.tituloArriba {
+    display: flex;
+}
+.tituloArriba h1 {
+    margin: 0;
+}
+#swo {
+    margin-left: 1em;
+    font-size: 1.6em;
+    align-self: center;
+    color: dimgray;
+}
+.tituloAbajo h3 {
+    margin: 0;
+    margin-left: 2em;
+    color: cornflowerblue;
+}
+
+/* Datos del Cliente */
+
+.clienteCard {
+    border-radius: 10px;
+    zoom: 80%;
+}
+.clienteCard h3 {
+    color: darkcyan;
+}

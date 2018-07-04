@@ -26,17 +26,37 @@
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select placeholder="Zona.." [(ngModel)]="cliente.zona" name="zona" required>
+                        <mat-option *ngFor="let opZona of zonas" [value]="opZona">
+                            {{opZona}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select placeholder="Tipo de cliente.." [(ngModel)]="cliente.tipo" name="tipo" required>
+                        <mat-option *ngFor="let opTipo of tipos" [value]="opTipo">
+                            {{opTipo}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
             </div>
 
             <div class="contactoDiv">
+                <mat-form-field>
+                    <input matInput class="contacto" #contacto="ngModel" name="contacto" [(ngModel)]="cliente.contacto" placeholder="Nombre del contacto..">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput class="departamento" #departamento="ngModel" name="departamento" [(ngModel)]="cliente.departamento" placeholder="Departamento del contacto..">
+                </mat-form-field>
                 <mat-form-field>
                     <input matInput class="telefono" #telefono="ngModel" name="telefono" [(ngModel)]="cliente.telefono" placeholder="Telefono..">
                 </mat-form-field>
                 <mat-form-field>
                     <input matInput class="correo" #correo="ngModel" name="correo" [(ngModel)]="cliente.correo" placeholder="Correo..">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput class="contacto" #contacto="ngModel" name="contacto" [(ngModel)]="cliente.contacto" placeholder="Nombre del contacto..">
                 </mat-form-field>
             </div>
 

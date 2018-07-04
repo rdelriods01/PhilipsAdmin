@@ -19,12 +19,15 @@ import { MatButtonModule, MatToolbarModule, MatIconModule, MatCardModule,
           MatRadioModule, MatButtonToggleModule, MatSliderModule, MatAutocompleteModule
     } from '@angular/material';
 
+// Flatpicker
+import { Ng2FlatpickrModule } from 'ng2-flatpickr';
+
 // Servicios ==========================
 import { AuthService } from './services/auth.service';
 import { ClienteService } from './services/cliente.service';
 import { EquipoService } from './services/equipo.service';
-// import { PacienteService } from './services/paciente.service';
-// import { VisitaService } from './services/visita.service';
+import { SWOService } from './services/swo.service';
+import { ConfigService } from './services/config.service';
 
 // Componentes ========================
 import { AppComponent } from './app.component';
@@ -32,16 +35,24 @@ import { LoginComponent } from './components/login.component';
 import { LayoutComponent } from './components/layout.component';
 import { DashboardComponent } from './components/dashboard.component';
 import { TestComponent } from './components/test.component';
+import { ConfigComponent } from './components/config.component';
 import { BaseInstaladaComponent } from './components/baseInstalada.component';
 import { NewClienteComponent } from './components/newCliente.component';
 import { NewEquipoComponent } from './components/newEquipo.component';
+import { PerfilEquipoComponent } from './components/perfilEquipo.component';
+import { NewSwoComponent } from './components/newSwo.component';
+import { SwoComponent } from './components/Swo.component';
+
 
 // Rutas =============================
 const routes: Routes = [
   { path:'', component: LayoutComponent ,children:[
     { path:'', component: DashboardComponent},
     { path:'test', component: TestComponent },
+    { path:'config', component: ConfigComponent },
     { path:'bi', component: BaseInstaladaComponent},
+    { path:'equipo/:id', component: PerfilEquipoComponent },
+    { path:'swo/:id', component: SwoComponent}
   ]},
   { path:'login', component: LoginComponent},
   { path:'**', redirectTo: '', pathMatch: 'full'}
@@ -54,17 +65,22 @@ const routes: Routes = [
     LayoutComponent,
     DashboardComponent,
     TestComponent,
+    ConfigComponent,
     BaseInstaladaComponent,
     NewClienteComponent, 
-    NewEquipoComponent
+    NewEquipoComponent,
+    PerfilEquipoComponent,
+    NewSwoComponent,
+    SwoComponent
   ],
   entryComponents:[
-    NewClienteComponent, NewEquipoComponent
+    NewClienteComponent, NewEquipoComponent, NewSwoComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    Ng2FlatpickrModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
@@ -81,7 +97,9 @@ const routes: Routes = [
   providers: [
     AuthService,
     ClienteService,
-    EquipoService
+    EquipoService,
+    SWOService, 
+    ConfigService, 
   ],
   bootstrap: [AppComponent]
 })

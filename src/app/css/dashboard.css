@@ -1,11 +1,156 @@
-.dashContainer {
+.superior {
     text-align: center;
 }
-.title {
-    color: #555;
-    margin: 0 0 1em 0;
+.superior h1 {
+    margin-top: 0;
+    color: #666;
 }
-.dbItems {
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 2em;
+    grid-template-areas: "pasado presente futuro";
+    height: 89vh;
+    min-height: 30vh;
+    align-items: center;
+}
+mat-card {
+    border-radius: 8px;
+}
+@media only screen and (max-width: 769px) {
+    .main {
+        grid-template-columns: 1fr;
+        grid-template-areas: "presente" "futuro" "pasado"
+    }
+    .pasado {
+        grid-area: pasado;
+        padding: 0 1em;
+    }
+    .presente {
+        grid-area: presente;
+        padding: 0 1em;
+    }
+    .futuro {
+        grid-area: futuro;
+        padding: 0 1em;
+    }
+}
+.pasado {
+    grid-area: pasado;
+    padding: 0 1em;
+}
+.presente {
+    grid-area: presente;
+    padding: 0 1em;
+}
+.futuro {
+    grid-area: futuro;
+    padding: 0 1em;
+}
+
+/* SWO Items */
+
+.cardSup {
+    text-align: center;
+    margin-top: 0.5em !important;
+}
+.cardSup h2 {
+    margin: 0;
+    font-weight: normal !important;
+}
+.cardInf * {
+    font-size: 0.9em;
+}
+.swoItem {
+    margin: 1em 0;
+    border-radius: 10px;
+    padding: 1em 0;
+    transition: transform .2s ease-out;
+}
+.swoItem:hover {
+    cursor: pointer;
+    transform: scale(1.04);
+}
+.swoItem ::ng-deep span.mat-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "swoHoy cliente cliente" " swoHoy modelo serie";
+}
+.swoItemHeader {
+    height: auto !important;
+    background: rgba(0, 0, 0, 0) !important;
+}
+.swoItemHeader * {
+    margin: 0;
+}
+.swoComplete {
+    border: 3px solid lightgreen;
+    background-color: ghostwhite !important;
+}
+
+/* Colores */
+
+.swoItemHoy {
+    background-color: lightblue;
+}
+.swoItemHoy:hover {
+    background-color: #5db4d3;
+}
+.swoItemMa {
+    background-color: lightgreen;
+}
+.swoItemMa:hover {
+    background-color: #7cca83
+}
+.swoItemPend {
+    background-color: lightpink;
+}
+.swoItemPend:hover {
+    background-color: #de8491;
+}
+
+/* Header de cada SWO Item */
+
+.swoHoy {
+    grid-area: swoHoy;
+    color: #0071c2;
+    padding: 0 10px 0 0;
+    list-style: none;
+    margin: auto !important;
+    font-size: 1.2em !important;
+}
+.cliente {
+    grid-area: cliente;
+    font-weight: bold;
+}
+.modelo {
+    grid-area: modelo;
+    color: gray;
+}
+.serie {
+    grid-area: serie;
+    color: gray;
+}
+
+/* Detalles */
+
+.expan p {
+    color: gray;
+}
+.expan p span {
+    color: black;
+}
+.btnDetalles {
+    width: 100%;
+    border-radius: 10px;
+    height: 3em;
+}
+.btnDetalles ::ng-deep span.mat-button-wrapper {
     display: flex;
-    justify-content: space-evenly;
+    line-height: normal;
+    font-size: 1em;
+    justify-content: center;
+}
+.btnDetalles:hover {
+    background-color: rgba(0, 0, 0, 0.1)
 }

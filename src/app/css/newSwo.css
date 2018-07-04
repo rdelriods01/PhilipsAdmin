@@ -12,12 +12,18 @@ button {
     width: 100%;
     margin-top: 2em;
 }
-.nombre {
-    width: 350px;
-}
 ::ng-deep .cdk-overlay-pane {
-    zoom: 80% !important;
+    zoom: 80%;
 }
 ::ng-deep .mat-dialog-container {
     zoom: 100% !important;
+}
+::ng-deep .pickerNewSwo div input.ng2-flatpickr-input.flatpickr-input {
+    border-radius: 5px;
+    height: 2em;
+    width: 85%;
+    border: 2px solid cornflowerblue;
+    color: cornflowerblue;
+    text-align: center;
+    font-weight: bold;
 }

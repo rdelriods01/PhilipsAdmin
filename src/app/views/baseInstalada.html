@@ -21,12 +21,12 @@
                         <mat-expansion-panel-header class="mat-row">
                             <span class="mat-cell">{{cli.nombre}}</span>
                         </mat-expansion-panel-header>
-                        <div class="expan">
+                        <!-- <div class="expan">
                             <div class="acciones">
                                 <button mat-raised-button (click)="getEquiposdelCliente(cli)">Ver equipos</button>
                                 <button mat-button (click)="eliminarCliente(cli.id)">Eliminar<mat-icon>delete</mat-icon></button>
                             </div>
-                        </div>
+                        </div> -->
                     </mat-expansion-panel>
                 </mat-accordion>
 
@@ -58,7 +58,7 @@
                             <span class="mat-header-cell" mat-sort-header="serie">Serie</span>
                         </section>
 
-                        <mat-expansion-panel *ngFor="let equipo of displayedEquipos$ | async" (opened)="getSwosDelEquipo(equipo.id)">
+                        <mat-expansion-panel *ngFor="let equipo of displayedEquipos$ | async">
                             <mat-expansion-panel-header class="mat-row">
                                 <span class="mat-cell">{{equipo.tipo}}</span>
                                 <span class="mat-cell">{{equipo.modelo}}</span>
@@ -66,8 +66,8 @@
                             </mat-expansion-panel-header>
                             <div class="expan">
                                 <div class="accionesE">
-                                    <button mat-raised-button (click)="getSwosDelEquipo(equipo.id)">Ver SWOs</button>
-                                    <button mat-button (click)="eliminarEquipo(equipo.id)">Eliminar<mat-icon>delete</mat-icon></button>
+                                    <button mat-raised-button (click)="verPerfilEquipo(equipo.serie)">Ver Equipo</button>
+                                    <button mat-button (click)="eliminarEquipo(equipo.serie)">Eliminar<mat-icon>delete</mat-icon></button>
                                 </div>
                             </div>
                         </mat-expansion-panel>
