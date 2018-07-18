@@ -197,3 +197,20 @@ a mat-icon:hover {
         left: 82%;
     }
 }
+@media print {
+    .tb, .noprint {
+        display: none !important;
+    }
+    .sideb {
+        padding-top: 0px !important;
+    }
+    .rutas {
+        margin-left: 0 !important;
+        padding: 0;
+        overflow: visible;
+        height: 92vh;
+    }
+    .rutas {
+        background-color: lightsalmon;
+    }
+}

@@ -1,6 +1,7 @@
 <form #formNewCliente="ngForm">
     <div style="margin-top: 1em">
-        <h2>Agregar nuevo Cliente</h2>
+        <h2 *ngIf="editFlag==false">Agregar nuevo Cliente</h2>
+        <h2 *ngIf="editFlag==true">Editar cliente</h2>
         <div class="main">
             <div class="nombreDiv">
                 <mat-form-field>
@@ -20,8 +21,8 @@
 
                 <mat-form-field>
                     <input matInput [formControl]="miEstado" [matAutocomplete]="auto" placeholder="Estado..." required>
-                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)='getEstado($event.option.value)'>
-                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getEstado($event.option.value)'>
+                        <mat-option *ngFor="let option of filteredEstado | async" [value]="option">
                             {{ option }}
                         </mat-option>
                     </mat-autocomplete>

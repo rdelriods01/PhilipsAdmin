@@ -12,18 +12,20 @@ button {
     width: 100%;
     margin-top: 2em;
 }
-.serie {
-    width: 350px;
-}
-.conAccesorios {
-    display: grid;
-    grid-template-columns: 1fr;
-}
 ::ng-deep .cdk-overlay-pane {
     zoom: 80%;
 }
 ::ng-deep .mat-dialog-container {
     zoom: 100% !important;
+}
+::ng-deep .pickerNewOP div input.ng2-flatpickr-input.flatpickr-input {
+    border-radius: 5px;
+    height: 2em;
+    width: 85%;
+    border: 2px solid cornflowerblue;
+    color: cornflowerblue;
+    text-align: center;
+    font-weight: bold;
 }
 @media only screen and (max-width: 769px) {
      ::ng-deep .mat-form-field {
@@ -31,7 +33,7 @@ button {
     }
      ::ng-deep .mat-dialog-container {
         zoom: 80% !important;
-        height: fit-content;
+        height: 100%;
         text-align: center;
     }
 }

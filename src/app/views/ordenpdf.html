@@ -1,0 +1,160 @@
+<mat-card class="all">
+    <div class="header">
+        <h2>Orden de servicio</h2>
+        <img class="philips" src="../../assets/philips.png">
+    </div>
+    <div class="section1">
+        <div class="section1L">
+            <span>No. de identificación (ID):</span>
+            <div class="line"></div>
+            <span>Modelo:</span>
+            <div class="line"> {{equipo.modelo}} </div>
+            <span>Número de Serie:</span>
+            <div class="line"> {{equipo.serie}} </div>
+            <span>No. de Proyecto:</span>
+            <div></div>
+        </div>
+        <div class="section1R">
+            <span id="S1Rr1c1">Orden de Servicio:</span>
+            <div class="line" id="S1Rr1c2"> {{swo.swo}}-{{op.op}} </div>
+            <span id="S1Rr2c1">Tipo de Contrato:</span>
+            <div class="line" id="S1Rr2c2"></div>
+            <span id="S1Rr3c1">Equipo Operando:</span>
+            <div id="S1Rr3c2"></div>
+            <div class="S1Rr4">
+                <span id="S1Rr4_Si">Si</span>
+                <div id="S1Rr4_C1" class="cuadrito"> <span *ngIf="op.operando==true">X</span> </div>
+                <span id="S1Rr4_No">No</span>
+                <div id="S1Rr4_C2" class="cuadrito"><span *ngIf="op.operando==false">X</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="section2">
+        <span>Nombre del Cliente:</span>
+        <div> {{cliente.nombre}} </div>
+        <span class="S2mid">Dirección:</span>
+        <div class="S2mid"> {{cliente.direccion}} {{cliente.ciudad}},{{cliente.estado}} </div>
+        <span>Teléfono:</span>
+        <div> {{cliente.telefono}} </div>
+    </div>
+    <div class="section3">
+        <span>Descripción de la Falla:</span>
+        <div> {{swo.falla}} </div>
+        <span class="S3mid">Resultados de Inspección y Pruebas:</span>
+        <div class="S3mid"> {{op.resultados}} </div>
+        <span>Observaciones:</span>
+        <div> {{op.observaciones}} </div>
+    </div>
+    <div class="section4">
+        <span class="secTitle">Actividades:</span>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <span>Tipo de Actividades</span>
+        <span class="s4_C2">Descripción de la Actividad</span>
+        <span>Fecha Inicio (DD/MM/AAAA)</span>
+        <span class="s4_C4">Fecha Fin &nbsp;&nbsp; (DD/MM/AAAA)</span>
+        <span>Duración (hrs)</span>
+        <div> {{op.actividad}} </div>
+        <div class="s4_C2"> {{descAct}} </div>
+        <div> {{op.fechaprog | date: 'dd/MM/yyyy'}} </div>
+        <div class="s4_C4"> {{op.fechafin | date: 'dd/MM/yyyy'}} </div>
+        <div> {{op.duracion}} </div>
+        <div></div>
+        <div class="s4_C2"></div>
+        <div></div>
+        <div class="s4_C4"></div>
+        <div></div>
+        <div></div>
+        <div class="s4_C2"></div>
+        <div></div>
+        <div class="s4_C4"></div>
+        <div></div>
+        <div></div>
+        <div class="s4_C2"></div>
+        <div></div>
+        <div class="s4_C4"></div>
+        <div></div>
+    </div>
+    <div class="section5">
+        <span class="secTitle">Refacciones/Accesorios:</span>
+        <div></div>
+        <div></div>
+        <span>Código</span>
+        <span class="s5_C2">Descripción</span>
+        <span>Cantidad</span>
+        <div></div>
+        <div class="s5_C2"></div>
+        <div></div>
+        <div></div>
+        <div class="s5_C2"></div>
+        <div></div>
+        <div></div>
+        <div class="s5_C2"></div>
+        <div></div>
+        <div></div>
+        <div class="s5_C2"></div>
+        <div></div>
+        <div></div>
+        <div class="s5_C2"></div>
+        <div></div>
+        <div></div>
+        <div class="s5_C2"></div>
+        <div></div>
+        <div></div>
+        <div class="s5_C2"></div>
+        <div></div>
+        <div></div>
+        <div class="s5_C2"></div>
+        <div></div>
+        <div></div>
+        <div class="s5_C2"></div>
+        <div></div>
+    </div>
+    <div class="section6">
+        <span class="secTitle sec6title">Herramienta de Medición Utilizada</span>
+        <div style="border-right: 1px solid black"></div>
+        <span>Descripción de Herramienta</span>
+        <span class="s6_C2">Modelo</span>
+        <span>Marca</span>
+        <span class="s6_C2">Número de Serie</span>
+        <div></div>
+        <div class="s6_C2"></div>
+        <div></div>
+        <div class="s6_C2"></div>
+        <div></div>
+        <div class="s6_C2"></div>
+        <div></div>
+        <div class="s6_C2"></div>
+    </div>
+    <div class="section7">
+        <div class="section7L">
+            <div></div>
+            <div></div>
+            <div></div>
+            <span>Nombre, Puesto y Firma del Cliente</span>
+        </div>
+        <div class="section7R">
+            <div></div>
+            <div></div>
+            <span id="FSE">Ing. {{op.fse}} </span>
+            <span>Nombre y Firma del Ingeniero de Servicio</span>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="fooC1">
+            <span>Centro de Servicio al cliente:</span>
+            <span>01 800 253-0448</span>
+        </div>
+        <div class="fooC1">
+            <span>Av. La Palma No. 6</span>
+            <span>Col. San Fernando, La Herradura</span>
+            <span>Huixquilican, Edo de Mex., C.P. 52784</span>
+            <span>Tel: 5269 9000</span>
+            <a>www.philips.com.mx</a>
+        </div>
+        <div class="fooC1"></div>
+        <div class="fooC1"></div>
+    </div>
+</mat-card>

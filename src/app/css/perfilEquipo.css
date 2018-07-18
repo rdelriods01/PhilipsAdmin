@@ -4,9 +4,44 @@
     grid-gap: 1em;
     grid-template-rows: 1fr 2fr;
 }
+* {
+    font-family: Product Sans;
+}
 .superior {
     display: grid;
     grid-template-columns: 2fr 1fr;
+}
+@media only screen and (max-width: 769px) {
+    .superior {
+        grid-template-columns: 1fr;
+    }
+    .titulo {
+        display: grid;
+        grid-template-columns: 1fr;
+        margin: 0 !important;
+        text-align: center;
+    }
+    .tituloArriba {
+        display: grid !important;
+        grid-template-columns: 1fr;
+    }
+    #eqSerie {
+        margin: 0 !important;
+    }
+    .datosCliente {
+        margin-top: 1em;
+    }
+    .tituloAbajo h3 {
+        margin: 0 !important;
+    }
+    .exp ::ng-deep .mat-content {
+        display: grid !important;
+        grid-template-columns: repeat(6, 1fr);
+        align-items: center;
+    }
+    .mat-cell {
+        font-size: 12px !important;
+    }
 }
 
 /* Datos del Equipo */
@@ -30,6 +65,10 @@
     margin: 0;
     margin-left: 2em;
     color: cornflowerblue;
+}
+.modulo, .accesorios {
+    color: dimgray;
+    font-size: 0.9em;
 }
 
 /* Datos del Cliente */
@@ -62,6 +101,10 @@
 }
 .tablaInputBuscarS {
     zoom: 100%;
+}
+.btnNewSwo {
+    display: grid;
+    justify-content: center;
 }
 .mat-accordion .mat-header-row {
     padding-left: 1.5rem;
@@ -101,6 +144,7 @@
 .exp {
     padding: 0 1em;
     text-align: center;
+    height: fit-content !important;
 }
 .headerGrid6 {
     display: grid;

@@ -1,6 +1,7 @@
 <form #formNewEquipo="ngForm">
     <div style="margin-top: 1em">
-        <h2>Agregar nuevo Equipo</h2>
+        <h2 *ngIf="editFlag==false">Agregar nuevo Equipo</h2>
+        <h2 *ngIf="editFlag==true">Editar Equipo</h2>
         <div class="main">
             <div class="serieDiv">
                 <mat-form-field>
@@ -33,8 +34,26 @@
                 <mat-form-field>
                     <input matInput class="ubicacion" #ubicacion="ngModel" name="ubicacion" [(ngModel)]="equipo.ubicacion" placeholder="Ubicación..">
                 </mat-form-field>
+            </div>
+
+            <div *ngIf="equipo.tipo=='Monitor de signos vitales'" class="conModulo">
                 <mat-form-field>
-                    <input matInput class="accesoriode" #accesoriode="ngModel" name="accesoriode" [(ngModel)]="equipo.accesoriode" placeholder="Pertenece al equipo con NS..">
+                    <input matInput class="modModelo" #moduloModelo="ngModel" name="moduloModelo" [(ngModel)]="equipo.moduloModelo" placeholder="Modelo del Módulo...">
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput class="modSerie" #moduloSerie="ngModel" name="moduloSerie" [(ngModel)]="equipo.moduloSerie" placeholder="Serie del Módulo...">
+                </mat-form-field>
+            </div>
+
+            <div class="accesorios">
+                <p><strong>¿Tiene más accesorios?</strong>
+                    <mat-radio-group name="accesoriosBoolean" [(ngModel)]="accesoriosBoolean" required>
+                        <mat-radio-button [value]=true>Si</mat-radio-button>
+                        <mat-radio-button [value]=false>No</mat-radio-button>
+                    </mat-radio-group>
+                </p>
+                <mat-form-field class="conAccesorios" *ngIf="accesoriosBoolean==true">
+                    <textarea matInput matTextareaAutosize matAutosizeMinRows="3" #accesorios="ngModel" name="accesorios" [(ngModel)]="equipo.accesorios" placeholder="Otros accesorios..." required></textarea>
                 </mat-form-field>
             </div>
 

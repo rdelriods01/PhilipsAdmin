@@ -1,24 +1,15 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-
-// import { ICliente } from '../models/interfaces';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Injectable()
 
 export class ConfigService{
     
-    // clientes:ICliente[];
     config;
 
     constructor( public afs: AngularFirestore){
     } 
 
-    // Agregar Nuevo Tipo de Equipo
-    saveTipo(tipo){
-        console.log(tipo);
-        
-        this.afs.collection('config').doc('tipos').update(tipo);
-    }
     // Leer toda la configuración
     getConfig() {
         return this.afs.collection('config').snapshotChanges()
@@ -34,10 +25,32 @@ export class ConfigService{
             return res;
         })
     }
+
+    // Agregar Nuevo Tipo de Equipo
+    saveTipo(tipo){
+        console.log(tipo);        
+        this.afs.collection('config').doc('tipos').update(tipo);
+    }
     // Agregar Nuevo Modelo
     saveNew(modelo){
         this.afs.collection('config').doc('tipos').update(modelo);
     }
+
+    // Leer usuarios que sean FSE y pasarlos a un array
+    getFSEs(){
+        return this.afs.collection('users', ref => ref.where('role', '==', 'fse')).snapshotChanges()
+        .map( arr => {
+            return arr.map(a => {
+                const obj = a.payload.doc.data();
+                return obj;                
+            })
+        })
+    }
+
+
+
+
+
 
     // // Leer un cliente en específico   
     // getUnCliente(idC){

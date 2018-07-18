@@ -21,3 +21,13 @@ button {
 ::ng-deep .mat-dialog-container {
     zoom: 100% !important;
 }
+@media only screen and (max-width: 769px) {
+     ::ng-deep .mat-form-field {
+        width: 90%;
+    }
+     ::ng-deep .mat-dialog-container {
+        zoom: 80% !important;
+        height: 100vh;
+        text-align: center;
+    }
+}

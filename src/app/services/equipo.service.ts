@@ -32,7 +32,6 @@ export class EquipoService{
             })
             .map(res => {
             this.equipos = res;
-            console.log('lista de equipos OK');
             return res;
             });
     }
@@ -50,6 +49,10 @@ export class EquipoService{
     // Leer un equipo en específico
     getUnEquipo(idE){
         return this.afs.collection('equipos').doc(idE).valueChanges()
+    }
+    // Actualizar Equipo
+    updateEquipo(eq:IEquipo){
+        this.afs.collection('equipos').doc(eq.id).update(eq);
     }
     // Eliminar Equipo
     deleteEquipo(idE){

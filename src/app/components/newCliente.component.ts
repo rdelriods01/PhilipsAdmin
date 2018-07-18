@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
@@ -17,6 +17,7 @@ import { ICliente } from '../models/interfaces';
 export class NewClienteComponent{
 
     cliente = {} as ICliente;
+    editFlag:Boolean=false;
 
     // Variables para los Estados
     miEstado: FormControl = new FormControl();
@@ -26,7 +27,7 @@ export class NewClienteComponent{
             'Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo',
             'San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala',
             'Veracruz','Yucatán','Zacatecas'];
-    filteredOptions: Observable<string[]>;
+    filteredEstado: Observable<string[]>;
     
     zonas = ['Norte-Occidente','Centro-Noreste','Metro-Sur'];
     tipos=['V.I.P.', 'Privado', 'Gobierno'];
@@ -34,13 +35,20 @@ export class NewClienteComponent{
 
     constructor( public dialogRef: MatDialogRef<NewClienteComponent>,
                 private _clienteService: ClienteService,
-                ) {}
+                ) {
+                }
 
     ngOnInit(){
-        this.filteredOptions = this.miEstado.valueChanges.pipe(
-            startWith(''),
-            map(val => this.filtrarEstados(val))
-          );
+        if(this.cliente.estado){
+            this.miEstado.setValue(this.cliente.estado);
+        }else{
+            this.filteredEstado = this.miEstado.valueChanges.pipe(
+                startWith(''),
+                map(val => this.filtrarEstados(val))
+              );
+        }
+
+
     }
 
     filtrarEstados(val: string): string[] {
@@ -51,8 +59,14 @@ export class NewClienteComponent{
     }
     onSubmit(){
         // this.cliente.nombre=this.toCapital(this.cliente.nombre);
-        this._clienteService.saveCliente(this.cliente);
-        this.dialogRef.close();
+        if(this.editFlag==true){
+            console.log(this.cliente);
+            this._clienteService.updateCliente(this.cliente);
+            this.dialogRef.close();
+        }else{
+            this._clienteService.saveCliente(this.cliente);
+            this.dialogRef.close();
+        }
     }
 
     toCapital(str){

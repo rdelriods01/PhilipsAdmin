@@ -1,64 +1,74 @@
-<mat-toolbar class="tb">
-    <mat-toolbar-row>
-        <!-- boton toggle sidenav -->
-        <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-        <!-- EMPRESA -->
-        <div class="empresa">
-            <!-- <img class="empresaLogo" src="{{cliente.logoURL}}" alt="{{cliente.logoURL}}"> -->
-            <a class="empresaLogo" [routerLink]="['/']"> <img class="empresaImg" src="../../assets/philips.png" alt="logo"> </a>
-        </div>
-        <!-- separador -->
-        <span class="spacer"></span>
-        <!-- buscar -->
-        <div class="buscar">
-            <button mat-button id="bSidenav" (click)="toggleBuscar(searchInput)"><mat-icon>search</mat-icon></button>
-            <mat-form-field floatLabel="never" [ngClass]='showBtn'>
-                <input matInput id="buscarInput" #searchInput type="text" [(ngModel)]=buscado (keyup)="filter();showResBus()" placeholder="Buscar...">
-            </mat-form-field>
-        </div>
-
-        <div class="resBusqueda" [ngClass]='showRes'>
-            <button mat-button class="busElement" [ngClass]='showItm' *ngFor=" let item of filteredList" [routerLink]="['/',item.tipo, item.id]" (click)="hideResBus()">{{item.data}} </button>
-        </div>
-        <!-- usuario -->
-        <div *ngIf="auth.user | async as user" class="usuario" (click)="auth.logout()">
-            <img mat-card-image src="../../assets/pp.png" alt="PP">
-            <p> {{userio.displayName}} </p>
-        </div>
-    </mat-toolbar-row>
-
-</mat-toolbar>
-
-<mat-sidenav-container class="sideb" (click)="hideResBus()">
-    <mat-sidenav #snav mode="side" opened="true">
-        <ul class="sb-list-items">
-            <li>
-                <a [routerLink]="['/']">
-                    <mat-icon class="icon">dashboard</mat-icon>Dashboard</a>
-            </li>
-            <li>
-                <a [routerLink]="['/bi']">
-                    <mat-icon class="icon">language</mat-icon>Base Instalada</a>
-            </li>
-            <li>
-                <a [routerLink]="['/test']">
-                    <mat-icon class="icon">new_releases</mat-icon>Test</a>
-            </li>
+<div *ngIf="user">
+    <mat-toolbar class="tb">
+        <mat-toolbar-row>
+            <!-- boton toggle sidenav -->
+            <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+            <!-- EMPRESA -->
+            <div class="empresa">
+                <!-- <img class="empresaLogo" src="{{cliente.logoURL}}" alt="{{cliente.logoURL}}"> -->
+                <a class="empresaLogo" [routerLink]="['/']"> <img class="empresaImg" src="../../assets/philips.png" alt="logo"> </a>
+            </div>
+            <!-- separador -->
             <span class="spacer"></span>
-            <li>
-                <a [routerLink]="['/config']">
-                    <mat-icon class="icon">settings</mat-icon>Configuración</a>
-            </li>
-            <li>
-                <a (click)="auth.logout()">
-                    <mat-icon class="icon">exit_to_app</mat-icon>Cerrar Sesión</a>
-            </li>
-        </ul>
-    </mat-sidenav>
+            <!-- buscar -->
+            <div class="buscar">
+                <button mat-button id="bSidenav" (click)="toggleBuscar(searchInput)"><mat-icon>search</mat-icon></button>
+                <mat-form-field floatLabel="never" [ngClass]='showBtn'>
+                    <input matInput id="buscarInput" #searchInput type="text" [(ngModel)]=buscado (keyup)="filter();showResBus()" placeholder="Buscar...">
+                </mat-form-field>
+            </div>
 
-    <mat-sidenav-content class="rutas">
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+            <div class="resBusqueda" [ngClass]='showRes'>
+                <button mat-button class="busElement" [ngClass]='showItm' *ngFor=" let item of filteredList" [routerLink]="['/',item.tipo, item.id]" (click)="hideResBus()">{{item.data}} </button>
+            </div>
+            <!-- usuario -->
+            <div *ngIf="user" class="usuario">
+                <img mat-card-image src="../../assets/pp.png" alt="PP">
+                <p> {{user.displayName}} </p>
+            </div>
+        </mat-toolbar-row>
 
-<!-- <button mat-fab class="btn-floating" (click)="newPaciente()"><mat-icon>add</mat-icon></button> -->
+    </mat-toolbar>
+
+    <mat-sidenav-container class="sideb" (click)="hideResBus()">
+        <mat-sidenav class="noprint" #snav mode="side" opened="true">
+            <ul class="sb-list-items">
+                <li>
+                    <a [routerLink]="['/']">
+                        <mat-icon class="icon">dashboard</mat-icon>Dashboard</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/bi']">
+                        <mat-icon class="icon">language</mat-icon>Base Instalada</a>
+                </li>
+                <li *ngIf="user.role=='fse'">
+                    <a [routerLink]="['/bitacora']">
+                        <mat-icon class="icon">assignment_turned_in</mat-icon>Bitácora</a>
+                </li>
+                <!-- <li>
+                    <a [routerLink]="['/test']">
+                        <mat-icon class="icon">new_releases</mat-icon>Test</a>
+                </li> -->
+                <span class="spacer"></span>
+                <li *ngIf="user.role=='superuser'">
+                    <a [routerLink]="['/users']">
+                        <mat-icon class="icon">supervisor_account</mat-icon>Usuarios</a>
+                </li>
+                <li *ngIf="user.role!='fse'">
+                    <a [routerLink]="['/config']">
+                        <mat-icon class="icon">settings</mat-icon>Configuración</a>
+                </li>
+                <li>
+                    <a (click)="auth.logout()">
+                        <mat-icon class="icon">exit_to_app</mat-icon>Cerrar Sesión</a>
+                </li>
+            </ul>
+        </mat-sidenav>
+
+        <mat-sidenav-content class="rutas">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+
+    <!-- <button mat-fab class="btn-floating" (click)="newPaciente()"><mat-icon>add</mat-icon></button> -->
+</div>

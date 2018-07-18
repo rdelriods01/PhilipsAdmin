@@ -8,6 +8,10 @@ button {
     height: 40px;
     color: ghostwhite !important;
 }
+.falla {
+    display: grid;
+    grid-template-columns: 1fr;
+}
 .guardar button {
     width: 100%;
     margin-top: 2em;
@@ -26,4 +30,14 @@ button {
     color: cornflowerblue;
     text-align: center;
     font-weight: bold;
+}
+@media only screen and (max-width: 769px) {
+     ::ng-deep .mat-form-field {
+        width: 90%;
+    }
+     ::ng-deep .mat-dialog-container {
+        zoom: 80% !important;
+        height: fit-content;
+        text-align: center;
+    }
 }

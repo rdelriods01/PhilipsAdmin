@@ -6,38 +6,180 @@
 }
 .superior {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+@media only screen and (max-width: 769px) {
+    .superior {
+        grid-template-columns: 1fr;
+        grid-template-areas: "dswo" "dequipo" "dcliente"
+    }
+    .datosEquipo {
+        grid-area: dequipo;
+        padding: 1em 1em;
+    }
+    .datosSwo {
+        grid-area: dswo;
+        padding: 0 1em;
+    }
+    .datosCliente {
+        grid-area: dcliente;
+        padding: 0 1em;
+    }
+}
+mat-card {
+    border-radius: 10px !important;
 }
 
 /* Datos de la SWO */
 
-.titulo {
-    margin-left: 2em;
-}
-.tituloArriba {
-    display: flex;
-}
-.tituloArriba h1 {
-    margin: 0;
+.datosSwo {
+    margin: auto 1em;
 }
 #swo {
-    margin-left: 1em;
-    font-size: 1.6em;
-    align-self: center;
+    margin: 0;
+    font-size: 3em;
+    text-align: center;
+    color: cornflowerblue;
+}
+.swoDetalles p {
+    text-align: center;
+    font-size: 0.8em;
     color: dimgray;
 }
-.tituloAbajo h3 {
+
+/* Datos del Equipo */
+
+.datosEquipo {
+    margin: auto 1em;
+    font-size: 0.8em;
+    text-align: center;
+}
+.equipoCard h4 {
+    color: darkcyan;
     margin: 0;
-    margin-left: 2em;
-    color: cornflowerblue;
+    font-size: 1.3em;
+    cursor: pointer;
 }
 
 /* Datos del Cliente */
 
+.datosCliente {
+    margin: auto 1em;
+    text-align: center;
+}
 .clienteCard {
     border-radius: 10px;
     zoom: 80%;
 }
 .clienteCard h3 {
     color: darkcyan;
+    cursor: pointer;
+}
+
+/* Otra OP */
+
+.otraOP {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    max-height: 2.3em;
+}
+@media only screen and (max-width: 769px) {
+    .otraOP {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* INFERIOR */
+
+.inferior {
+    margin-bottom: 2em;
+}
+.tab {
+    width: 2em;
+}
+.opGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    text-align: center;
+}
+.proceedBtn {
+    margin: auto 0;
+}
+.backSaveBtns {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 1em;
+}
+.proceedDetails {
+    border-top: 1px solid lightgray;
+}
+.proceedDetails p {
+    text-align: center;
+}
+.statusP {
+    margin: 0;
+}
+.resObsGrid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    text-align: center;
+}
+.hrs {
+    width: 5em;
+    text-align: center;
+}
+.refasTable {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    text-align-last: center;
+}
+.refasTable span {
+    font-size: 0.8em;
+}
+.refasTable input {
+    border: 1px solid black;
+}
+
+/* comoPDF Component */
+
+.comoPDF {
+    zoom: 90%;
+    margin: 0 20%;
+}
+.comoPDF button {
+    margin: 1em auto;
+    width: 14vw;
+    display: block;
+}
+@media only screen and (max-width: 769px) {
+    .comoPDF {
+        margin: 0;
+    }
+    .comoPDF button {
+        width: 90vw;
+    }
+}
+@media print {
+    .comoPDF, .Ops {
+        zoom: 100% !important;
+        margin: auto 1.3em !important;
+        padding: 0 !important;
+    }
+    .superior, ::ng-deep mat-tab-header, .otraOP, .comoPDF button {
+        display: none !important;
+    }
+     ::ng-deep mat-card {
+        box-shadow: none !important;
+    }
+    .comoPDF {
+        background: lightblue;
+        height: 100vh;
+    }
+    .Ops {
+        background-color: lightcoral
+    }
+    .inferior {
+        background-color: lightgreen;
+    }
 }

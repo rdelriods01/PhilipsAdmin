@@ -1,83 +1,89 @@
-<div class="superior">
-    <h1>Base Instalada</h1>
-</div>
+<div>
+    <div class="superior">
+        <h1>Base Instalada</h1>
+    </div>
 
-<div class="main">
-    <mat-card>
-        <div class="izquierda">
-            <div class="tablaClientes">
-                <div class="tablaSup">
-                    <mat-form-field class="tablaBuscar">
-                        <input matInput class="tablaInputBuscar" type="text" [(ngModel)]=clienteBuscado (keyup)="filtrarClientes()" placeholder="Buscar cliente...">
-                    </mat-form-field>
-                </div>
-
-                <mat-accordion displayMode="flat" class="mat-table">
-                    <section matSort #sortClientes class="mat-elevation-z2 mat-header-row">
-                        <span class="mat-header-cell" mat-sort-header="nombre">Nombre</span>
-                    </section>
-
-                    <mat-expansion-panel *ngFor="let cli of displayedClientes$ | async" (destroyed)="displayDerecha='none'" (opened)="getEquiposdelCliente(cli)">
-                        <mat-expansion-panel-header class="mat-row">
-                            <span class="mat-cell">{{cli.nombre}}</span>
-                        </mat-expansion-panel-header>
-                        <!-- <div class="expan">
-                            <div class="acciones">
-                                <button mat-raised-button (click)="getEquiposdelCliente(cli)">Ver equipos</button>
-                                <button mat-button (click)="eliminarCliente(cli.id)">Eliminar<mat-icon>delete</mat-icon></button>
-                            </div>
-                        </div> -->
-                    </mat-expansion-panel>
-                </mat-accordion>
-
-                <div class="tablaInf">
-                    <mat-paginator #paginator [length]="totalRowsClientes$ | async" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-                    <button mat-raised-button (click)="agregarCliente()">Agregar cliente nuevo</button>
-                </div>
-            </div>
-        </div>
-    </mat-card>
-    <mat-card>
-        <div [style.display]="displayDerecha" class="derecha">
-            <div class="derSuperior">
-                <p>{{clienteActual.nombre}}</p>
-                <button mat-raised-button color="accent" (click)="agregarEquipo()">Agregar equipo</button>
-            </div>
-            <div class="derInferior">
-                <div class="tablaEquipos">
-                    <div class="tablaSupE">
-                        <mat-form-field class="tablaBuscarE">
-                            <input matInput class="tablaInputBuscarE" type="text" [(ngModel)]=equipoBuscado (keyup)="filtrarEquipos()" placeholder="Filtrar o buscar equipo...">
+    <div class="main">
+        <mat-card>
+            <div class="izquierda">
+                <div class="tablaClientes">
+                    <div class="tablaSup">
+                        <mat-form-field class="tablaBuscar">
+                            <input matInput class="tablaInputBuscar" type="text" [(ngModel)]=clienteBuscado (keyup)="filtrarClientes()" placeholder="Buscar cliente...">
                         </mat-form-field>
                     </div>
 
                     <mat-accordion displayMode="flat" class="mat-table">
-                        <section matSort #sortEquipos="matSort" class="mat-elevation-z2 mat-header-row">
-                            <span class="mat-header-cell" mat-sort-header="tipo">Tipo</span>
-                            <span class="mat-header-cell" mat-sort-header="modelo">Modelo</span>
-                            <span class="mat-header-cell" mat-sort-header="serie">Serie</span>
+                        <section matSort #sortClientes class="mat-elevation-z2 mat-header-row headerGrid">
+                            <span class="mat-header-cell" mat-sort-header="nombre">Nombre</span>
                         </section>
 
-                        <mat-expansion-panel *ngFor="let equipo of displayedEquipos$ | async">
+                        <mat-expansion-panel *ngFor="let cli of displayedClientes$ | async" (destroyed)="displayDerecha='none'" (opened)="getEquiposdelCliente(cli)">
                             <mat-expansion-panel-header class="mat-row">
-                                <span class="mat-cell">{{equipo.tipo}}</span>
-                                <span class="mat-cell">{{equipo.modelo}}</span>
-                                <span class="mat-cell">{{equipo.serie}}</span>
+                                <span class="mat-cell">{{cli.nombre}}</span>
                             </mat-expansion-panel-header>
                             <div class="expan">
-                                <div class="accionesE">
-                                    <button mat-raised-button (click)="verPerfilEquipo(equipo.serie)">Ver Equipo</button>
-                                    <button mat-button (click)="eliminarEquipo(equipo.serie)">Eliminar<mat-icon>delete</mat-icon></button>
+                                <div *ngIf="user" class="acciones">
+                                    <button mat-raised-button (click)="editarCliente(cli)">Editar</button>
+                                    <button *ngIf="user.role!='fse'" mat-button (click)="eliminarCliente(cli.id)">Eliminar<mat-icon>delete</mat-icon></button>
                                 </div>
                             </div>
                         </mat-expansion-panel>
                     </mat-accordion>
 
-                    <div class="tablaInfE">
-                        <mat-paginator #paginatorE [length]="totalRowsEquipos$ | async" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                    <div class="tablaInf">
+                        <mat-paginator #paginator [length]="totalRowsClientes$ | async" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                        <button mat-raised-button (click)="agregarCliente()">Agregar cliente nuevo</button>
                     </div>
                 </div>
             </div>
-        </div>
-    </mat-card>
+        </mat-card>
+        <mat-card>
+            <div [style.display]="displayDerecha" class="derecha">
+                <div class="derSuperior">
+                    <div class="client">
+                        <p>{{clienteActual.nombre}}</p>
+                        <span> {{clienteActual.ciudad}}, {{clienteActual.estado}} </span>
+                    </div>
+                    <button mat-raised-button color="accent" (click)="agregarEquipo()">Agregar equipo</button>
+                </div>
+                <div class="derInferior">
+                    <div class="tablaEquipos">
+                        <div class="tablaSupE">
+                            <mat-form-field class="tablaBuscarE">
+                                <input matInput class="tablaInputBuscarE" type="text" [(ngModel)]=equipoBuscado (keyup)="filtrarEquipos()" placeholder="Filtrar o buscar equipo...">
+                            </mat-form-field>
+                        </div>
+
+                        <mat-accordion displayMode="flat" class="mat-table">
+                            <section matSort #sortEquipos="matSort" class="mat-elevation-z2 mat-header-row headerGrid3">
+                                <span class="mat-header-cell" mat-sort-header="tipo">Tipo</span>
+                                <span class="mat-header-cell" mat-sort-header="modelo">Modelo</span>
+                                <span class="mat-header-cell" mat-sort-header="serie">Serie</span>
+                            </section>
+
+                            <mat-expansion-panel *ngFor="let equipo of displayedEquipos$ | async">
+                                <mat-expansion-panel-header class="mat-row">
+                                    <span class="mat-cell">{{equipo.tipo}}</span>
+                                    <span class="mat-cell">{{equipo.modelo}}</span>
+                                    <span class="mat-cell">{{equipo.serie}}</span>
+                                </mat-expansion-panel-header>
+                                <div class="expan">
+                                    <div class="accionesE">
+                                        <button mat-raised-button [routerLink]="['/equipo',equipo.id]">Ver Equipo</button>
+                                        <button mat-raised-button (click)="editarEquipo(equipo)">Editar</button>
+                                        <button mat-button (click)="eliminarEquipo(equipo.serie)">Eliminar<mat-icon>delete</mat-icon></button>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                        <div class="tablaInfE">
+                            <mat-paginator #paginatorE [length]="totalRowsEquipos$ | async" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
 </div>

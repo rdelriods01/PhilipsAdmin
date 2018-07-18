@@ -9,8 +9,9 @@ import { map } from 'rxjs/operators';
 
 import { fromMatSort, sortRows, fromMatPaginator, paginateRows } from './datasource-utils';
 
-import { ICliente } from '../models/interfaces'
+import { ICliente } from '../models/interfaces';
 
+import { AuthService } from '../services/auth.service';
 import { ClienteService } from '../services/cliente.service';
 import { EquipoService } from '../services/equipo.service';
 
@@ -23,6 +24,7 @@ import { NewEquipoComponent } from '../components/newEquipo.component';
   styleUrls: ['../css/baseInstalada.css']
 })
 export class BaseInstaladaComponent {
+  user;
 
   clientes:any=[];
   equipos:any=[];
@@ -51,9 +53,12 @@ export class BaseInstaladaComponent {
     public _equipoService:EquipoService,
     public dialog: MatDialog,
     public router: Router,
+    public auth: AuthService
   ){
+    this.auth.user.subscribe(us=>{this.user=us});
     this._clienteService.getClientes().subscribe(res=>{
       this.clientes=res;
+      console.log(res);
       this.datosTablaClientes(res);
     })
   }
@@ -90,8 +95,6 @@ datosTablaClientes(data){
     this.displayedEquipos$ = rows$.pipe(sortRows(sortEventsE$), paginateRows(pageEventsE$));
   }
   filtrarEquipos(){
-    // TODO, ver como poder filtrar en todos los parametros (tipo, serie, modelo) ya 08-05-18
-    // TODO, ver como poder eliminar propiedades del objeto (ej, quitar prop cliente, id) para filtrar solo por (tipo, serie, modelo)
     let newEquipos=JSON.parse(JSON.stringify(this.equipos));
     newEquipos.forEach(el => {
       delete el.id;
@@ -103,29 +106,30 @@ datosTablaClientes(data){
     this.datosTablaEquipos(this.listaDeEquiposFiltrados);
   }
 
-  verPerfilEquipo(serie){
-    let idE;
-    this.equipos.forEach(el => {
-      if(el.serie==serie){
-        idE=el.id;
-      }
-    });
-    this.router.navigate(['equipo',idE]);
-  }
-
-
-
-
   agregarCliente(){
     this.dialog.open(NewClienteComponent);
   }
   agregarEquipo(){
     let dialogNewEquipos= this.dialog.open(NewEquipoComponent);
     dialogNewEquipos.componentInstance.idC=this.clienteActual.id;
-    // dialogNewEquipos.componentInstance.tipos=['Desfibrilador'];
   }
+  editarEquipo(eq){
+    let dialogEditEquipos= this.dialog.open(NewEquipoComponent);
+    dialogEditEquipos.componentInstance.editFlag=true;
+    dialogEditEquipos.componentInstance.equipo=eq;
+    if(eq.accesorios){
+      dialogEditEquipos.componentInstance.accesoriosBoolean=true;
+    }
+  }
+  editarCliente(cl){
+    let dialogEditCliente= this.dialog.open(NewClienteComponent);
+    dialogEditCliente.componentInstance.editFlag=true;
+    dialogEditCliente.componentInstance.cliente=cl;
+  }
+
   eliminarCliente(idC){
-    this._clienteService.deleteCliente(idC);
+    alert('Se borrará éste cliente, ¿Está seguro?')
+    // this._clienteService.deleteCliente(idC);
   }
   eliminarEquipo(serie){
     let idE;
@@ -134,9 +138,10 @@ datosTablaClientes(data){
         idE=el.id;
       }
     });
-
     this._equipoService.deleteEquipo(idE);
   }
+
+
   // FUNCIONES UTILES
   filterByProperty(array, prop, value){
     var filtered = [];

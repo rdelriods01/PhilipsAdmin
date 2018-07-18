@@ -10,6 +10,7 @@ import { fromMatSort, sortRows, } from './datasource-utils';
 
 import { IEquipo } from '../models/interfaces'
 
+import { AuthService } from '../services/auth.service';
 import { ClienteService } from '../services/cliente.service';
 import { EquipoService } from '../services/equipo.service';
 import { SWOService } from '../services/swo.service';
@@ -22,6 +23,7 @@ import { NewSwoComponent } from '../components/newSwo.component';
   styleUrls: ['../css/perfilEquipo.css']
 })
 export class PerfilEquipoComponent {
+    user;
 
     equipo;
     cliente;
@@ -37,7 +39,9 @@ export class PerfilEquipoComponent {
                 public dialog: MatDialog,
                 public _equipoService:EquipoService,
                 public _clienteService:ClienteService,
-                public _swoService:SWOService){
+                public _swoService:SWOService,
+                public auth: AuthService){
+        this.auth.user.subscribe(us=>{this.user=us});
         this._route.params.forEach((params:Params)=>{
             let id = params['id'];
             this._equipoService.getUnEquipo(id).subscribe(eq =>{

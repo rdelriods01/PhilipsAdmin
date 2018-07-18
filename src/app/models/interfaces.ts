@@ -1,3 +1,11 @@
+export interface IUser {
+    uid: string;
+    email: string;
+    photoURL?: string;
+    displayName?: string;
+    role:string;
+}
+
 export interface ICliente {
     id?: string;
     nombre: string;
@@ -20,24 +28,29 @@ export interface ICliente {
     sw?: string,
     marca?: string,
     ubicacion: string,
-    accesoriode?:string,
+    moduloModelo?:string,
+    moduloSerie?:string,
     cliente:string
+    accesorios?:string
 }
 
 export interface ISwo{
     id?:string,
     swo:string,
     fechainicio:Date,
+    fechaop:Date,
     fechafin?:Date,
     cliente:string,
     equipo:string,
     status:string,
     falla:string,
     actividad:string;
+    fse:string;
 }
 export interface IOperacion{
     id?:string;
     op:string;
+    swoid:string; 
     actividad:string;
     fechaprog:Date;
     fechafin?:Date;
@@ -46,4 +59,7 @@ export interface IOperacion{
     status:string;
     resultados?:string;
     observaciones?:string;
+    operando?:Boolean;
+    duracion?:number;
+    fse:string
 }

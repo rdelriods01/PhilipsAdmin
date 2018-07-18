@@ -23,27 +23,32 @@ export class LayoutComponent {
   filteredList:any;
   arrayFinder;
 
-  // User temporal
-  userio;
-
+  user;
+  myOPsFSE;
   constructor(public auth: AuthService, 
               public router: Router,
               public dialog: MatDialog,
-            public _equipoServvice: EquipoService,
+            public _equipoService: EquipoService,
             public _swoService: SWOService,
             ) 
   {
-    this.userio=new Object();
-    this.userio={displayName:"Ricardo Del Rio"};
+    this.auth.user.subscribe(us=>{
+      this.user=us;
+      console.log(this.user);
+      if(us){
+        let ops=this._swoService.getOPsFSE(this.user.displayName)
+          console.log(ops);
+        this.myOPsFSE=ops;
+      }
+    })
     this.prepareFinder();
-  
   }
 
   prepareFinder(){
-    this._equipoServvice.getEquipos().subscribe(eq=>{
+    this._equipoService.getEquipos().subscribe(eq=>{
       let todosEquipos=eq;
       todosEquipos.forEach(el=>{
-        delete el.accesoriode;
+        delete el.accesorios;
         delete el.cliente;
         delete el.marca;
         delete el.modelo;
@@ -69,7 +74,7 @@ export class LayoutComponent {
         for (let i=0;i<todasSwos.length;i++){
           this.arrayFinder.push({id:todasSwos[i].id, data: todasSwos[i].swo, tipo:'swo'});
         }
-        console.log(this.arrayFinder);
+        // console.log(this.arrayFinder);
       })
     })
   }
@@ -85,7 +90,7 @@ export class LayoutComponent {
     this.showRes='showResultado';
     this.showItm='showResItem';
   }
-  hideResBus(tipo){
+  hideResBus(){
     this.showRes='hideResultado';
     this.showItm='hideResItem';
     this.showBtn='ocultarB';

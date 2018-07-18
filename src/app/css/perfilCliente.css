@@ -1,0 +1,9 @@
+.superior {
+    display: grid;
+    grid-template-columns: 1fr;
+    text-align-last: center;
+}
+.datosCliente {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}

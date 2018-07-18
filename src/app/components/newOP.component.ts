@@ -11,33 +11,30 @@ import { ISwo, IOperacion } from '../models/interfaces';
 import { FlatpickrOptions } from 'ng2-flatpickr';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+
 @Component({
-   selector: 'newSwo',
-   templateUrl: '../views/newSwo.html',
-   styleUrls: ['../css/newSwo.css']
+   selector: 'newOP',
+   templateUrl: '../views/newOP.html',
+   styleUrls: ['../css/newOP.css']
 })
-export class NewSwoComponent{
+export class NewOPComponent{
     user;
 
     swo = {} as ISwo;
     oper= {} as IOperacion;
 
-    cliente:string='';
-    equipo:string='';
-    actividades = ['PMAI','DIAG','CMAI','IN02','ADMI','FCOA'];
+    actividades = ['DIAG','CMAI','ADMI','PMAI','FCOA'];
     ingenieros=[];
-
-    editFlag=false;
 
     pickerOptions: FlatpickrOptions = {
         minDate: 'today'
-    };
+      };
     pickerFormGroup:FormGroup;
 
-    constructor( public dialogRef: MatDialogRef<NewSwoComponent>,
+    constructor( public dialogRef: MatDialogRef<NewOPComponent>,
                 public _swoService: SWOService,
                 public _configService: ConfigService,
-                public auth: AuthService,
+                public auth: AuthService
                 ) {
                     this.auth.user.subscribe(us=>{this.user=us});
                     this.pickerFormGroup = new FormGroup({
@@ -46,9 +43,6 @@ export class NewSwoComponent{
                 }
 
     ngOnInit(){
-        if(this.oper.fechaprog){
-            this.pickerOptions.defaultDate=this.oper.fechaprog;
-        }
         // cargar ingenieros 
         this._configService.getFSEs().subscribe(arr=>{
             arr.forEach(inge=>{
@@ -61,6 +55,7 @@ export class NewSwoComponent{
         let fecha = this.pickerFormGroup.controls['pickerForm'].value;
         if(fecha){        
             this.oper.fechaprog=fecha[0];
+            this.swo.fechaop=this.oper.fechaprog;
             this.swo.status=this.oper.status;
             if(this.oper.actividad=='PMAI'){
                 this.swo.falla='Mantenimiento Preventivo';
@@ -70,23 +65,12 @@ export class NewSwoComponent{
                 this.oper.fse=this.user.displayName;
             }
             this.swo.fse=this.oper.fse;
-            if(this.editFlag){
-                if(this.oper.op=='10'){
-                    this.swo.fechainicio=this.swo.fechaop=this.oper.fechaprog;
-                }
-                this.swo.fechaop=this.oper.fechaprog;
-                this._swoService.updateOP(this.swo,this.oper);
-            }else{
-                this.swo.fechainicio=this.swo.fechaop=this.oper.fechaprog;
-                this._swoService.saveSWO(this.swo,this.oper);
-            }
+            this._swoService.saveOP(this.swo,this.oper);
+            this._swoService.updateSWO(this.swo);
             this.dialogRef.close();
         } else{
             alert('Por favor seleccione la fecha');
         }
-
-
     }
 
-//FIN
 }

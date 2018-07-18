@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 
+import { AuthService } from '../services/auth.service';
 import { ClienteService } from '../services/cliente.service';
 import { EquipoService } from '../services/equipo.service';
 import { SWOService } from '../services/swo.service';
-
-import { IEquipo, ICliente } from '../models/interfaces'
 
 @Component({
   selector: 'dashboardC',
@@ -12,40 +11,76 @@ import { IEquipo, ICliente } from '../models/interfaces'
   styleUrls: ['../css/dashboard.css']
 })
 export class DashboardComponent {
-  
+  user;
+
   arrToday:any[]=[];
   arrTomorrow:any[]=[];
   arrPendientes:any[]=[];
 
   constructor(  public _swoService: SWOService,
                 public _equipoService:EquipoService,
-                public _clienteService:ClienteService )
+                public _clienteService:ClienteService,
+                public auth: AuthService
+              )
   {  
-    this._swoService.getSWOs().subscribe(el=>{
-      let hoy = this.getHoy();
-      let mañana = this.getMañana();
-      this.arrToday=[]
-      this.arrTomorrow=[];
-      this.arrPendientes=[];
-      el.forEach(sx=>{
-        let f1= sx.fechainicio.toLocaleDateString();
-        let f2:any[]=[];
-        f2=f1.split("/");
-        //f2[0] dia , f2[1] mes , f2[2] año
-        if(f2[0]<10){ f2[0]=('0'+f2[0]) }
-        if(f2[1]<10){ f2[1]=('0'+f2[1]) }
-        let mifechadeswo = f2[2]+'-'+f2[1]+'-'+f2[0];
-        // comparar cuales son de hoy y cuales de mañana
-        if(mifechadeswo==hoy){ if(sx.status=='Programado' || sx.status=='Concluido'){this.arrToday.push(sx)}}
-        if(mifechadeswo==mañana) { this.arrTomorrow.push(sx) }
-        // Comparar cuales tienen status 'En espera de refacción o pendiente'
-        if(sx.status=='En espera de refacción' || sx.status=='Pendiente'){ this.arrPendientes.push(sx)}
-      })
-      // Aqui ya tengo un array con las ordenes correspondientes, falta completar el cliente, modelo y serie
-      this.arrToday=this.completarArray(this.arrToday);
-      this.arrTomorrow=this.completarArray(this.arrTomorrow);
-      this.arrPendientes=this.completarArray(this.arrPendientes);
-    })
+    let hoy = this.getHoy();
+    let mañana = this.getMañana();
+    this.auth.user.subscribe(us=>{
+      this.user=us
+      // Si es FSE debe de leer solo sus SWO  
+      if(us){
+        if(this.user.role=='fse'){
+          this._swoService.getSWOsFSE(this.user.displayName).subscribe(el=>{
+            this.arrToday=[]
+            this.arrTomorrow=[];
+            this.arrPendientes=[];
+            el.forEach(sx=>{
+              let f1= sx.fechaop.toLocaleDateString();
+              let f2:any[]=[];
+              f2=f1.split("/");
+              //f2[0] dia , f2[1] mes , f2[2] año
+              if(f2[0]<10){ f2[0]=('0'+f2[0]) }
+              if(f2[1]<10){ f2[1]=('0'+f2[1]) }
+              let mifechadeswo = f2[2]+'-'+f2[1]+'-'+f2[0];
+              // comparar cuales son de hoy y cuales de mañana
+              if(mifechadeswo==hoy){ if(sx.status=='Programado' || sx.status=='Concluido'){this.arrToday.push(sx)}}
+              if(mifechadeswo==mañana) { this.arrTomorrow.push(sx) }
+              // Comparar cuales tienen status 'En espera de refacción o pendiente'
+              if(sx.status=='En espera de refacción' || sx.status=='Pendiente'){ this.arrPendientes.push(sx)}
+            })
+            // Aqui ya tengo un array con las ordenes correspondientes, falta completar el cliente, modelo y serie
+            this.arrToday=this.completarArray(this.arrToday);
+            this.arrTomorrow=this.completarArray(this.arrTomorrow);
+            this.arrPendientes=this.completarArray(this.arrPendientes);
+          });
+        } else{
+          // Si no es FSE, debe de leer todas las SWO
+          this._swoService.getSWOs().subscribe(el=>{
+            this.arrToday=[]
+            this.arrTomorrow=[];
+            this.arrPendientes=[];
+            el.forEach(sx=>{
+              let f1= sx.fechaop.toLocaleDateString();
+              let f2:any[]=[];
+              f2=f1.split("/");
+              //f2[0] dia , f2[1] mes , f2[2] año
+              if(f2[0]<10){ f2[0]=('0'+f2[0]) }
+              if(f2[1]<10){ f2[1]=('0'+f2[1]) }
+              let mifechadeswo = f2[2]+'-'+f2[1]+'-'+f2[0];
+              // comparar cuales son de hoy y cuales de mañana
+              if(mifechadeswo==hoy){ if(sx.status=='Programado' || sx.status=='Concluido'){this.arrToday.push(sx)}}
+              if(mifechadeswo==mañana) { this.arrTomorrow.push(sx) }
+              // Comparar cuales tienen status 'En espera de refacción o pendiente'
+              if(sx.status=='En espera de refacción' || sx.status=='Pendiente'){ this.arrPendientes.push(sx)}
+            })
+            // Aqui ya tengo un array con las ordenes correspondientes, falta completar el cliente, modelo y serie
+            this.arrToday=this.completarArray(this.arrToday);
+            this.arrTomorrow=this.completarArray(this.arrTomorrow);
+            this.arrPendientes=this.completarArray(this.arrPendientes);
+          });
+        }
+      }
+    });
   }
 
   completarArray(arr){
@@ -65,7 +100,6 @@ export class DashboardComponent {
 
   verSWO(x){
     console.log(x);
-    
   }
 
 
@@ -87,9 +121,7 @@ export class DashboardComponent {
     if(miFecha[2]<10){
         miFecha[2]=('0'+miFecha[2]);
     }
-    let hoy=miFecha[0]+'-'+miFecha[1]+'-'+miFecha[2];
-    console.log(hoy);
-    
+    let hoy=miFecha[0]+'-'+miFecha[1]+'-'+miFecha[2];   
     return hoy;
   }
 
@@ -107,10 +139,6 @@ export class DashboardComponent {
         miFecha[2]=('0'+miFecha[2]);
     }
     let mañana=miFecha[0]+'-'+miFecha[1]+'-'+miFecha[2];
-    console.log(mañana);
     return mañana;
-
-
-
   }
 }

@@ -1,0 +1,70 @@
+<div class="superior">
+    <h1>Bitácora</h1>
+</div>
+<div class="inferior">
+    <mat-card>
+        <div class="header">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+        </div>
+
+        <div class="mat-elevation-z8">
+            <mat-table [dataSource]="dataSource" matSort>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="fechaprog">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.fechaprog | date: 'dd/MM/yyyy'}} </mat-cell>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="swo">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> SWO </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="hoverElement" [routerLink]="['/swo',row.swoid]"> {{row.swo}} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="op">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> OP </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.op}} </mat-cell>
+                </ng-container>
+
+                <!-- Color Column -->
+                <ng-container matColumnDef="cliente">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="hoverElement" [routerLink]="['/cliente',row.clienteid]"> {{row.cliente}} </mat-cell>
+                </ng-container>
+
+                <!-- Color Column -->
+                <ng-container matColumnDef="equipoModelo">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Equipo </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.equipoModelo}} </mat-cell>
+                </ng-container>
+
+                <!-- Color Column -->
+                <ng-container matColumnDef="equipoSerie">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Serie </mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="hoverElement" [routerLink]="['/equipo',row.equipoid]"> {{row.equipoSerie}} </mat-cell>
+                </ng-container>
+
+                <!-- Color Column -->
+                <ng-container matColumnDef="actividad">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Actividad </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.actividad}} </mat-cell>
+                </ng-container>
+
+                <!-- Color Column -->
+                <ng-container matColumnDef="falla">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Falla </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.falla}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </mat-card>
+</div>

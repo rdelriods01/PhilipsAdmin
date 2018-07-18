@@ -1,85 +1,118 @@
-<div *ngIf='equipo && cliente'>
+<div *ngIf='equipo && cliente && user'>
     <div class="main">
         <div class="superior">
-            <div class="titulo">
-                <div class="tituloArriba">
-                    <h1 id="eqSerie">{{swo.swo}} </h1>
+            <div class="datosEquipo">
+                <mat-card class="equipoCard">
+                    <p> <strong>Modelo:</strong> {{equipo.modelo}} </p>
+                    <h4 [routerLink]="['/equipo',equipo.id]">Serie: {{equipo.serie}}</h4>
+                    <p> <strong>Ubicación:</strong> {{equipo.ubicacion}} </p>
+                </mat-card>
+            </div>
+            <div class="datosSwo">
+                <div class="swo">
+                    <h1 id="swo">{{swo.swo}} </h1>
                 </div>
-                <div class="tituloAbajo">
-                    <h3>{{equipo.nombre}} </h3>
-                    <h3>{{equipo.serie}} </h3>
+                <div class="swoDetalles">
+                    <p><strong>Actividad:</strong> {{swo.actividad}} </p>
+                    <p><strong>Falla:</strong> {{swo.falla}} </p>
+                    <p><strong>Status:</strong> {{swo.status}} </p>
+                    <p *ngIf="swo.status=='Concluido'"><strong>Fecha inicio:</strong> {{swo.fechainicio | date: 'dd/MM/yyyy'}} </p>
+                    <p *ngIf="swo.status=='Concluido'"><strong>Fecha fin:</strong> {{swo.fechafin | date: 'dd/MM/yyyy'}} </p>
                 </div>
             </div>
             <div class="datosCliente">
                 <mat-card class="clienteCard">
-                    <h3>{{cliente.nombre}} </h3>
+                    <h3 [routerLink]="['/cliente',cliente.id]">{{cliente.nombre}} </h3>
                     <p>{{cliente.direccion}} {{cliente.ciudad}}, {{cliente.estado}} </p>
-                    <p> <strong>Ubicación:</strong> {{equipo.ubicacion}} </p>
                 </mat-card>
             </div>
         </div>
-        <!-- <div class="inferior">
-            <mat-card class="historialSWOs">
-                <div class="tablaSWOs">
-                    <div class="tablaSupS">
-                        <mat-form-field class="tablaBuscarS">
-                            <input matInput class="tablaInputBuscarS" type="text" [(ngModel)]=swoBuscado (keyup)="filtrarSWOs()" placeholder="Filtrar o buscar SWO...">
-                        </mat-form-field>
-                        <button mat-raised-button color="accent" (click)="agregarSWO()">Agregar nueva SWO</button>
-                    </div>
-
-                    <mat-accordion displayMode="flat" class="mat-table">
-                        <section matSort class="mat-elevation-z2 mat-header-row headerGrid6">
-                            <span class="mat-header-cell" mat-sort-header="swo">SWO</span>
-                            <span class="mat-header-cell" mat-sort-header="fechainicio">Fecha Inicio</span>
-                            <span class="mat-header-cell" mat-sort-header="status">Status</span>
-                            <span class="mat-header-cell" mat-sort-header="fechafin">Ultima actualización</span>
-                            <span class="mat-header-cell" mat-sort-header="actividad">Actividad</span>
-                            <span class="mat-header-cell">Falla</span>
-                        </section>
-
-                        <mat-expansion-panel *ngFor="let orden of displayedSWO$ | async" (opened)="leerOps(orden.id)">
-                            <mat-expansion-panel-header class="mat-row exp" [ngStyle]="{'background-color':getColor(orden.status)}">
-                                <span class="mat-cell">{{orden.swo}}</span>
-                                <span class="mat-cell">{{orden.fechainicio | date: 'dd/MM/yyyy'}}</span>
-                                <span class="mat-cell">{{orden.status}}</span>
-                                <span class="mat-cell">{{orden.fechafin | date: 'dd/MM/yyyy'}}</span>
-                                <span class="mat-cell">{{orden.actividad}}</span>
-                                <span class="mat-cell">{{orden.falla}}</span>
-                            </mat-expansion-panel-header>
-                            <div class="expan">
+        <mat-card *ngIf="swo.status=='En espera de refacción' || swo.status=='Pendiente'" class="otraOP">
+            <div></div>
+            <button color="primary" mat-raised-button (click)="nuevaOP()">Programar nueva OP</button>
+        </mat-card>
+        <div class="inferior">
+            <mat-card class="Ops">
+                <mat-tab-group>
+                    <mat-tab class="tab" *ngFor="let op of ops" label="Op {{op.op}}">
+                        <form *ngIf="op.status=='Programado'" #formNewSwo="ngForm">
+                            <div class="opGrid">
                                 <div>
-                                    <mat-tab-group>
-                                        <mat-tab *ngFor="let operacion of ops" label="Op {{operacion.op}}">
-                                            <div class="opGrid">
-                                                <div class="opDerecha">
-                                                    <div class="itemsOper">
-                                                        <h3>Fecha programado:</h3><span class="mat-cell">{{operacion.fechaprog | date: 'dd/MM/yyyy'}}</span></div>
-                                                    <div class="itemsOper">
-                                                        <h3>Status:</h3><span class="mat-cell">{{operacion.status}}</span></div>
-                                                    <div class="itemsOper">
-                                                        <h3>Fecha realizado:</h3><span class="mat-cell">{{operacion.fechafin | date: 'dd/MM/yyyy'}}</span></div>
-                                                    <div class="itemsOper">
-                                                        <h3>Actividad:</h3><span class="mat-cell">{{operacion.actividad }}</span></div>
-                                                    <div class="itemsOper">
-                                                        <h3>Resultados:</h3><span class="mat-cell">{{operacion.resultados }}</span></div>
-                                                    <div class="itemsOper">
-                                                        <h3>observaciones:</h3><span class="mat-cell">{{operacion.observaciones }}</span></div>
-                                                </div>
-
-                                                <div class="opBtns">
-                                                    <button mat-raised-button (click)="editarOP(orden,operacion)">Editar</button>
-                                                    <button mat-raised-button (click)="editarOP(orden,operacion)">Ver</button>
-                                                </div>
-                                            </div>
-                                        </mat-tab>
-                                    </mat-tab-group>
+                                    <p *ngIf="op.fse!=user.displayName"><strong>Ingeniero: &nbsp; </strong> {{op.fse}} </p>
+                                    <p><strong>Fecha programada: &nbsp; </strong> {{op.fechaprog | date: 'dd/MM/yyyy'}} </p>
+                                </div>
+                                <button class="proceedBtn" *ngIf="!showProceedDetails && op.fse==user.displayName " color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails; proceed()">Proceder</button>
+                                <div class="backSaveBtns">
+                                    <button *ngIf="showProceedDetails" color="accent" mat-raised-button (click)="showProceedDetails=!showProceedDetails"> <mat-icon>arrow_back</mat-icon> </button>
+                                    <button *ngIf="showProceedDetails" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails; saveProceed(op)" [disabled]="!formNewSwo.form.valid">Guardar</button>
                                 </div>
                             </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </div>
+                            <div *ngIf="showProceedDetails" class="proceedDetails">
+                                <p><strong>¿Equipo operando?</strong>
+                                    <mat-radio-group name="operando" [(ngModel)]="operando" required>
+                                        <mat-radio-button [value]=true>Si</mat-radio-button>
+                                        <mat-radio-button [value]=false>No</mat-radio-button>
+                                    </mat-radio-group>
+                                </p>
+                                <p class="statusP"><strong>Nuevo Status: &nbsp;</strong>
+                                    <mat-form-field>
+                                        <mat-select [(ngModel)]="status" name="status" required>
+                                            <mat-option *ngFor="let opStatus of statuses" [value]="opStatus">
+                                                {{opStatus}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </p>
+                                <div class="resObsGrid">
+                                    <p><strong>Resultados:</strong></p>
+                                    <mat-form-field>
+                                        <textarea matInput name="resultados" [(ngModel)]="resultados" matTextareaAutosize matAutosizeMinRows="4" required></textarea>
+                                    </mat-form-field>
+                                    <p><strong>Observaciones:</strong></p>
+                                    <mat-form-field>
+                                        <textarea matInput name="observaciones" [(ngModel)]="observaciones" matTextareaAutosize matAutosizeMinRows="4" required></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <p><strong>Duración:</strong>
+                                    <mat-form-field class="hrs">
+                                        <input type="number" matInput name="duracion" [(ngModel)]="duracion" required><span matSuffix>hrs</span>
+                                    </mat-form-field>
+                                </p>
+                                <p><strong>Refacciones:</strong>
+                                    <mat-radio-group [(ngModel)]="showRefas" name="refasYN" required>
+                                        <mat-radio-button [value]="true">Si</mat-radio-button>
+                                        <mat-radio-button [value]="false">No</mat-radio-button>
+                                    </mat-radio-group>
+                                </p>
+                                <div *ngIf="showRefas" class="refasTable">
+                                    <span>Código</span>
+                                    <span>Descripción</span>
+                                    <span>Cantidad</span>
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                    <input type="text">
+                                </div>
+                            </div>
+                        </form>
+                        <div *ngIf="op.status!='Programado'" class="comoPDF">
+                            <button color="accent" mat-raised-button (click)="print()"> <mat-icon>print</mat-icon> </button>
+                            <ordenpdfC [swo]="swo" [op]="op" [cliente]="cliente" [equipo]="equipo"></ordenpdfC>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
             </mat-card>
-        </div> -->
+        </div>
     </div>
 </div>

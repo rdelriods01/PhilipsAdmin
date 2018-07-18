@@ -1,0 +1,272 @@
+.all {
+    display: grid;
+    grid-row-gap: 1em;
+    grid-template-rows: repeat(3, 1fr) 3fr 1.8fr 2.8fr 1fr 1.4fr 1fr;
+}
+@media only screen and (max-width: 769px) {
+    .all {
+        height: 100vh;
+        zoom: 70%;
+        box-shadow: none;
+    }
+}
+@media print {
+    .all {
+        height: 90vh;
+    }
+}
+@media print {
+    .all {
+        background: lightyellow;
+    }
+}
+
+/* Header */
+
+.header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.header h2 {
+    display: grid;
+    font-size: 1.2em !important;
+    align-content: center;
+}
+.philips {
+    width: 14em;
+    margin: auto 0 auto auto;
+}
+
+/* Section 1 (Datos del equipo y swo) */
+
+.section1 {
+    border: 1px solid black;
+    display: grid;
+    /* height: fit-content; */
+    grid-template-columns: 1fr 1fr;
+    font-size: 0.7em;
+}
+.section1L {
+    border: 1px solid black;
+    display: grid;
+    /* height: fit-content; */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
+}
+.line {
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+.section1R {
+    border: 1px solid black;
+    display: grid;
+    /* height: fit-content; */
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas: "S1Rr1c1 S1Rr1c2 S1Rr1c2" "S1Rr2c1 S1Rr2c2 S1Rr2c2" "S1Rr3c1 S1Rr3c2 S1Rr3c2" "S1Rr4 S1Rr4 S1Rr4"
+}
+#S1Rr1c1 {
+    grid-area: S1Rr1c1;
+}
+#S1Rr1c2 {
+    grid-area: S1Rr1c2;
+}
+#S1Rr2c1 {
+    grid-area: S1Rr2c1;
+}
+#S1Rr2c2 {
+    grid-area: S1Rr2c2;
+}
+#S1Rr3c1 {
+    grid-area: S1Rr3c1;
+}
+#S1Rr3c2 {
+    grid-area: S1Rr3c2;
+}
+.S1Rr4 {
+    grid-area: S1Rr4;
+    /* border-bottom: 1px solid black; */
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-areas: ". . . S1Rr4_Si S1Rr4_C1 . . S1Rr4_No S1Rr4_C2 . . ."
+}
+#S1Rr4_Si {
+    grid-area: S1Rr4_Si;
+}
+#S1Rr4_No {
+    grid-area: S1Rr4_No;
+}
+#S1Rr4_C1 {
+    grid-area: S1Rr4_C1;
+}
+#S1Rr4_C2 {
+    grid-area: S1Rr4_C2;
+}
+.cuadrito {
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+/* Section 2 (Cliente) */
+
+.section2 {
+    border: 2px solid black;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 2fr 1fr;
+    font-size: 0.7em;
+}
+.section2 span {
+    border-right: 1px solid black;
+    text-align: center;
+    display: grid;
+    align-content: center;
+}
+.section2 div {
+    text-align: center;
+    display: grid;
+    align-content: center;
+}
+.S2mid {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+/* Section 3 (Falla, Resultados y Observaciones) */
+
+.section3 {
+    border: 2px solid black;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 3fr 6fr 3fr;
+    font-size: 0.7em;
+}
+.section3 span {
+    border-right: 1px solid black;
+    text-align: center;
+    display: grid;
+    align-content: center;
+}
+.section3 div {
+    text-align: center;
+    display: grid;
+    align-content: center;
+}
+.S3mid {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+/* Section 4 (Actividades) */
+
+.section4 {
+    border-top: 1px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr 2fr repeat(4, 1fr);
+    font-size: 0.7em;
+}
+.secTitle {
+    font-weight: bold;
+    text-align: left !important;
+}
+.section4 span, .section4 div {
+    border-top: 1px solid black;
+    text-align: center;
+    display: grid;
+    align-content: center;
+}
+.s4_C2, .s4_C4 {
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+/* Section 5 (Refacciones) */
+
+.section5 {
+    border-top: 1px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: repeat(11, 1fr);
+    font-size: 0.7em;
+}
+.section5 span, .section5 div {
+    border-top: 1px solid black;
+    text-align: center;
+    display: grid;
+    align-content: center;
+}
+.s5_C2 {
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+/* Section 6 (Herramienta) */
+
+.section6 {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas: "sec6title sec6title sec6title ." ". . . ." ". . . ." ". . . .";
+    font-size: 0.7em;
+}
+.sec6title {
+    grid-area: sec6title;
+}
+.section6 span, .section6 div {
+    border-top: 1px solid black;
+    text-align: center;
+    display: grid;
+    align-content: center;
+}
+.s6_C2 {
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+/* Section 7 (Firmas) */
+
+.section7 {
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 0.7em;
+    text-align: center;
+    font-weight: bold;
+}
+.section7L, .section7R {
+    border: 1px solid black;
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+}
+#FSE {
+    display: grid;
+    align-content: end;
+}
+
+/* Footer */
+
+.footer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    font-size: 0.6em;
+    text-align: center;
+}
+.fooC1 {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+}

@@ -1,0 +1,19 @@
+<div class="superior">
+    <h1>
+        {{cliente.nombre}}
+    </h1>
+
+    <div class="datosCliente">
+        <div></div>
+        <mat-card>
+            <p> <strong>Dirección:</strong> {{cliente.direccion}} {{cliente.ciudad}}, {{cliente.estado}} </p>
+            <p> <strong>Zona: </strong> {{cliente.zona}} </p>
+            <p> <strong>Tipo: </strong> {{cliente.tipo}} </p>
+            <p *ngIf="cliente.contacto"> <strong>Contacto: </strong> {{cliente.contacto}} </p>
+            <p *ngIf="cliente.departamento"> <strong>Departamento: </strong> {{cliente.departamento}} </p>
+            <p *ngIf="cliente.telefono"> <strong>Teléfono: </strong> {{cliente.telefono}} </p>
+            <p *ngIf="cliente.correo"> <strong>Correo: </strong> {{cliente.correo}} </p>
+        </mat-card>
+        <div></div>
+    </div>
+</div>

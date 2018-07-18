@@ -11,13 +11,11 @@ export class LoginComponent {
   
   email:string;
   pass:string;
-  user:any;
 
   constructor(public auth: AuthService) {}
   
   login(e,p){
-    this.user=this.auth.login(e,p);
-    console.log(this.user);
+    this.auth.login(e,p);
   }
 
 }

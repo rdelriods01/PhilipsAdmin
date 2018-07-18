@@ -16,7 +16,8 @@ import { MatButtonModule, MatToolbarModule, MatIconModule, MatCardModule,
           MatInputModule, MatFormFieldModule, MatSidenavModule, MatListModule,
           MatExpansionModule, MatPaginatorModule, MatSortModule,MatTabsModule,
           MatDatepickerModule, MatNativeDateModule, MatDialogModule,MatSelectModule,
-          MatRadioModule, MatButtonToggleModule, MatSliderModule, MatAutocompleteModule
+          MatRadioModule, MatButtonToggleModule, MatSliderModule, MatAutocompleteModule,
+          MatTableModule
     } from '@angular/material';
 
 // Flatpicker
@@ -40,8 +41,13 @@ import { BaseInstaladaComponent } from './components/baseInstalada.component';
 import { NewClienteComponent } from './components/newCliente.component';
 import { NewEquipoComponent } from './components/newEquipo.component';
 import { PerfilEquipoComponent } from './components/perfilEquipo.component';
+import { PerfilClienteComponent } from './components/perfilCliente.component';
 import { NewSwoComponent } from './components/newSwo.component';
 import { SwoComponent } from './components/Swo.component';
+import { OrdenPDFComponent } from './components/ordenpdf.component';
+import { NewOPComponent } from './components/newOP.component';
+import { UsersComponent } from './components/users.component';
+import { BitacoraComponent } from './components/bitacora.component';
 
 
 // Rutas =============================
@@ -50,8 +56,11 @@ const routes: Routes = [
     { path:'', component: DashboardComponent},
     { path:'test', component: TestComponent },
     { path:'config', component: ConfigComponent },
+    { path:'users', component: UsersComponent },
+    { path:'bitacora', component: BitacoraComponent },
     { path:'bi', component: BaseInstaladaComponent},
     { path:'equipo/:id', component: PerfilEquipoComponent },
+    { path:'cliente/:id', component: PerfilClienteComponent },
     { path:'swo/:id', component: SwoComponent}
   ]},
   { path:'login', component: LoginComponent},
@@ -70,11 +79,16 @@ const routes: Routes = [
     NewClienteComponent, 
     NewEquipoComponent,
     PerfilEquipoComponent,
+    PerfilClienteComponent,
     NewSwoComponent,
-    SwoComponent
+    SwoComponent,
+    OrdenPDFComponent,
+    NewOPComponent, 
+    UsersComponent,
+    BitacoraComponent
   ],
   entryComponents:[
-    NewClienteComponent, NewEquipoComponent, NewSwoComponent
+    NewClienteComponent, NewEquipoComponent, NewSwoComponent, NewOPComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +106,7 @@ const routes: Routes = [
     MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule,MatInputModule, MatFormFieldModule,
     MatSidenavModule, MatListModule, MatExpansionModule, MatPaginatorModule, MatSortModule, MatTabsModule,
     MatDatepickerModule, MatNativeDateModule,MatDialogModule, MatSelectModule, MatRadioModule,
-    MatButtonToggleModule,MatSliderModule, MatAutocompleteModule
+    MatButtonToggleModule,MatSliderModule, MatAutocompleteModule,MatTableModule
   ],
   providers: [
     AuthService,
@@ -100,6 +114,7 @@ const routes: Routes = [
     EquipoService,
     SWOService, 
     ConfigService, 
+    LayoutComponent
   ],
   bootstrap: [AppComponent]
 })

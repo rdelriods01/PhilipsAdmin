@@ -17,6 +17,8 @@ export class NewEquipoComponent{
     equipo = {} as IEquipo;
     idC:string='';
 
+    editFlag:Boolean=false;
+
     // Variables para el TIPO
     miTipo: FormControl = new FormControl();
     arrayTipos;
@@ -28,12 +30,18 @@ export class NewEquipoComponent{
     modelos = [];
     filteredModelo;
 
+    accesoriosBoolean=false;
 
     constructor( public dialogRef: MatDialogRef<NewEquipoComponent>,
                 private _equipoService: EquipoService,
                 public _configService:ConfigService
                 ) {
-                    this.leerConfig();
+                    if(this.editFlag==true){
+                        this.filteredTipo=this.equipo.tipo;
+                        this.filteredModelo=this.equipo.modelo;
+                    }else{
+                        this.leerConfig();
+                    }
                 }
 
     leerConfig(){
@@ -59,12 +67,17 @@ export class NewEquipoComponent{
     getModelo(v){
         this.equipo.modelo=v;
     }
-
-
+    
     onSubmit(){
-        this.equipo.cliente=this.idC;
-        this._equipoService.saveEquipo(this.equipo);
-        this.dialogRef.close();
+        if(this.editFlag==true){
+            this._equipoService.updateEquipo(this.equipo);
+            console.log(this.equipo);
+            this.dialogRef.close();
+        }else{
+            this.equipo.cliente=this.idC;
+            this._equipoService.saveEquipo(this.equipo);
+            this.dialogRef.close();
+        }
     }
 
     toCapital(str){

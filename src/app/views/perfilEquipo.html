@@ -9,6 +9,12 @@
                 <div class="tituloAbajo">
                     <h3>{{equipo.tipo}} </h3>
                 </div>
+                <div *ngIf="equipo.moduloSerie" class="modulo">
+                    <h4> Módulo: {{equipo.moduloModelo}} serie: {{equipo.moduloSerie}} </h4>
+                </div>
+                <div *ngIf="equipo.accesorios" class="accesorios">
+                    <p><strong>Accesorios:</strong> {{equipo.accesorios}} </p>
+                </div>
             </div>
             <div class="datosCliente">
                 <mat-card class="clienteCard">
@@ -25,7 +31,7 @@
                         <mat-form-field class="tablaBuscarS">
                             <input matInput class="tablaInputBuscarS" type="text" [(ngModel)]=swoBuscado (keyup)="filtrarSWOs()" placeholder="Filtrar o buscar SWO...">
                         </mat-form-field>
-                        <button mat-raised-button color="accent" (click)="agregarSWO()">Agregar nueva SWO</button>
+                        <button mat-raised-button class="btnNewSwo" color="accent" (click)="agregarSWO()">Agregar SWO</button>
                     </div>
 
                     <mat-accordion displayMode="flat" class="mat-table">
@@ -64,12 +70,14 @@
                                                     <div class="itemsOper">
                                                         <h3>Resultados:</h3><span class="mat-cell">{{operacion.resultados }}</span></div>
                                                     <div class="itemsOper">
-                                                        <h3>observaciones:</h3><span class="mat-cell">{{operacion.observaciones }}</span></div>
+                                                        <h3>Observaciones:</h3><span class="mat-cell">{{operacion.observaciones }}</span></div>
                                                 </div>
 
-                                                <div class="opBtns">
-                                                    <button mat-raised-button (click)="editarOP(orden,operacion)">Editar</button>
+                                                <div *ngIf="user" class="opBtns">
                                                     <button mat-raised-button [routerLink]="['/swo', orden.id]">Ver</button>
+                                                    <div *ngIf="operacion.fse==user.displayName || user.role=='admin' ">
+                                                        <button *ngIf="operacion.status!='Concluido'" mat-raised-button (click)="editarOP(orden,operacion)">Editar</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </mat-tab>

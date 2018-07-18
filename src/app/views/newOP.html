@@ -1,23 +1,13 @@
-<form #formNewSwo="ngForm">
+<form #formNewOP="ngForm">
     <div *ngIf="user" style="margin-top: 1em">
-        <h2 *ngIf='editFlag==false'>Agregar nueva SWO</h2>
-        <h2 *ngIf='editFlag==true'>Editar SWO</h2>
+        <h2>Agregar nueva Operación</h2>
         <div class="main">
             <div class="swoDiv">
                 <mat-form-field>
-                    <input matInput class="swo" name="orden" [(ngModel)]="swo.swo" placeholder="SWO.." [readonly]=editFlag required>
+                    <input matInput class="swo" name="orden" [(ngModel)]="swo.swo" placeholder="SWO.." disabled>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput class="op" name="op" [(ngModel)]="oper.op" placeholder="Operación.." disabled>
-                </mat-form-field>
-            </div>
-
-            <div class="clienteDiv">
-                <mat-form-field>
-                    <input matInput class="clie" name="cliente" [(ngModel)]="cliente" placeholder="Cliente.." disabled>
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput class="equi" name="equipo" [(ngModel)]="equipo" placeholder="Equipo.." disabled>
+                    <input matInput class="op" name="op" [(ngModel)]="oper.op" placeholder="Operación..">
                 </mat-form-field>
             </div>
 
@@ -43,17 +33,13 @@
                 </mat-form-field>
 
                 <div [formGroup]="pickerFormGroup">
-                    <ng2-flatpickr class="pickerNewSwo" [config]="pickerOptions" formControlName="pickerForm" placeholder='Fecha...' required></ng2-flatpickr>
+                    <ng2-flatpickr class="pickerNewOP" [config]="pickerOptions" formControlName="pickerForm" placeholder="Fecha.." required></ng2-flatpickr>
                 </div>
-
-                <mat-form-field class="falla" *ngIf="oper.actividad=='DIAG' || oper.actividad=='CMAI'">
-                    <textarea matInput name="falla" [(ngModel)]="swo.falla" placeholder="Falla..." required></textarea>
-                </mat-form-field>
             </div>
         </div>
 
         <div class="guardar">
-            <button mat-raised-button color="accent" id="btn-newSwo-guardar" (click)="onSubmit()" [disabled]="!formNewSwo.form.valid">Guardar</button>
+            <button mat-raised-button color="accent" (click)="onSubmit()" [disabled]="!formNewOP.form.valid">Guardar</button>
         </div>
     </div>
 </form>

@@ -48,6 +48,9 @@
 .mat-row {
     min-height: 48px;
 }
+.mat-sort-header-container {
+    justify-content: center;
+}
 .mat-row, .mat-header-row {
     display: flex;
     border-bottom-width: 1px;
@@ -55,6 +58,23 @@
     align-items: center;
     padding: 0 24px;
     box-sizing: border-box;
+}
+.headerGrid {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    text-align: center;
+    grid-auto-flow: column;
+    padding: 0 1em !important;
+}
+.headerGrid span, .headerGrid3 span {
+    justify-self: center;
+}
+.headerGrid3 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    grid-auto-flow: column;
+    padding: 0 1em !important;
 }
 .mat-row::after, .mat-header-row::after {
     display: inline-block;
@@ -65,6 +85,7 @@
     flex: 1;
     overflow: hidden;
     word-wrap: break-word;
+    text-align: center;
 }
 .expan {
     background: #f0f0f0;
@@ -88,9 +109,17 @@
     height: 2.5em;
     margin-bottom: 1em;
 }
-.derSuperior p {
+.client {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+.client p {
     margin: auto 0;
     color: cornflowerblue;
+}
+.client span {
+    color: dimgray;
+    font-size: 0.8em;
 }
 .tablaEquipos {
     zoom: 80%;
