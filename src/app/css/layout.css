@@ -183,7 +183,7 @@ a mat-icon:hover {
 }
 .rutas {
     padding: 1em;
-    height: 89vh;
+    /* height: 92.4vh; */
     background-color: #eee;
 }
 .btn-floating {
@@ -202,15 +202,12 @@ a mat-icon:hover {
         display: none !important;
     }
     .sideb {
-        padding-top: 0px !important;
+        padding: 0px !important;
+        height: 100vh !important;
     }
     .rutas {
-        margin-left: 0 !important;
-        padding: 0;
-        overflow: visible;
-        height: 92vh;
-    }
-    .rutas {
-        background-color: lightsalmon;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: white;
     }
 }

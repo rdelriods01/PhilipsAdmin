@@ -2,7 +2,8 @@ import { Component} from '@angular/core';
 import { FormsModule, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ActivatedRoute, Params } from '@angular/router';
-
+import { AngularFireStorage } from 'angularfire2/storage';
+import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
 import { AuthService } from '../services/auth.service';
@@ -37,13 +38,19 @@ export class SwoComponent{
     observaciones:string='';
     duracion:number;
     fechafin:Date;
+    refas:any;
+
+    // Variables para subirfoto
+    uploadPercent:Observable<number>;
+    showProgressBar=false;
 
     constructor(public _route:ActivatedRoute, 
                 public _equipoService:EquipoService,
                 public _clienteService:ClienteService,
                 public _swoService:SWOService,
                 public dialog: MatDialog,
-                public auth: AuthService ){
+                public auth: AuthService,
+                public storage: AngularFireStorage ){
         this.auth.user.subscribe(us=>{this.user=us});
         this._route.params.forEach((params:Params)=>{
             let id = params['id'];
@@ -59,6 +66,7 @@ export class SwoComponent{
                         this._swoService.getOPs(id).subscribe(ops=>{
                             this.ops=ops;
                             console.log(this.ops);
+                            this.uploadPercent=Observable.of(0)
                         })
                         // this.datosTablaSWOs(this.swos);
                     })
@@ -66,6 +74,15 @@ export class SwoComponent{
             }) 
         })
         this.fechafin= new Date();
+        this.refas={refa1:['','',''],
+                    refa2:['','',''],
+                    refa3:['','',''],
+                    refa4:['','',''],
+                    refa5:['','',''],
+                    refa6:['','',''],
+                    refa7:['','',''],
+                    refa8:['','',''],
+                    refa9:['','','']};
     }
 
     proceed(){
@@ -76,6 +93,8 @@ export class SwoComponent{
             this.observaciones='El equipo queda operando Correctamente';
             this.duracion=1;            
         }
+        console.log(this.refas);
+        
     }
 
     saveProceed(oper){
@@ -89,6 +108,7 @@ export class SwoComponent{
         oper.resultados=this.resultados;
         oper.observaciones=this.observaciones;
         oper.duracion=this.duracion;
+        oper.refacciones=this.refas;
         this._swoService.updateOP(this.swo,oper);
         console.log(oper);
     }
@@ -108,5 +128,26 @@ export class SwoComponent{
 
     print(){
         window.print();
+    }
+
+
+    subirFoto(event,op){
+        console.log(op);
+        this.showProgressBar=true;
+        const file = event.target.files[0];
+        const filePath = this.swo.swo + '-' + op.op;
+        const task = this.storage.upload(filePath,file);
+        // observe percentage changes
+        this.uploadPercent = task.percentageChanges();
+        // download url
+        task.downloadURL().subscribe(url=>{
+            console.log(url);
+            op.fotoSwoURL=url;
+            this._swoService.updateOP(this.swo,op);
+            this.showProgressBar=false;
+        })
+    }
+    verFoto(url){
+        window.open(url);
     }
 }

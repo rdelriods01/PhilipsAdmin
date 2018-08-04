@@ -22,6 +22,7 @@ export class SWOService{
     // Agregar Nueva SWO
     saveSWO (swo:ISwo, op:IOperacion){
         swo.id=this.afs.createId();
+        op.swoid=swo.id;
         this.afs.collection('swos').doc(swo.id).set(swo);
         this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).set(op);
     }
@@ -153,6 +154,7 @@ export class SWOService{
     }
     // Nueva OP
     saveOP(swo:ISwo, op:IOperacion){
+        op.swoid=swo.id;
         this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).set(op);
     }
     // Obtener los datos de una OP en especifico de una SWO
@@ -164,7 +166,15 @@ export class SWOService{
         this.afs.collection('swos').doc(swo.id).update(swo);
         this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).update(op);
     }
-
+    // Eliminar OP
+    deleteOP(swo,op){
+        if(op.op=='10'){
+            this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).delete();
+            this.deleteSWO(swo.id);
+        }else{
+            this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).delete();
+        }
+    }
     // Leer una SWO en específico   
     getUnaSWO(idS){
         return this.afs.collection('swos').doc(idS).valueChanges();

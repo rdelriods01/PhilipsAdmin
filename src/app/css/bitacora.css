@@ -1,12 +1,15 @@
 .superior {
     text-align: center;
 }
+.main{
+    height: 92.4vh;
+}
 .superior h1 {
     margin-top: 0;
     color: #666;
 }
 .inferior {
-    zoom: 80%;
+    zoom: 85%;
 }
 .hoverElement:hover {
     color: darkcyan;
@@ -28,5 +31,4 @@
 }
 .mat-table {
     overflow: auto;
-    max-height: 500px;
 }

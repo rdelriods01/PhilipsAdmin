@@ -1,8 +1,7 @@
 .main {
     display: grid;
-    height: 89vh;
     grid-gap: 1em;
-    grid-template-rows: 1fr 2fr;
+    height: 92.4vh;
 }
 .superior {
     display: grid;
@@ -143,43 +142,81 @@ mat-card {
 
 /* comoPDF Component */
 
-.comoPDF {
+/* .comoPDF {
     zoom: 90%;
     margin: 0 20%;
+} */
+.comoPDF{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
 }
-.comoPDF button {
-    margin: 1em auto;
-    width: 14vw;
-    display: block;
+.printBtn {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 1em;
 }
+.subirFoto{
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-bottom: 2em;
+}
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.labelFile {
+    cursor: pointer;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+.inputfile:focus + label {
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}
+
+.administrativos{
+    background-color: lightblue;
+    margin-right: 1em;
+    border-radius: 10px;
+    padding: 1em;
+}
+
 @media only screen and (max-width: 769px) {
     .comoPDF {
         margin: 0;
+        grid-template-columns: 1fr;
     }
     .comoPDF button {
-        width: 90vw;
+        /* width: 90vw; */
     }
 }
 @media print {
     .comoPDF, .Ops {
+        display: block;
         zoom: 100% !important;
-        margin: auto 1.3em !important;
         padding: 0 !important;
     }
-    .superior, ::ng-deep mat-tab-header, .otraOP, .comoPDF button {
+    .superior, ::ng-deep mat-tab-header, .otraOP, .masDatos {
         display: none !important;
     }
      ::ng-deep mat-card {
         box-shadow: none !important;
     }
     .comoPDF {
-        background: lightblue;
         height: 100vh;
-    }
-    .Ops {
-        background-color: lightcoral
+        
     }
     .inferior {
-        background-color: lightgreen;
+        margin: 0 !important;
+    }
+    .aver{
+        margin: 0 3.6em;
+        zoom: 92% !important;
     }
 }

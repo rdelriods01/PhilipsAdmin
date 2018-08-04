@@ -23,20 +23,13 @@ export class ClienteService{
     getClientes() {
         return this.afs.collection('clientes').snapshotChanges()
         .map(arr => {
-            console.log(arr);
-            
         return arr.map(snap => {
             const obj = snap.payload.doc.data() as ICliente;
-            // obj.id = snap.payload.doc.id;
-            console.log(obj);
-            
             return obj;
         });
         })
         .map(res=>{
             // res, ya es un array de objetos
-            console.log(res);
-            
             this.clientes=res;
             return res;
         })

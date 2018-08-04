@@ -17,7 +17,7 @@ export interface ICliente {
     departamento?:string,
     telefono?: string,
     correo?: string,
-    contacto?: string,
+    contacto?: string
  }
 
  export interface IEquipo{
@@ -61,5 +61,13 @@ export interface IOperacion{
     observaciones?:string;
     operando?:Boolean;
     duracion?:number;
-    fse:string
+    fse:string;
+    refacciones?:any;
+    firmada?:Boolean;
+    nombrefirma?:string;
+    enviada?:Boolean;
+    guia?:string;
+    recibida?:Boolean;
+    recibio?:string;
+    fotoSwoUrl?:string;
 }

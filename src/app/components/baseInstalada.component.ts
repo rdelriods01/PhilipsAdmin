@@ -58,7 +58,6 @@ export class BaseInstaladaComponent {
     this.auth.user.subscribe(us=>{this.user=us});
     this._clienteService.getClientes().subscribe(res=>{
       this.clientes=res;
-      console.log(res);
       this.datosTablaClientes(res);
     })
   }
@@ -87,7 +86,7 @@ datosTablaClientes(data){
     })
   }
   // Funcion para definir los datos de la tabla EQUIPOS
-  datosTablaEquipos(data){
+  datosTablaEquipos(data){    
     const sortEventsE$: Observable<Sort> = fromMatSort(this.sortE);
     const pageEventsE$: Observable<PageEvent> = fromMatPaginator(this.paginatorE);
     const rows$ = of(data);
@@ -97,7 +96,6 @@ datosTablaClientes(data){
   filtrarEquipos(){
     let newEquipos=JSON.parse(JSON.stringify(this.equipos));
     newEquipos.forEach(el => {
-      delete el.id;
       delete el.cliente;
       delete el.ubicacion;
       delete el.sw;
@@ -113,7 +111,13 @@ datosTablaClientes(data){
     let dialogNewEquipos= this.dialog.open(NewEquipoComponent);
     dialogNewEquipos.componentInstance.idC=this.clienteActual.id;
   }
-  editarEquipo(eq){
+  editarEquipo(idE){
+    let eq;
+    this.equipos.forEach(el => {
+      if(el.id==idE){
+        eq=el;
+      }
+    });
     let dialogEditEquipos= this.dialog.open(NewEquipoComponent);
     dialogEditEquipos.componentInstance.editFlag=true;
     dialogEditEquipos.componentInstance.equipo=eq;
@@ -128,19 +132,29 @@ datosTablaClientes(data){
   }
 
   eliminarCliente(idC){
-    alert('Se borrará éste cliente, ¿Está seguro?')
-    // this._clienteService.deleteCliente(idC);
+    let res= confirm('Desea eliminar este cliente?');
+    if(res==true){
+      this._clienteService.deleteCliente(idC);
+      alert('Cliente eliminado!');
+    }else{
+      alert('Cliente no eliminado');
+    }    
   }
   eliminarEquipo(serie){
-    let idE;
-    this.equipos.forEach(el => {
-      if(el.serie==serie){
-        idE=el.id;
-      }
-    });
-    this._equipoService.deleteEquipo(idE);
+    let res= confirm('Desea eliminar esta equipo?');
+    if(res==true){
+      let idE;
+      this.equipos.forEach(el => {
+        if(el.serie==serie){
+          idE=el.id;
+        }
+      });
+      this._equipoService.deleteEquipo(idE);
+      alert('Equipo eliminado!');
+    }else{
+      alert('Equipo no eliminada');
+    }
   }
-
 
   // FUNCIONES UTILES
   filterByProperty(array, prop, value){
@@ -158,12 +172,10 @@ datosTablaClientes(data){
     var filtrado = [];
     for (var i=0; i<array.length;i++){
       var obj=JSON.stringify(array[i]);
-      // console.log(obj);      
       if(obj.toLowerCase().indexOf(value)>=0){
         filtrado.push(JSON.parse(obj));
       }
     }
-    // console.log(filtrado);   
     return filtrado;
   }
 

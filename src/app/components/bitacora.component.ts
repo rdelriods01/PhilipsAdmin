@@ -16,7 +16,7 @@ export class BitacoraComponent {
 
     ops=[];
 
-    displayedColumns: string[] = ['fechaprog', 'swo', 'op', 'cliente', 'equipoModelo', 'equipoSerie', 'actividad', 'falla'];
+    displayedColumns: string[] = ['fechaprog', 'swo', 'op', 'cliente', 'equipoModelo', 'equipoSerie', 'actividad', 'falla', 'status'];
 
     dataSource= new MatTableDataSource();     
 

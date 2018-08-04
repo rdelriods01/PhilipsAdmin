@@ -2,11 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { StaticSymbol } from '@angular/compiler';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { MatSort, Sort , MatDialog, MAT_SORT_HEADER_INTL_PROVIDER} from '@angular/material';
+import { MatSort, Sort , MatPaginator, PageEvent, MatDialog, MAT_SORT_HEADER_INTL_PROVIDER} from '@angular/material';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
-import { fromMatSort, sortRows, } from './datasource-utils';
+import { fromMatSort, sortRows, fromMatPaginator, paginateRows } from './datasource-utils';
 
 import { IEquipo } from '../models/interfaces'
 
@@ -31,7 +31,9 @@ export class PerfilEquipoComponent {
     ops;
     // Variables para la tabla Clientes
     @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
     displayedSWO$:Observable<any[]>;
+    totalRowsSWO$: Observable<number>;
     listaDeSWOsFiltrados;
     swoBuscado;
 
@@ -52,6 +54,7 @@ export class PerfilEquipoComponent {
                     console.log(this.cliente);
                     this._swoService.getSWOsEquipo(id).subscribe(or=>{
                         this.swos=or;
+                        console.log(this.swos);
                         this.datosTablaSWOs(this.swos);
                     })
                 })
@@ -61,8 +64,10 @@ export class PerfilEquipoComponent {
 
     datosTablaSWOs(data){
         const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+        const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
         const rows$ = of(data);
-        this.displayedSWO$ = rows$.pipe(sortRows(sortEvents$));
+        this.totalRowsSWO$ = rows$.pipe(map(rows => rows.length));
+        this.displayedSWO$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$) );
     }
 
     leerOps(id){
@@ -82,7 +87,27 @@ export class PerfilEquipoComponent {
     }
 
     filtrarSWOs(){
-        console.log('Holi al filtro');
+        let newSwos = JSON.parse(JSON.stringify(this.swos));
+        newSwos.forEach(el => {
+            delete el.cliente;
+            delete el.equipo;
+            delete el.fechafin;
+            delete el.fechaop;
+        });
+        this.listaDeSWOsFiltrados=this.filterAllProperties(newSwos, this.swoBuscado.toLowerCase());
+        this.datosTablaSWOs(this.listaDeSWOsFiltrados);
+    }
+
+    // FUNCIONES UTILES
+    filterAllProperties(array,value){
+        var filtrado = [];
+        for (var i=0; i<array.length;i++){
+        var obj=JSON.stringify(array[i]);
+        if(obj.toLowerCase().indexOf(value)>=0){
+            filtrado.push(JSON.parse(obj));
+        }
+        }
+        return filtrado;
     }
 
 
@@ -94,9 +119,19 @@ export class PerfilEquipoComponent {
         dialogNewSwo.componentInstance.editFlag=true;
         dialogNewSwo.componentInstance.equipo=this.equipo.serie; 
         dialogNewSwo.componentInstance.cliente=this.cliente.nombre;
-
     }
     
+    eliminarOP(swo,op){
+        let res= confirm('Desea eliminar ésta operación?');
+        if(res==true){
+            this._swoService.deleteOP(swo,op);
+            alert('Operación eliminada!');
+        }
+        else{
+            alert('Operación no eliminada');
+        }
+    }
+
 
     getColor(stat){
         switch (stat) {

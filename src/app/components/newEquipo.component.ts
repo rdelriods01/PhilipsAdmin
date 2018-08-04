@@ -71,7 +71,6 @@ export class NewEquipoComponent{
     onSubmit(){
         if(this.editFlag==true){
             this._equipoService.updateEquipo(this.equipo);
-            console.log(this.equipo);
             this.dialogRef.close();
         }else{
             this.equipo.cliente=this.idC;

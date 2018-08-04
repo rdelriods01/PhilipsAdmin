@@ -17,6 +17,17 @@ export class OrdenPDFComponent{
     descAct:string='';
 
     ngOnChanges(){
+        if(!this.op.refacciones){           
+            this.op.refacciones={refa1:['','',''],
+            refa2:['','',''],
+            refa3:['','',''],
+            refa4:['','',''],
+            refa5:['','',''],
+            refa6:['','',''],
+            refa7:['','',''],
+            refa8:['','',''],
+            refa9:['','','']};
+        }
         console.log(this.op);
         
         if(this.op.actividad=='PMAI'){this.descAct='Preventivo'}

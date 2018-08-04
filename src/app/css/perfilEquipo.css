@@ -1,6 +1,6 @@
 .main {
     display: grid;
-    height: 89vh;
+    height: 92.4vh;
     grid-gap: 1em;
     grid-template-rows: 1fr 2fr;
 }
@@ -80,6 +80,9 @@
 .clienteCard h3 {
     color: darkcyan;
 }
+.clienteCard h3:hover {
+    cursor: pointer;
+}
 
 /* INFERIOR */
 
@@ -140,6 +143,7 @@
     flex: 1;
     overflow: hidden;
     word-wrap: break-word;
+    margin: auto;
 }
 .exp {
     padding: 0 1em;
@@ -162,20 +166,19 @@
 }
 .opGrid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(5, 1fr) 2fr 2fr 1fr;
+    justify-items: center;
 }
-.opDerecha {
-    padding: 1em 1em 0 4em;
-}
-.itemsOper {
-    display: flex;
-}
-.itemsOper span {
-    margin: auto;
-    padding-left: 1em;
-}
+
 .opBtns {
-    padding: 1em;
+    margin: auto;
+}
+
+::ng-deep .mat-expansion-panel-spacing {
+    border: 1px solid mediumturquoise;
+}
+
+.tablaInf {
+    margin-top: 0.5em;
     display: grid;
-    grid-gap: 1em;
 }

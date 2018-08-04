@@ -12,12 +12,12 @@
 }
 @media print {
     .all {
-        height: 90vh;
+        padding: 0 !important;
+        height: 100vh !important;
     }
-}
-@media print {
-    .all {
-        background: lightyellow;
+    .footer{
+        height: 6.7em;
+        max-height: 6.7em;
     }
 }
 
@@ -265,6 +265,7 @@
     grid-template-columns: repeat(4, 1fr);
     font-size: 0.6em;
     text-align: center;
+    padding-bottom: 10px;
 }
 .fooC1 {
     display: grid;

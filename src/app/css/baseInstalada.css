@@ -1,3 +1,6 @@
+.all{
+    height: 92.4vh;
+}
 .superior {
     text-align: center;
 }
@@ -116,6 +119,9 @@
 .client p {
     margin: auto 0;
     color: cornflowerblue;
+}
+.client p:hover{
+    cursor: pointer;
 }
 .client span {
     color: dimgray;

@@ -10,7 +10,8 @@ export const environment = {
     authDomain: "philipsadmin-a741c.firebaseapp.com",
     databaseURL: "https://philipsadmin-a741c.firebaseio.com",
     projectId: "philipsadmin-a741c",
-    storageBucket: "",
+    storageBucket: "philipsadmin-a741c.appspot.com",
     messagingSenderId: "827157343595"
   }
 };
+

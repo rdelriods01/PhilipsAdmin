@@ -5,11 +5,12 @@ import { FormsModule, Validators, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
+ 
 // Firebase ====================
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 
 // Angular Material ====================
 import { MatButtonModule, MatToolbarModule, MatIconModule, MatCardModule, 
@@ -17,7 +18,7 @@ import { MatButtonModule, MatToolbarModule, MatIconModule, MatCardModule,
           MatExpansionModule, MatPaginatorModule, MatSortModule,MatTabsModule,
           MatDatepickerModule, MatNativeDateModule, MatDialogModule,MatSelectModule,
           MatRadioModule, MatButtonToggleModule, MatSliderModule, MatAutocompleteModule,
-          MatTableModule
+          MatTableModule, MatProgressBarModule
     } from '@angular/material';
 
 // Flatpicker
@@ -102,11 +103,12 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
+    AngularFireStorageModule,
     // Material
     MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule,MatInputModule, MatFormFieldModule,
     MatSidenavModule, MatListModule, MatExpansionModule, MatPaginatorModule, MatSortModule, MatTabsModule,
     MatDatepickerModule, MatNativeDateModule,MatDialogModule, MatSelectModule, MatRadioModule,
-    MatButtonToggleModule,MatSliderModule, MatAutocompleteModule,MatTableModule
+    MatButtonToggleModule,MatSliderModule, MatAutocompleteModule,MatTableModule, MatProgressBarModule
   ],
   providers: [
     AuthService,

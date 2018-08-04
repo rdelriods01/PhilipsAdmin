@@ -1,11 +1,13 @@
-<div *ngIf='equipo && cliente && user'>
+<div class="aver" *ngIf='equipo && cliente && user'>
     <div class="main">
         <div class="superior">
             <div class="datosEquipo">
                 <mat-card class="equipoCard">
                     <p> <strong>Modelo:</strong> {{equipo.modelo}} </p>
                     <h4 [routerLink]="['/equipo',equipo.id]">Serie: {{equipo.serie}}</h4>
-                    <p> <strong>Ubicación:</strong> {{equipo.ubicacion}} </p>
+                    <p *ngIf="equipo.ubicacion"> <strong>Ubicación:</strong> {{equipo.ubicacion}} </p>
+                    <p *ngIf="equipo.sw"> <strong>SW:</strong> {{equipo.sw}} </p>
+
                 </mat-card>
             </div>
             <div class="datosSwo">
@@ -24,6 +26,8 @@
                 <mat-card class="clienteCard">
                     <h3 [routerLink]="['/cliente',cliente.id]">{{cliente.nombre}} </h3>
                     <p>{{cliente.direccion}} {{cliente.ciudad}}, {{cliente.estado}} </p>
+                    <p *ngIf="cliente.zona"> <strong>Zona:</strong> {{cliente.zona}} </p>
+                    <p *ngIf="cliente.tipo"> <strong>Tipo:</strong> {{cliente.tipo}} </p>
                 </mat-card>
             </div>
         </div>
@@ -88,26 +92,62 @@
                                     <span>Código</span>
                                     <span>Descripción</span>
                                     <span>Cantidad</span>
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
-                                    <input type="text">
+                                    <input name="refas00" [(ngModel)]="refas.refa1[0]" type="text">
+                                    <input name="refas01" [(ngModel)]="refas.refa1[1]" type="text">
+                                    <input name="refas02" [(ngModel)]="refas.refa1[2]" type="text">
+                                    <input name="refas10" [(ngModel)]="refas.refa2[0]" type="text">
+                                    <input name="refas11" [(ngModel)]="refas.refa2[1]" type="text">
+                                    <input name="refas12" [(ngModel)]="refas.refa2[2]" type="text">
+                                    <input name="refas20" [(ngModel)]="refas.refa3[0]" type="text">
+                                    <input name="refas21" [(ngModel)]="refas.refa3[1]" type="text">
+                                    <input name="refas22" [(ngModel)]="refas.refa3[2]" type="text">
+                                    <input name="refas30" [(ngModel)]="refas.refa4[0]" type="text">
+                                    <input name="refas31" [(ngModel)]="refas.refa4[1]" type="text">
+                                    <input name="refas32" [(ngModel)]="refas.refa4[2]" type="text">
+                                    <input name="refas40" [(ngModel)]="refas.refa5[0]" type="text">
+                                    <input name="refas41" [(ngModel)]="refas.refa5[1]" type="text">
+                                    <input name="refas42" [(ngModel)]="refas.refa5[2]" type="text">
+                                    <input name="refas50" [(ngModel)]="refas.refa6[0]" type="text">
+                                    <input name="refas51" [(ngModel)]="refas.refa6[1]" type="text">
+                                    <input name="refas52" [(ngModel)]="refas.refa6[2]" type="text">
+                                    <input name="refas60" [(ngModel)]="refas.refa7[0]" type="text">
+                                    <input name="refas61" [(ngModel)]="refas.refa7[1]" type="text">
+                                    <input name="refas62" [(ngModel)]="refas.refa7[2]" type="text">
+                                    <input name="refas70" [(ngModel)]="refas.refa8[0]" type="text">
+                                    <input name="refas71" [(ngModel)]="refas.refa8[1]" type="text">
+                                    <input name="refas72" [(ngModel)]="refas.refa8[2]" type="text">
+                                    <input name="refas80" [(ngModel)]="refas.refa9[0]" type="text">
+                                    <input name="refas81" [(ngModel)]="refas.refa9[1]" type="text">
+                                    <input name="refas82" [(ngModel)]="refas.refa9[2]" type="text">
                                 </div>
                             </div>
                         </form>
                         <div *ngIf="op.status!='Programado'" class="comoPDF">
-                            <button color="accent" mat-raised-button (click)="print()"> <mat-icon>print</mat-icon> </button>
+                            <div class="masDatos">
+                                <div class="printBtn">
+                                    <h3>Imprimir</h3>
+                                    <button color="accent" mat-raised-button (click)="print()"> <mat-icon>print</mat-icon> </button>
+                                </div>
+                                <div  *ngIf="op.fotoSwoURL" class="printBtn">
+                                    <h3>Ver foto</h3>
+                                    <button color="primary" mat-raised-button (click)="verFoto(op.fotoSwoURL)"> <mat-icon>wallpaper</mat-icon> </button>
+                                </div>
+                                <div *ngIf="!op.fotoSwoURL" class="subirFoto">
+                                    <div class="printBtn">
+                                        <h3>Subir foto</h3>
+                                        <input type="file" name="file" id="file" class="inputfile" (change)="subirFoto($event, op)" />
+                                        <label class="labelFile mat-raised-button mat-primary" for="file"><mat-icon>photo_camera</mat-icon></label>
+                                    </div>
+                                    <div *ngIf="showProgressBar" style="width: 94%" >
+                                        <mat-progress-bar mode="determinate" [value]="uploadPercent | async"></mat-progress-bar> <span>{{uploadPercent | async | number:'1.0-0'}}%</span>
+                                    </div>
+                                </div>
+                                <div class="administrativos">
+                                    <p><strong>Firmada:</strong>  Si/No</p>
+                                    <p><strong>Enviada:</strong>  Si/No</p>
+                                    <p><strong>Recibida:</strong> Si/No</p>
+                                </div>
+                            </div>
                             <ordenpdfC [swo]="swo" [op]="op" [cliente]="cliente" [equipo]="equipo"></ordenpdfC>
                         </div>
                     </mat-tab>

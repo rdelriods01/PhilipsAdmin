@@ -1,4 +1,4 @@
-<div>
+<div class="all" >
     <div class="superior">
         <h1>Base Instalada</h1>
     </div>
@@ -42,7 +42,7 @@
             <div [style.display]="displayDerecha" class="derecha">
                 <div class="derSuperior">
                     <div class="client">
-                        <p>{{clienteActual.nombre}}</p>
+                        <p [routerLink]="['/cliente',clienteActual.id]" >{{clienteActual.nombre}}</p>
                         <span> {{clienteActual.ciudad}}, {{clienteActual.estado}} </span>
                     </div>
                     <button mat-raised-button color="accent" (click)="agregarEquipo()">Agregar equipo</button>
@@ -71,7 +71,7 @@
                                 <div class="expan">
                                     <div class="accionesE">
                                         <button mat-raised-button [routerLink]="['/equipo',equipo.id]">Ver Equipo</button>
-                                        <button mat-raised-button (click)="editarEquipo(equipo)">Editar</button>
+                                        <button mat-raised-button (click)="editarEquipo(equipo.id)">Editar</button>
                                         <button mat-button (click)="eliminarEquipo(equipo.serie)">Eliminar<mat-icon>delete</mat-icon></button>
                                     </div>
                                 </div>

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
 import { EquipoService } from '../services/equipo.service';
+import { ClienteService } from '../services/cliente.service';
+
 import { SWOService } from '../services/swo.service';
 
 import { MatDialog } from '@angular/material';
@@ -30,6 +32,7 @@ export class LayoutComponent {
               public dialog: MatDialog,
             public _equipoService: EquipoService,
             public _swoService: SWOService,
+            public _clienteService: ClienteService
             ) 
   {
     this.auth.user.subscribe(us=>{
@@ -67,14 +70,31 @@ export class LayoutComponent {
           delete el.equipo;
           delete el.status;
         });
-        this.arrayFinder =[];
-        for(let i = 0; i<todosEquipos.length;i++){
-          this.arrayFinder.push({id: todosEquipos[i].id, data: todosEquipos[i].serie, tipo:'equipo' });
-        }
-        for (let i=0;i<todasSwos.length;i++){
-          this.arrayFinder.push({id:todasSwos[i].id, data: todasSwos[i].swo, tipo:'swo'});
-        }
-        // console.log(this.arrayFinder);
+        this._clienteService.getClientes().subscribe(cl=>{
+          let todosClientes=cl;
+          todosClientes.forEach(el=>{
+            delete el.direccion;
+            delete el.ciudad;
+            delete el.estado;
+            delete el.zona;
+            delete el.tipo;
+            delete el.departamento;
+            delete el.telefono;
+            delete el.correo;
+            delete el.contacto;
+          });
+          this.arrayFinder =[];
+          for(let i = 0; i<todosEquipos.length;i++){
+            this.arrayFinder.push({id: todosEquipos[i].id, data: todosEquipos[i].serie, tipo:'equipo' });
+          }
+          for (let i=0;i<todasSwos.length;i++){
+            this.arrayFinder.push({id:todasSwos[i].id, data: todasSwos[i].swo, tipo:'swo'});
+          }
+          for (let i=0;i<todosClientes.length;i++){
+            this.arrayFinder.push({id:todosClientes[i].id, data: todosClientes[i].nombre, tipo:'cliente'});
+          }
+          // console.log(this.arrayFinder);
+        })
       })
     })
   }

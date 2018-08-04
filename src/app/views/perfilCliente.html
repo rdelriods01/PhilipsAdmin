@@ -1,19 +1,134 @@
-<div class="superior">
-    <h1>
-        {{cliente.nombre}}
-    </h1>
-
-    <div class="datosCliente">
-        <div></div>
-        <mat-card>
-            <p> <strong>Dirección:</strong> {{cliente.direccion}} {{cliente.ciudad}}, {{cliente.estado}} </p>
-            <p> <strong>Zona: </strong> {{cliente.zona}} </p>
-            <p> <strong>Tipo: </strong> {{cliente.tipo}} </p>
-            <p *ngIf="cliente.contacto"> <strong>Contacto: </strong> {{cliente.contacto}} </p>
-            <p *ngIf="cliente.departamento"> <strong>Departamento: </strong> {{cliente.departamento}} </p>
-            <p *ngIf="cliente.telefono"> <strong>Teléfono: </strong> {{cliente.telefono}} </p>
-            <p *ngIf="cliente.correo"> <strong>Correo: </strong> {{cliente.correo}} </p>
-        </mat-card>
-        <div></div>
+<div *ngIf="cliente" >
+    <div class="main">
+        <div class="superior">
+            <h1>
+                {{cliente.nombre}}
+            </h1>
+        
+            <div class="datosCliente">
+                <mat-card>
+                    <p> <strong>Dirección:</strong> {{cliente.direccion}} {{cliente.ciudad}}, {{cliente.estado}} </p>
+                    <p> <strong>Zona: </strong> {{cliente.zona}} </p>
+                    <p> <strong>Tipo: </strong> {{cliente.tipo}} </p>
+                    <p *ngIf="cliente.contacto"> <strong>Contacto: </strong> {{cliente.contacto}} </p>
+                    <p *ngIf="cliente.departamento"> <strong>Departamento: </strong> {{cliente.departamento}} </p>
+                    <p *ngIf="cliente.telefono"> <strong>Teléfono: </strong> {{cliente.telefono}} </p>
+                    <p *ngIf="cliente.correo"> <strong>Correo: </strong> {{cliente.correo}} </p>
+                </mat-card>
+            </div>
+        </div>
+        <div class="inferior">
+            <mat-card>
+                <div class="izquierda">
+                    <div class="tablaEquipos">
+                        <div class="tablaSup">
+                            <mat-form-field class="tablaBuscar">
+                                <input matInput class="tablaInputBuscar" type="text" [(ngModel)]=equipoBuscado (keyup)="filtrarEquipos()" placeholder="Buscar equipo...">
+                            </mat-form-field>
+                        </div>
+    
+                        <mat-accordion displayMode="flat" class="mat-table">
+                            <section matSort #sortEquipos class="mat-elevation-z2 mat-header-row headerGrid">
+                                <span class="mat-header-cell" mat-sort-header="modelo">Modelo</span>
+                                <span class="mat-header-cell" mat-sort-header="serie">Serie</span>
+                            </section>
+    
+                            <mat-expansion-panel *ngFor="let equi of displayedEquipos$ | async" (destroyed)="displayDerecha='none'" (opened)="getSWOsdelEquipo(equi)">
+                                <mat-expansion-panel-header class="mat-row">
+                                    <span class="mat-cell">{{equi.modelo}}</span>
+                                    <span class="mat-cell">{{equi.serie}}</span>
+                                </mat-expansion-panel-header>
+                                <div class="expan">
+                                    <div *ngIf="user" class="acciones">
+                                        <button mat-raised-button (click)="editarEquipo(equi)">Editar</button>
+                                        <!-- <button *ngIf="user.role!='fse'" mat-button (click)="eliminarCliente(cli.id)">Eliminar<mat-icon>delete</mat-icon></button> -->
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+    
+                        <div class="tablaInf">
+                            <mat-paginator #paginator [length]="totalRowsEquipos$ | async" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                            <button mat-raised-button (click)="agregarEquipo()">Agregar equipo nuevo</button>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+            <!-- Derecha -->
+            <mat-card>
+                <div [style.display]="displayDerecha" class="derecha">
+                    <div class="derSuperior">
+                        <div class="equip">
+                            <p [routerLink]="['/equipo',equipoActual.id]" >{{equipoActual.modelo}}, {{equipoActual.serie}}</p>
+                            <span> {{equipoActual.tipo}} </span>
+                        </div>
+                        <!-- <button mat-raised-button color="accent" (click)="agregarEquipo()">Agregar SWO</button> -->
+                    </div>
+                    <div class="derInferior">
+                        <div class="tablaSWOs">
+                            <div class="tablaSupSWO">
+                                <mat-form-field class="tablaBuscarSWO">
+                                    <input matInput class="tablaInputBuscarSWO" type="text" [(ngModel)]=SWOBuscado (keyup)="filtrarSWOs()" placeholder="Filtrar o buscar SWO...">
+                                </mat-form-field>
+                            </div>
+    
+                            <mat-accordion displayMode="flat" class="mat-table">
+                                <section matSort #sortSWOs="matSort" class="mat-elevation-z2 mat-header-row headerGrid6">
+                                    <span class="mat-header-cell" mat-sort-header="swo">SWO</span>
+                                    <span class="mat-header-cell" mat-sort-header="fechainicio">Fecha inicial</span>
+                                    <span class="mat-header-cell" mat-sort-header="fechaop">Ultima OP</span>
+                                    <span class="mat-header-cell" mat-sort-header="actividad">Actividad</span>
+                                    <span class="mat-header-cell" mat-sort-header="falla">Falla</span>
+                                    <span class="mat-header-cell" mat-sort-header="status">Status</span>
+                                </section>
+    
+                                <mat-expansion-panel *ngFor="let swo of displayedSWOs$ | async"  (opened)="getOPsdelSWO(swo.id)" >
+                                    <mat-expansion-panel-header class="mat-row">
+                                        <span class="mat-cell">{{swo.swo}}</span>
+                                        <span class="mat-cell">{{swo.fechainicio | date: 'dd/MM/yyyy'}}</span>
+                                        <span class="mat-cell">{{swo.fechaop | date: 'dd/MM/yyyy'}}</span>
+                                        <span class="mat-cell">{{swo.actividad}}</span>
+                                        <span class="mat-cell">{{swo.falla}}</span>
+                                        <span class="mat-cell">{{swo.status}}</span>
+                                    </mat-expansion-panel-header>
+                                    <div class="expan">
+                                        <div>
+                                            <mat-tab-group>
+                                                <mat-tab *ngFor="let operacion of ops" label="Op {{operacion.op}}">
+                                                    <div class="opGrid">
+                                                        <h3>Fecha programado:</h3>
+                                                        <h3>Status:</h3>
+                                                        <h3>Fecha realizado:</h3>
+                                                        <h3>FSE</h3>
+                                                        <h3>Actividad:</h3>
+                                                        <h3>Resultados:</h3>
+                                                        <h3>Observaciones:</h3>
+                                                        <h3>Acciones</h3>
+                                                        <span class="mat-cell">{{operacion.fechaprog | date: 'dd/MM/yyyy'}}</span>
+                                                        <span class="mat-cell">{{operacion.status}}</span>
+                                                        <span class="mat-cell">{{operacion.fechafin | date: 'dd/MM/yyyy'}}</span>
+                                                        <span class="mat-cell">{{operacion.fse }}</span>
+                                                        <span class="mat-cell">{{operacion.actividad }}</span>
+                                                        <span class="mat-cell">{{operacion.resultados }}</span>
+                                                        <span class="mat-cell">{{operacion.observaciones }}</span>
+                                                        <div class="opBtns">
+                                                            <button mat-raised-button [routerLink]="['/swo', swo.id]">Ver</button>
+                                                        </div>
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+    
+                            <div class="tablaInfSWO">
+                                <mat-paginator #paginatorSWO [length]="totalRowsSWOs$ | async" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
     </div>
 </div>

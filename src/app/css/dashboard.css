@@ -9,8 +9,8 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 2em;
-    grid-template-areas: "pasado presente futuro";
-    height: 89vh;
+    grid-template-areas: "pasado presente futuro" "recientes recientes recientes";
+    height: 92.4vh;
     min-height: 30vh;
     align-items: center;
 }
@@ -20,7 +20,7 @@ mat-card {
 @media only screen and (max-width: 769px) {
     .main {
         grid-template-columns: 1fr;
-        grid-template-areas: "presente" "futuro" "pasado"
+        grid-template-areas: "presente" "futuro" "pasado" "recientes"
     }
     .pasado {
         grid-area: pasado;
@@ -34,6 +34,10 @@ mat-card {
         grid-area: futuro;
         padding: 0 1em;
     }
+    .recientes{
+        grid-area: recientes;
+        padding: 0 1em;
+    }
 }
 .pasado {
     grid-area: pasado;
@@ -45,6 +49,10 @@ mat-card {
 }
 .futuro {
     grid-area: futuro;
+    padding: 0 1em;
+}
+.recientes{
+    grid-area: recientes;
     padding: 0 1em;
 }
 
@@ -108,7 +116,12 @@ mat-card {
 .swoItemPend:hover {
     background-color: #de8491;
 }
-
+.swoItemReciente {
+    background-color: lightsteelblue;
+}
+.swoItemReciente:hover{
+    background-color: #93a3b9;
+}
 /* Header de cada SWO Item */
 
 .swoHoy {
