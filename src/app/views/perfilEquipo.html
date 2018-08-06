@@ -26,16 +26,16 @@
         </div>
         <div class="inferior">
             <mat-card class="historialSWOs">
-                <div class="tablaSWOs">
-                    <div class="tablaSupS">
-                        <mat-form-field class="tablaBuscarS">
-                            <input matInput class="tablaInputBuscarS" type="text" [(ngModel)]=swoBuscado (keyup)="filtrarSWOs()" placeholder="Filtrar o buscar SWO...">
+                <div class="tabla">
+                    <div class="tablaSup">
+                        <mat-form-field class="tablaBuscar">
+                            <input matInput class="tablaInputBuscar" type="text" [(ngModel)]=swoBuscado (keyup)="filtrarSWOs()" placeholder="Filtrar o buscar SWO...">
                         </mat-form-field>
                         <button mat-raised-button class="btnNewSwo" color="accent" (click)="agregarSWO()">Agregar SWO</button>
                     </div>
 
                     <mat-accordion class="mat-table">
-                        <section matSort class="mat-elevation-z2 mat-header-row headerGrid6">
+                        <section matSort class="mat-elevation-z2 mat-header-row headerGrid">
                             <span class="mat-header-cell" mat-sort-header="swo">SWO</span>
                             <span class="mat-header-cell" mat-sort-header="fechainicio">Fecha Inicio</span>
                             <span class="mat-header-cell" mat-sort-header="status">Status</span>
@@ -45,7 +45,7 @@
                         </section>
 
                         <mat-expansion-panel *ngFor="let orden of displayedSWO$ | async" (opened)="leerOps(orden.id)">
-                            <mat-expansion-panel-header class="mat-row exp" [ngStyle]="{'background-color':getColor(orden.status)}">
+                            <mat-expansion-panel-header class="mat-row" [ngStyle]="{'background-color':getColor(orden.status)}">
                                 <span class="mat-cell">{{orden.swo}}</span>
                                 <span class="mat-cell">{{orden.fechainicio | date: 'dd/MM/yyyy'}}</span>
                                 <span class="mat-cell">{{orden.status}}</span>

@@ -124,7 +124,7 @@
                         </form>
                         <div *ngIf="op.status!='Programado'" class="comoPDF">
                             <div class="masDatos">
-                                <div class="printBtn">
+                                <div *ngIf="op.fse==user.displayName" class="printBtn">
                                     <h3>Imprimir</h3>
                                     <button color="accent" mat-raised-button (click)="print()"> <mat-icon>print</mat-icon> </button>
                                 </div>
@@ -132,7 +132,7 @@
                                     <h3>Ver foto</h3>
                                     <button color="primary" mat-raised-button (click)="verFoto(op.fotoSwoURL)"> <mat-icon>wallpaper</mat-icon> </button>
                                 </div>
-                                <div *ngIf="!op.fotoSwoURL" class="subirFoto">
+                                <div *ngIf="!op.fotoSwoURL && op.fse==user.displayName" class="subirFoto">
                                     <div class="printBtn">
                                         <h3>Subir foto</h3>
                                         <input type="file" name="file" id="file" class="inputfile" (change)="subirFoto($event, op)" />
@@ -143,9 +143,47 @@
                                     </div>
                                 </div>
                                 <div class="administrativos">
-                                    <p><strong>Firmada:</strong>  Si/No</p>
-                                    <p><strong>Enviada:</strong>  Si/No</p>
-                                    <p><strong>Recibida:</strong> Si/No</p>
+                                    <div class="adminItm" >
+                                        <div *ngIf="!op.firmada" class="swoFirmada">
+                                            <p>Firmada </p>
+                                            <mat-icon *ngIf="op.fse!=user.displayName">close</mat-icon>
+                                            <mat-slide-toggle *ngIf="op.fse==user.displayName" class="slide" labelPosition="before" color="primary" [(ngModel)]="firmada"></mat-slide-toggle>
+                                            <button *ngIf="firmada" mat-raised-button (click)="firmarOP(op)"> Guardar </button>
+                                        </div>
+                                        <div *ngIf="op.firmada" class="swoFirmada">
+                                            <p>Firmada </p>
+                                            <mat-icon>done</mat-icon>
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                    <div class="adminItm" >
+                                        <div *ngIf="!op.enviada" class="swoNoEnviada ">
+                                            <p class="nE1" >Enviada</p>
+                                            <mat-icon *ngIf="op.fse!=user.displayName">close</mat-icon>
+                                            <mat-slide-toggle *ngIf="op.fse==user.displayName" class="slide nE2" labelPosition="before" color="primary" [(ngModel)]="enviada"></mat-slide-toggle>
+                                            <div class="nE3"></div>
+                                            <p class="nE4" *ngIf="enviada" >No. de Guía:</p>
+                                            <button class="nE5" *ngIf="guia && enviada" mat-raised-button (click)="enviarOP(op)"> Guardar </button>
+                                            <input class="nE6" *ngIf="enviada" type="text" [(ngModel)]="guia" >
+                                        </div>
+                                        <div *ngIf="op.enviada" class="swoEnviada">
+                                            <p>Enviada </p> 
+                                            <mat-icon>done</mat-icon>
+                                            <p class="guia" > Guía: {{op.guia}} </p>
+                                        </div>
+                                    </div>
+                                    <div class="adminItm" >
+                                        <div *ngIf="!op.recibida" class="swoRecibida">
+                                            <p>Recibida</p>
+                                            <mat-icon>close</mat-icon>
+                                            <div></div>
+                                        </div>
+                                        <div *ngIf="op.recibida" class="swoRecibida">
+                                            <p>Recibida</p> 
+                                            <mat-icon>done</mat-icon>
+                                            <span> {{op.recibio}} el {{op.fecharecibida | date: 'dd/MM/yyyy'}} </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <ordenpdfC [swo]="swo" [op]="op" [cliente]="cliente" [equipo]="equipo"></ordenpdfC>

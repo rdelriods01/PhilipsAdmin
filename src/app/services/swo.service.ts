@@ -6,7 +6,7 @@ import { ISwo, IOperacion } from '../models/interfaces';
 import { ClienteService } from '../services/cliente.service';
 import { EquipoService } from '../services/equipo.service';
 
-import { Observable } from '../../../node_modules/rxjs';
+import { LayoutComponent } from "../components/layout.component";
 
 @Injectable()
 
@@ -16,17 +16,54 @@ export class SWOService{
 
     constructor( public afs: AngularFirestore,
                 public _equipoService: EquipoService,
-                public _clienteService: ClienteService){
+                public _clienteService: ClienteService,
+                // public _layoutC: LayoutComponent
+            ){
     } 
 
-    // Agregar Nueva SWO
+    // Agregar Nueva SWO y primer OP (10)
     saveSWO (swo:ISwo, op:IOperacion){
         swo.id=this.afs.createId();
         op.swoid=swo.id;
+        op.firmada=false;
+        op.enviada=false;
+        op.recibida=false;
         this.afs.collection('swos').doc(swo.id).set(swo);
         this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).set(op);
     }
-    // Leer todos los swos
+    // Nueva OP en la SWO
+    saveOP (swo:ISwo, op:IOperacion){
+        op.id=this.afs.createId();
+        op.swoid=swo.id;
+        op.firmada=false;
+        op.enviada=false;
+        op.recibida=false;
+        this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).set(op);
+    }
+    // Actualizar SWO
+    updateSWO(swo:ISwo){
+        this.afs.collection('swos').doc(swo.id).update(swo);
+    }
+    // Actualizar OP
+    updateOP(swo:ISwo, op:IOperacion){
+        this.afs.collection('swos').doc(swo.id).update(swo);
+        this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).update(op);
+    }
+    // Eliminar SWO
+    deleteSWO(idS){
+        this.afs.collection('swos').doc(idS).delete();
+    }
+    // Eliminar OP
+    deleteOP(swo,op){
+        if(op.op=='10'){
+            this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).delete();
+            this.deleteSWO(swo.id);
+        }else{
+            this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).delete();
+        }
+    }
+    // =========================================SWO QUERYS=====================================
+    // Leer todas los swos (TODO: filtrar por la zona)
     getSWOs() {
         return this.afs.collection('swos').snapshotChanges()
         .map(arr => {
@@ -62,6 +99,7 @@ export class SWOService{
             })
         })
     }
+    // Leer swos de un fse
     getSWOsFSE(inge){
         return this.afs.collection('swos', ref => ref.where('fse', '==', inge)).snapshotChanges()
         .map( arr => {
@@ -71,73 +109,53 @@ export class SWOService{
             })
         })
     }
+    // Leer una SWO en específico   
+    getUnaSWO(idS){
+        return this.afs.collection('swos').doc(idS).valueChanges();
+    }
 
-    getOPsFSE(inge){
-        let ops=[];
-        this.afs.collection('swos').snapshotChanges()
-        .subscribe(arr=>{    
-            arr.map(a=>{
-                let swo= a.payload.doc.data(); 
-                this.afs.collection('swos').doc(swo.id).collection('ops', ref => ref.where('fse','==', inge)).snapshotChanges()
-                .subscribe(arr=>{ 
-                    arr.map(b=>{
-                        let op= b.payload.doc.data();
-                        this.getUnaSWO(op.swoid).subscribe(swo=>{
-                            op.falla=swo['falla'];
-                            op.swo=swo['swo']; 
-                            op.equipoid=swo['equipo'];
-                            this._equipoService.getUnEquipo(op.equipoid).subscribe(eq=>{
-                                op.equipoSerie=eq['serie'];
-                                op.equipoModelo=eq['modelo'];
-                            })
-                            op.clienteid=swo['cliente'];
-                            this._clienteService.getUnCliente(op.clienteid).subscribe(cl=>{
-                                op.cliente=cl['nombre'];
-                            })
-                            ops.push(op);
-                        })
-                    })
-                })
+    // ==================================OP QUERYS==========================================
+    // Leer las OPs de un FSE
+    getOPsFSE(swo,inge){
+        return this.afs.collection('swos').doc(swo.id).collection('ops', ref => ref.where('fse', '==', inge)).snapshotChanges()
+        .map(arr=>{
+            return arr.map(b=>{
+                let op=b.payload.doc.data();
+                // this.updateOP(swo,op)
+                op.falla=swo.falla;
+                op.swo=swo.swo;
+                op.equipoid=swo.equipo;
+                
+                // this._equipoService.getUnEquipo(op.equipoid).subscribe(eq=>{
+                //     op.equipoSerie=eq['serie'];
+                //     op.equipoModelo=eq['modelo'];
+                // })
+
+                op.clienteid=swo.cliente;
+
+                // this._clienteService.getUnCliente(op.clienteid).subscribe(cl=>{
+                //     op.cliente=cl['nombre'];
+                // })
+                return op;
             })
         })
-
-        return ops;
+    }
+    getOPsToSend(swo){
+        return this.afs.collection('swos').doc(swo.id).collection('ops', ref=> ref.where('firmada','==',true).where('enviada','==',false) ).snapshotChanges()
+        .map(arr=>{
+            return arr.map(b=>{
+                let op=b.payload.doc.data();
+                op.swo=swo.swo;
+                op.equipoid=swo.equipo;
+                op.clienteid=swo.cliente;
+                // console.log(op);
+                return op;
+            })
+        })
     }
 
 
-    // getOPsFSE(inge){
-    //     let ops=[];
-    //     this.afs.collection('swos').snapshotChanges()
-    //     .subscribe(arr=>{    
-    //         arr.map(a=>{
-    //             let swo= a.payload.doc.data(); 
-    //             this.afs.collection('swos').doc(swo.id).collection('ops', ref => ref.where('fse','==', inge)).snapshotChanges()
-    //             .subscribe(arr=>{ 
-    //                 arr.map(b=>{
-    //                     let op= b.payload.doc.data();
-    //                     this.getUnaSWO(op.swoid).subscribe(swo=>{
-    //                         op.falla=swo['falla'];
-    //                         op.swo=swo['swo']; 
-    //                         op.equipoid=swo['equipo'];
-    //                         this._equipoService.getUnEquipo(op.equipoid).subscribe(eq=>{
-    //                             op.equipoSerie=eq['serie'];
-    //                             op.equipoModelo=eq['modelo'];
-    //                         })
-    //                         op.clienteid=swo['cliente'];
-    //                         this._clienteService.getUnCliente(op.clienteid).subscribe(cl=>{
-    //                             op.cliente=cl['nombre'];
-    //                         })
-    //                         ops.push(op);
-    //                     })
-    //                 })
-    //             })
-    //         })
-    //     })
-
-    //     return ops;
-    // }
-        
-    // Leer las OPs de una swo
+    // Leer las OPs de una SWO
     getOPs(idSWO){
         return this.afs.collection('swos').doc(idSWO).collection('ops').snapshotChanges()
         .map(arr => {
@@ -147,44 +165,21 @@ export class SWOService{
         });
         })
         .map(res=>{
-            // res, ya es un array de objetos
-            console.log('Lista de ops OK');
             return res;
         })
     }
-    // Nueva OP
-    saveOP(swo:ISwo, op:IOperacion){
-        op.swoid=swo.id;
-        this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).set(op);
-    }
+    
     // Obtener los datos de una OP en especifico de una SWO
-    getUnaOP(swo:ISwo, op:IOperacion){
-        this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).valueChanges();
+    // getUnaOP(swo:ISwo, op:IOperacion){
+    //     this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).valueChanges();
+    // }
+    getOneOP(swoId, op){
+        return this.afs.collection('swos').doc(swoId).collection('ops').doc(op).valueChanges();
     }
-    // Actualizar OP
-    updateOP(swo:ISwo, op:IOperacion){
-        this.afs.collection('swos').doc(swo.id).update(swo);
-        this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).update(op);
+    updateJustOP(swoId,op){
+        this.afs.collection('swos').doc(swoId).collection('ops').doc(op.op).update(op);
     }
-    // Eliminar OP
-    deleteOP(swo,op){
-        if(op.op=='10'){
-            this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).delete();
-            this.deleteSWO(swo.id);
-        }else{
-            this.afs.collection('swos').doc(swo.id).collection('ops').doc(op.op).delete();
-        }
-    }
-    // Leer una SWO en específico   
-    getUnaSWO(idS){
-        return this.afs.collection('swos').doc(idS).valueChanges();
-    }
-    // Actualizar SWO
-    updateSWO(swo:ISwo){
-        this.afs.collection('swos').doc(swo.id).update(swo);
-    }
-    // Eliminar SWO
-    deleteSWO(idS){
-        this.afs.collection('swos').doc(idS).delete();
-    }
+    
+    
+    
 }

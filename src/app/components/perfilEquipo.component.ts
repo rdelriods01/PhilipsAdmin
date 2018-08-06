@@ -48,13 +48,10 @@ export class PerfilEquipoComponent {
             let id = params['id'];
             this._equipoService.getUnEquipo(id).subscribe(eq =>{
                 this.equipo=eq;
-                console.log(this.equipo);
                 this._clienteService.getUnCliente(this.equipo.cliente).subscribe(cl=>{
                     this.cliente=cl;
-                    console.log(this.cliente);
                     this._swoService.getSWOsEquipo(id).subscribe(or=>{
                         this.swos=or;
-                        console.log(this.swos);
                         this.datosTablaSWOs(this.swos);
                     })
                 })
@@ -73,7 +70,6 @@ export class PerfilEquipoComponent {
     leerOps(id){
         this._swoService.getOPs(id).subscribe(ops=>{
             this.ops=ops;
-            console.log(ops);
         })
     }
     agregarSWO(){

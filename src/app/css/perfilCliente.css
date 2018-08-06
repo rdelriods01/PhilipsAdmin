@@ -1,32 +1,40 @@
 .superior {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    text-align-last: center;
+    text-align: center;
 }
-
+.superior h1{
+    color: #0079c2;
+}
 @media only screen and (max-width: 769px) {
-    .superior {
-        grid-template-columns: 1fr;
+    .superior, .inferior {
+        grid-template-columns: 1fr !important;
+        grid-gap: 1em;
+    }
+    .mat-table{
+        width: 100vw;
+        min-width: 100%;
     }
 }
 .main{
     height: 92.4vh;
 }
-.datosCliente {
+.datosCliente { 
     margin: 1em;
 }
 mat-card{
     border-radius: 10px;
 }
-
 /* INFERIOR */
 .inferior {
     display: grid;
     grid-template-columns: 2fr 6fr;
+    margin-bottom: 2em;
 }
+
 /* IZQUIERDA */
 
-.tablaEquipos {
+.tabla {
     zoom: 80%;
 }
 .tablaSup {
@@ -35,6 +43,7 @@ mat-card{
     background-color: white;
     margin-bottom: 0.5em;
 }
+
 .tablaBuscar {
     background-color: white;
     font-size: 0.8em;
@@ -54,8 +63,10 @@ mat-card{
     border-bottom: none;
 }
 .mat-table {
-    display: block;
+    display: grid;
+    overflow-x: auto;
     text-align: center;
+    padding: 4px;
 }
 .mat-header-row {
     min-height: 56px;
@@ -63,7 +74,7 @@ mat-card{
 .mat-row {
     min-height: 48px;
 }
-.mat-sort-header-container {
+::ng-deep .mat-sort-header-container {
     justify-content: center;
 }
 .mat-row, .mat-header-row {
@@ -74,9 +85,8 @@ mat-card{
     padding: 0 24px;
     box-sizing: border-box;
 }
-.headerGrid {
+.headerGrid , .headerGrid6{
     display: grid !important;
-    grid-template-columns: 1fr 1fr;
     text-align: center;
     grid-auto-flow: column;
     padding: 0 1em !important;
@@ -84,12 +94,11 @@ mat-card{
 .headerGrid span, .headerGrid6 span {
     justify-self: center;
 }
+.headerGrid{
+    grid-template-columns: 1fr 1fr;
+}
 .headerGrid6 {
-    display: grid !important;
     grid-template-columns: repeat(6, 1fr);
-    text-align: center;
-    grid-auto-flow: column;
-    padding: 0 1em !important;
 }
 .mat-row::after, .mat-header-row::after {
     display: inline-block;
@@ -99,8 +108,10 @@ mat-card{
 .mat-cell, .mat-header-cell {
     flex: 1;
     overflow: hidden;
+    min-width: 7em;
     word-wrap: break-word;
     text-align: center;
+    margin: auto;
 }
 .expan {
     background: #f0f0f0;
@@ -115,9 +126,7 @@ mat-card{
     margin-top: 0.5em;
     display: grid;
 }
-
 /* DERECHA */
-
 .derSuperior {
     display: flex;
     justify-content: space-between;
@@ -139,61 +148,10 @@ mat-card{
     color: dimgray;
     font-size: 0.8em;
 }
-.tablaSWOs {
-    zoom: 80%;
-}
-.tablaSupSWO {
-    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-    display: flex;
-    background-color: white;
-    margin-bottom: 0.5em;
-}
-.tablaBuscarSWO {
-    background-color: white;
-    font-size: 0.8em;
-    flex: 1 1 auto;
-    margin: auto;
-    padding: 0.5em 2em 0 2em;
-}
-.tablaInputBuscarSWO {
-    zoom: 100%;
-}
-.mat-accordion .mat-header-row {
-    padding-left: 1.5rem;
-    padding-right: 2rem;
-    border-bottom: none;
-}
-.mat-expansion-panel-header.mat-row {
-    border-bottom: none;
-}
-.mat-table {
-    display: block;
-}
-.mat-header-row {
-    min-height: 56px;
-}
-.mat-row {
-    min-height: 48px;
-}
-.mat-row, .mat-header-row {
-    display: flex;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    align-items: center;
-    padding: 0 24px;
-    box-sizing: border-box;
-}
-.mat-row::after, .mat-header-row::after {
-    display: inline-block;
-    min-height: inherit;
-    content: '';
-}
-.mat-cell, .mat-header-cell {
-    flex: 1;
-    overflow: hidden;
-    word-wrap: break-word;
-    margin: auto;
-}
+
+
+
+
 
 .opGrid {
     display: grid;
@@ -208,10 +166,7 @@ mat-card{
 ::ng-deep .mat-expansion-panel-spacing {
     border: 1px solid mediumturquoise;
 }
-.tablaInfSWO {
-    margin-top: 0.5em;
-    display: grid;
-}
+
 
 
 

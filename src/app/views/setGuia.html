@@ -1,0 +1,43 @@
+<mat-card>
+    <div class="superior" >
+        <p>Escribir guía y seleccionar a que SWOs se les asignará la misma</p>
+        <div class="supDer" >
+            <button class="mainBtn" *ngIf="!showProceedDetails" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails">Seleccionar</button>
+            <div *ngIf="showProceedDetails" class="backSaveBtns">
+                <p> <strong> Numero de guía:</strong> <input type="text" [(ngModel)]="guia"> </p>
+                <button color="accent" mat-raised-button (click)="showProceedDetails=!showProceedDetails; back()"> <mat-icon>arrow_back</mat-icon> </button>
+                <button class="mainBtn" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails; saveProceed()" [disabled]="guia=='' || saveDisabled" >Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr class="rowHeader">
+                <th>Fecha</th>
+                <th>SWO</th>
+                <th>OP</th>
+                <th>Cliente</th>
+                <th>Equipo</th>
+                <th>Serie</th>
+                <th>FSE</th>
+                <th>Status</th>
+                <th *ngIf="showProceedDetails" > <mat-icon>check_box</mat-icon> </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let op of ops" class="rowData" >
+                <td > {{op.fechafin | date:'dd/MM/yyyy' }}</td>
+                <td class="hoverElement" [routerLink]="['/swo',op.swoid]" > {{op.swo}} </td>
+                <td > {{op.op}}</td>
+                <td class="hoverElement" [routerLink]="['/cliente',op.clienteid]"> {{op.cliente}}  </td>
+                <td class="hoverElement" [routerLink]="['/equipo',op.equipoid]"> {{op.equipoModelo}} </td>
+                <td class="hoverElement" [routerLink]="['/equipo',op.equipoid]"> {{op.equipoSerie}} </td>
+                <td > {{op.fse}} </td>
+                <td > {{op.status}}</td>
+                <td  *ngIf="showProceedDetails"> <mat-checkbox (change)="setUnset($event, op)" ></mat-checkbox> </td>
+            </tr> 
+            <p> Invisible</p>
+        </tbody>
+    </table>
+</mat-card>

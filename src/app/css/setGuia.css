@@ -1,0 +1,50 @@
+.superior{
+    display: grid;
+    margin: 1em 0;
+    grid-template-columns: 1fr 1fr;
+}
+.supDer{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.backSaveBtns{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    height: 51px;
+}
+.mainBtn{
+    width: 10em;
+}
+table{
+    width: 100%;
+    font-size: 0.8em;
+}
+.rowHeader, .rowData{
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    text-align: center;
+    align-items: center;
+}
+td, th{
+    padding: 0.5em 0
+}
+table{
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+thead tr{
+    border-bottom: 1px solid #0000001f;
+    color: #0000008a;
+    min-height: 56px;
+}
+tbody tr{
+    border-bottom: 1px solid #0000001f;
+}
+.hoverElement:hover {
+    color: darkcyan;
+    font-weight: bold;
+    cursor: pointer;
+}
+tbody p{
+    color: white;
+}

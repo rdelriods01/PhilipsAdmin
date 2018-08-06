@@ -3,6 +3,7 @@ export interface IUser {
     email: string;
     photoURL?: string;
     displayName?: string;
+    password?:string;
     role:string;
 }
 
@@ -64,10 +65,15 @@ export interface IOperacion{
     fse:string;
     refacciones?:any;
     firmada?:Boolean;
-    nombrefirma?:string;
     enviada?:Boolean;
     guia?:string;
     recibida?:Boolean;
     recibio?:string;
+    fecharecibida?:Date;
     fotoSwoUrl?:string;
 }
+
+
+
+// Si es FSE buscar en sus SWOs y OPS las que tienen firmadas == true y enviadas == false
+// Si es Karina buscar de todas las SWOs y OPS las que tienen enviadas == true y recibidas == false

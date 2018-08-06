@@ -82,7 +82,7 @@ mat-card {
 .swoItem ::ng-deep span.mat-content {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas: "swoHoy cliente cliente" " swoHoy modelo serie";
+    grid-template-areas: "numSWO cliente cliente" " numSWO modelo serie";
 }
 .swoItemHeader {
     height: auto !important;
@@ -124,9 +124,9 @@ mat-card {
 }
 /* Header de cada SWO Item */
 
-.swoHoy {
-    grid-area: swoHoy;
-    color: #0071c2;
+.numSWO {
+    grid-area: numSWO;
+    color: #0079c2;
     padding: 0 10px 0 0;
     list-style: none;
     margin: auto !important;

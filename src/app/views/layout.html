@@ -31,7 +31,7 @@
     </mat-toolbar>
 
     <mat-sidenav-container class="sideb" (click)="hideResBus()">
-        <mat-sidenav class="noprint" #snav mode="side" opened="true">
+        <mat-sidenav class="noprint" #snav mode="side" [opened]="showSideNav">
             <ul class="sb-list-items">
                 <li>
                     <a [routerLink]="['/']">
@@ -54,7 +54,7 @@
                     <a [routerLink]="['/users']">
                         <mat-icon class="icon">supervisor_account</mat-icon>Usuarios</a>
                 </li>
-                <li *ngIf="user.role!='fse'">
+                <li *ngIf="user.role=='superuser'">
                     <a [routerLink]="['/config']">
                         <mat-icon class="icon">settings</mat-icon>Configuración</a>
                 </li>

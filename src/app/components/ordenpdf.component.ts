@@ -9,6 +9,8 @@ import { ISwo, ICliente, IEquipo, IOperacion } from '../models/interfaces';
 })
 export class OrdenPDFComponent{
 
+    refacciones;
+
     @Input() swo: ISwo;
     @Input() op:IOperacion;
     @Input() cliente: ICliente;
@@ -18,7 +20,7 @@ export class OrdenPDFComponent{
 
     ngOnChanges(){
         if(!this.op.refacciones){           
-            this.op.refacciones={refa1:['','',''],
+            this.refacciones={refa1:['','',''],
             refa2:['','',''],
             refa3:['','',''],
             refa4:['','',''],
@@ -27,9 +29,10 @@ export class OrdenPDFComponent{
             refa7:['','',''],
             refa8:['','',''],
             refa9:['','','']};
+        }else{
+            this.refacciones=this.op.refacciones;
         }
-        console.log(this.op);
-        
+       
         if(this.op.actividad=='PMAI'){this.descAct='Preventivo'}
         if(this.op.actividad=='CMAI'){this.descAct='Correctivo'}
         if(this.op.actividad=='DIAG'){this.descAct='Diagnóstico'}

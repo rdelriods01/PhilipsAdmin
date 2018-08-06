@@ -15,6 +15,8 @@ import { ClienteService } from '../services/cliente.service';
 import { EquipoService } from '../services/equipo.service';
 import { SWOService } from '../services/swo.service';
 
+import { NewEquipoComponent } from '../components/newEquipo.component';
+
 @Component({
   selector: 'perfilClienteC',
   templateUrl: '../views/perfilCliente.html',
@@ -47,6 +49,7 @@ export class PerfilClienteComponent {
     displayDerecha='none';
 
     constructor(public _route:ActivatedRoute, 
+                public dialog: MatDialog,
                 public _equipoService:EquipoService,
                 public _clienteService:ClienteService,
                 public _swoService:SWOService,
@@ -104,16 +107,27 @@ export class PerfilClienteComponent {
             delete el.cliente;
             delete el.equipo;
             delete el.fechafin;
-            delete el.fechaop;
         });
         this.listaDeSWOsFiltrados=this.filterAllProperties(newSwos, this.swoBuscado.toLowerCase());
         this.datosTablaSWOs(this.listaDeSWOsFiltrados);
     }
-
     getOPsdelSWO(id){
         this._swoService.getOPs(id).subscribe(ops=>{
             this.ops=ops;
         })
+    }
+// Funcion para Agregar y Editar Equipo
+    agregarEquipo(){
+        let dialogNewEquipos= this.dialog.open(NewEquipoComponent);
+        dialogNewEquipos.componentInstance.idC=this.cliente.id;
+    }
+    editarEquipo(eq){
+        let dialogEditEquipos= this.dialog.open(NewEquipoComponent);
+        dialogEditEquipos.componentInstance.editFlag=true;
+        dialogEditEquipos.componentInstance.equipo=eq;
+        if(eq.accesorios){
+          dialogEditEquipos.componentInstance.accesoriosBoolean=true;
+        }
     }
 
     // FUNCIONES UTILES

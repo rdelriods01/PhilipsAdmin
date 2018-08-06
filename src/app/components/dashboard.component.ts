@@ -5,6 +5,8 @@ import { ClienteService } from '../services/cliente.service';
 import { EquipoService } from '../services/equipo.service';
 import { SWOService } from '../services/swo.service';
 
+import { LayoutComponent } from "../components/layout.component";
+
 @Component({
   selector: 'dashboardC',
   templateUrl: '../views/dashboard.html',
@@ -18,26 +20,24 @@ export class DashboardComponent {
   arrPendientes:any[]=[];
   arrRecientes:any[]=[];
 
+  equipos;
+  clientes;
+
   constructor(  public _swoService: SWOService,
                 public _equipoService:EquipoService,
                 public _clienteService:ClienteService,
-                public auth: AuthService
+                public auth: AuthService,
+                public _layoutC: LayoutComponent
               )
   {  
+    
     let hoy = new Date(this.getHoy());
     let mañana = new Date(this.getMañana());
     let antiAntier= new Date(this.get3dias());
     let hoyTS= hoy.getTime();
     let mañanaTS=mañana.getTime();
     let antiAntierTS=antiAntier.getTime();
-    console.log(hoyTS);
-    console.log(mañanaTS);
-    console.log(antiAntier);
-    console.log(antiAntierTS);
-       
-
     this.today=hoy;    
-    
     this.auth.user.subscribe(us=>{
       this.user=us
       // Si es FSE debe de leer solo sus SWO  
@@ -54,16 +54,11 @@ export class DashboardComponent {
                 if(fSWO<mañanaTS){
                   if(sx.status=='Programado' || sx.status=='Concluido'){
                     this.arrToday.push(sx)
-                    console.log('nuevo hoy');
-                    
                   }else{
                     this.arrPendientes.push(sx)
-                    console.log('nuevo pendiente');
-                    
                   }
                 }else{
                   this.arrTomorrow.push(sx);
-                  console.log('nuevo tomorrow');
                 }
               }else{
                 if(sx.status!='Concluido'){
@@ -73,10 +68,6 @@ export class DashboardComponent {
                     this.arrRecientes.push(sx);
                   }
                 }
-                // sacar el TimeStamp de hace 3 dias
-                // if(sx.status=='Concluido'){
-                //   this.arrRecientes.push(sx);
-                // }
               }
             })
             // Aqui ya tengo un array con las ordenes correspondientes, falta completar el cliente, modelo y serie
@@ -122,18 +113,38 @@ export class DashboardComponent {
         }
       }
     });
+
   }
 
   completarArray(arr){
+    this.equipos=this._layoutC.equipos;
+    this.clientes=this._layoutC.clientes;
+    // for(let k=0;k<this.equipos.length;k++){
+    //   if(swo.equipo==this.equipos[k].id){
+    //       swo.serie=this.equipos[k].serie;
+    //       swo.modelo=this.equipos[k].modelo;
+    //   }
+    // }
     if(arr.length>0){
-      arr.forEach(elem=>{
-        this._equipoService.getUnEquipo(elem.equipo).subscribe(equi=>{
-          elem.modelo=equi['modelo'];
-          elem.serie=equi['serie'];
-        })
-        this._clienteService.getUnCliente(elem.cliente).subscribe(clien=>{
-          elem.cliente=clien['nombre'];
-        })
+      arr.forEach(swo=>{
+        for(let k=0;k<this.equipos.length;k++){
+          if(swo.equipo==this.equipos[k].id){
+              swo.serie=this.equipos[k].serie;
+              swo.modelo=this.equipos[k].modelo;
+          }
+        }
+        for(let k=0;k<this.clientes.length;k++){
+          if(swo.cliente==this.clientes[k].id){
+              swo.cliente=this.clientes[k].nombre;
+          }
+        }
+        // this._equipoService.getUnEquipo(swo.equipo).subscribe(equi=>{
+        //   swo.modelo=equi['modelo'];
+        //   swo.serie=equi['serie'];
+        // })
+        // this._clienteService.getUnCliente(swo.cliente).subscribe(clien=>{
+        //   swo.cliente=clien['nombre'];
+        // })
       }) 
     }
     return arr;

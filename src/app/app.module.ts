@@ -18,7 +18,7 @@ import { MatButtonModule, MatToolbarModule, MatIconModule, MatCardModule,
           MatExpansionModule, MatPaginatorModule, MatSortModule,MatTabsModule,
           MatDatepickerModule, MatNativeDateModule, MatDialogModule,MatSelectModule,
           MatRadioModule, MatButtonToggleModule, MatSliderModule, MatAutocompleteModule,
-          MatTableModule, MatProgressBarModule
+          MatTableModule, MatProgressBarModule, MatSlideToggleModule, MatCheckboxModule
     } from '@angular/material';
 
 // Flatpicker
@@ -49,6 +49,7 @@ import { OrdenPDFComponent } from './components/ordenpdf.component';
 import { NewOPComponent } from './components/newOP.component';
 import { UsersComponent } from './components/users.component';
 import { BitacoraComponent } from './components/bitacora.component';
+import { SetGuiaComponent } from './components/setGuia.component';
 
 
 // Rutas =============================
@@ -86,7 +87,8 @@ const routes: Routes = [
     OrdenPDFComponent,
     NewOPComponent, 
     UsersComponent,
-    BitacoraComponent
+    BitacoraComponent,
+    SetGuiaComponent
   ],
   entryComponents:[
     NewClienteComponent, NewEquipoComponent, NewSwoComponent, NewOPComponent
@@ -108,7 +110,8 @@ const routes: Routes = [
     MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule,MatInputModule, MatFormFieldModule,
     MatSidenavModule, MatListModule, MatExpansionModule, MatPaginatorModule, MatSortModule, MatTabsModule,
     MatDatepickerModule, MatNativeDateModule,MatDialogModule, MatSelectModule, MatRadioModule,
-    MatButtonToggleModule,MatSliderModule, MatAutocompleteModule,MatTableModule, MatProgressBarModule
+    MatButtonToggleModule,MatSliderModule, MatAutocompleteModule,MatTableModule, MatProgressBarModule,
+    MatSlideToggleModule, MatCheckboxModule
   ],
   providers: [
     AuthService,

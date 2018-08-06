@@ -20,14 +20,14 @@
         <div class="inferior">
             <mat-card>
                 <div class="izquierda">
-                    <div class="tablaEquipos">
+                    <div class="tabla">
                         <div class="tablaSup">
                             <mat-form-field class="tablaBuscar">
                                 <input matInput class="tablaInputBuscar" type="text" [(ngModel)]=equipoBuscado (keyup)="filtrarEquipos()" placeholder="Buscar equipo...">
                             </mat-form-field>
                         </div>
     
-                        <mat-accordion displayMode="flat" class="mat-table">
+                        <mat-accordion class="mat-table">
                             <section matSort #sortEquipos class="mat-elevation-z2 mat-header-row headerGrid">
                                 <span class="mat-header-cell" mat-sort-header="modelo">Modelo</span>
                                 <span class="mat-header-cell" mat-sort-header="serie">Serie</span>
@@ -65,15 +65,15 @@
                         <!-- <button mat-raised-button color="accent" (click)="agregarEquipo()">Agregar SWO</button> -->
                     </div>
                     <div class="derInferior">
-                        <div class="tablaSWOs">
-                            <div class="tablaSupSWO">
-                                <mat-form-field class="tablaBuscarSWO">
-                                    <input matInput class="tablaInputBuscarSWO" type="text" [(ngModel)]=SWOBuscado (keyup)="filtrarSWOs()" placeholder="Filtrar o buscar SWO...">
+                        <div class="tabla">
+                            <div class="tablaSup">
+                                <mat-form-field class="tablaBuscar">
+                                    <input matInput class="tablaInputBuscar" type="text" [(ngModel)]=swoBuscado (keyup)="filtrarSWOs()" placeholder="Filtrar o buscar SWO...">
                                 </mat-form-field>
                             </div>
     
-                            <mat-accordion displayMode="flat" class="mat-table">
-                                <section matSort #sortSWOs="matSort" class="mat-elevation-z2 mat-header-row headerGrid6">
+                            <mat-accordion class="mat-table">
+                                <section matSort #sortSWOs="matSort" class="mat-elevation-z2 mat-header-row headerGrid6" matSortActive="fechaop" matSortDirection="desc" matSortDisableClear >
                                     <span class="mat-header-cell" mat-sort-header="swo">SWO</span>
                                     <span class="mat-header-cell" mat-sort-header="fechainicio">Fecha inicial</span>
                                     <span class="mat-header-cell" mat-sort-header="fechaop">Ultima OP</span>
@@ -122,7 +122,7 @@
                                 </mat-expansion-panel>
                             </mat-accordion>
     
-                            <div class="tablaInfSWO">
+                            <div class="tablaInf">
                                 <mat-paginator #paginatorSWO [length]="totalRowsSWOs$ | async" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                             </div>
                         </div>

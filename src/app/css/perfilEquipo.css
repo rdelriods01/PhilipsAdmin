@@ -7,6 +7,9 @@
 * {
     font-family: Product Sans;
 }
+mat-card{
+    border-radius: 10px;
+}
 .superior {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -34,10 +37,9 @@
     .tituloAbajo h3 {
         margin: 0 !important;
     }
-    .exp ::ng-deep .mat-content {
-        display: grid !important;
-        grid-template-columns: repeat(6, 1fr);
-        align-items: center;
+    .mat-table{
+        width: 100vw;
+        min-width: 100%;
     }
     .mat-cell {
         font-size: 12px !important;
@@ -59,12 +61,12 @@
     margin-left: 1em;
     font-size: 1.6em;
     align-self: center;
-    color: dimgray;
+    color: #0079c2;
 }
 .tituloAbajo h3 {
     margin: 0;
     margin-left: 2em;
-    color: cornflowerblue;
+    color: dimgray;
 }
 .modulo, .accesorios {
     color: dimgray;
@@ -74,7 +76,6 @@
 /* Datos del Cliente */
 
 .clienteCard {
-    border-radius: 10px;
     zoom: 80%;
 }
 .clienteCard h3 {
@@ -86,23 +87,23 @@
 
 /* INFERIOR */
 
-.tablaSWOs {
+.tabla {
     zoom: 80%;
 }
-.tablaSupS {
+.tablaSup {
     box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
     display: flex;
     background-color: white;
     margin-bottom: 0.5em;
 }
-.tablaBuscarS {
+.tablaBuscar {
     background-color: white;
     font-size: 0.8em;
     flex: 1 1 auto;
     margin: auto;
     padding: 0.5em 2em 0 2em;
 }
-.tablaInputBuscarS {
+.tablaInputBuscar {
     zoom: 100%;
 }
 .btnNewSwo {
@@ -118,13 +119,19 @@
     border-bottom: none;
 }
 .mat-table {
-    display: block;
+    display: grid;
+    overflow-x: auto;
+    text-align: center;
+    padding: 4px;
 }
 .mat-header-row {
     min-height: 56px;
 }
 .mat-row {
     min-height: 48px;
+}
+::ng-deep .mat-sort-header-container {
+    justify-content: center;
 }
 .mat-row, .mat-header-row {
     display: flex;
@@ -133,6 +140,16 @@
     align-items: center;
     padding: 0 24px;
     box-sizing: border-box;
+}
+.headerGrid {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr);
+    text-align: center;
+    grid-auto-flow: column;
+    padding: 0 1em !important;
+}
+.headerGrid span {
+    justify-self: center;
 }
 .mat-row::after, .mat-header-row::after {
     display: inline-block;
@@ -143,23 +160,15 @@
     flex: 1;
     overflow: hidden;
     word-wrap: break-word;
+    min-width: 7em;
+    text-align: center;
     margin: auto;
 }
-.exp {
+/* .exp {
     padding: 0 1em;
     text-align: center;
     height: fit-content !important;
-}
-.headerGrid6 {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    text-align: center;
-    grid-auto-flow: column;
-    padding: 0 1em !important;
-}
-.headerGrid6 span {
-    justify-self: center;
-}
+} */
 .expan {
     background: #f0f0f0;
     padding: 1em;

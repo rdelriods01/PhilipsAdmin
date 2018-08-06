@@ -39,6 +39,9 @@ export class SwoComponent{
     duracion:number;
     fechafin:Date;
     refas:any;
+    firmada:Boolean=false;
+    enviada:Boolean=false;
+    guia:string;
 
     // Variables para subirfoto
     uploadPercent:Observable<number>;
@@ -56,19 +59,14 @@ export class SwoComponent{
             let id = params['id'];
             this._swoService.getUnaSWO(id).subscribe(sw =>{
                 this.swo=sw;
-                console.log(this.swo);
                 this._clienteService.getUnCliente(this.swo.cliente).subscribe(cl=>{
                     this.cliente=cl;
-                    console.log(this.cliente);
                     this._equipoService.getUnEquipo(this.swo.equipo).subscribe(eq=>{
                         this.equipo=eq;
-                        console.log(this.equipo);
                         this._swoService.getOPs(id).subscribe(ops=>{
                             this.ops=ops;
-                            console.log(this.ops);
                             this.uploadPercent=Observable.of(0)
                         })
-                        // this.datosTablaSWOs(this.swos);
                     })
                 })
             }) 
@@ -92,9 +90,7 @@ export class SwoComponent{
             this.resultados='Se revisa equipo. Se realiza seguimiento de checklist anexo. Se comprueba funcionamiento general del equipo según especificaciones técnicas del fabricante. Se realiza limpieza externa e interna.';
             this.observaciones='El equipo queda operando Correctamente';
             this.duracion=1;            
-        }
-        console.log(this.refas);
-        
+        }       
     }
 
     saveProceed(oper){
@@ -110,20 +106,30 @@ export class SwoComponent{
         oper.duracion=this.duracion;
         oper.refacciones=this.refas;
         this._swoService.updateOP(this.swo,oper);
-        console.log(oper);
     }
 
+    firmarOP(operF){
+        console.log(this.firmada);
+        console.log(operF);
+        operF.firmada=this.firmada;
+        this._swoService.updateOP(this.swo,operF);
+        this.firmada=false;
+    }
+    enviarOP(oper){
+        console.log(this.enviada);
+        oper.enviada=this.enviada;
+        oper.guia=this.guia;
+        this._swoService.updateOP(this.swo,oper);
+        this.enviada=false;
+    }
     nuevaOP(){
         console.log('Nueva OP!!');
-        console.log(this.swo);
         let newOP = {} as IOperacion;
         newOP.op= String(Number(this.ops[this.ops.length-1].op) + 10 );
         newOP.status='Programado';
-        console.log(newOP);
         let dialogNewSwo= this.dialog.open(NewOPComponent);
         dialogNewSwo.componentInstance.oper=newOP;
         dialogNewSwo.componentInstance.swo=this.swo;
-        // this._swoService.saveOP(this.swo,)
     }
 
     print(){

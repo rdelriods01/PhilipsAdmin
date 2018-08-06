@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material';
 })
 export class LayoutComponent {
 
+  showSideNav:Boolean=true;
 // Variables para el buscador 
   visible:Boolean=false;
   showBtn: string ='ocultarB';
@@ -25,8 +26,10 @@ export class LayoutComponent {
   filteredList:any;
   arrayFinder;
 
+  equipos;
+  clientes;
+
   user;
-  myOPsFSE;
   constructor(public auth: AuthService, 
               public router: Router,
               public dialog: MatDialog,
@@ -35,20 +38,19 @@ export class LayoutComponent {
             public _clienteService: ClienteService
             ) 
   {
+    if(window.innerWidth<769){
+      this.showSideNav=false;
+    }
     this.auth.user.subscribe(us=>{
       this.user=us;
-      console.log(this.user);
-      if(us){
-        let ops=this._swoService.getOPsFSE(this.user.displayName)
-          console.log(ops);
-        this.myOPsFSE=ops;
-      }
+      // console.log(this.user);
     })
     this.prepareFinder();
   }
 
   prepareFinder(){
     this._equipoService.getEquipos().subscribe(eq=>{
+      this.equipos=JSON.parse(JSON.stringify(eq));
       let todosEquipos=eq;
       todosEquipos.forEach(el=>{
         delete el.accesorios;
@@ -71,6 +73,7 @@ export class LayoutComponent {
           delete el.status;
         });
         this._clienteService.getClientes().subscribe(cl=>{
+          this.clientes=cl;
           let todosClientes=cl;
           todosClientes.forEach(el=>{
             delete el.direccion;

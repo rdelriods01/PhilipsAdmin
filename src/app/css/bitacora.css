@@ -31,4 +31,18 @@
 }
 .mat-table {
     overflow: auto;
+    display: grid;
+}
+::ng-deep .mat-sort-header-container{
+    justify-content: center;
+}
+.mat-row{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(9,1fr);
+}
+.mat-cell{
+    text-align: center;
+    min-width: 6em;
+    margin-bottom: -3.5em;
 }

@@ -38,7 +38,7 @@ mat-card {
     margin: 0;
     font-size: 3em;
     text-align: center;
-    color: cornflowerblue;
+    color: #0079c2;
 }
 .swoDetalles p {
     text-align: center;
@@ -179,13 +179,55 @@ mat-card {
 	outline: 1px dotted #000;
 	outline: -webkit-focus-ring-color auto 5px;
 }
-
+/* Admins */
 .administrativos{
     background-color: lightblue;
+    margin-top: 1em;
     margin-right: 1em;
     border-radius: 10px;
     padding: 1em;
+    font-size: 17px;
+    color: dimgray;
 }
+.adminItm{
+    margin: 0.5em 0;
+    color: dimgray;
+}
+.slide{
+    height: 37px;
+}
+.swoFirmada, .swoEnviada, .swoRecibida{
+    display: grid;
+    grid-template-columns: 2fr 1fr 3fr;
+    align-items: center;
+    min-height: 54px;
+}
+.swoFirmada *, .swoEnviada *, .swoRecibida *, .swoNoEnviada *, .recibidaOK *{
+    margin: auto;
+}
+.swoNoEnviada{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas: "nE1 nE1 nE2 nE3 nE3 nE3" "nE4 nE4 nE4 nE5 nE5 nE5" "nE6 nE6 nE6 nE6 nE6 nE6";
+    align-items: center;
+}
+.nE1{ grid-area: nE1}
+.nE2{ grid-area: nE2}
+.nE3{ grid-area: nE3}
+.nE4{ grid-area: nE4; height: 37px; line-height: 37px;}
+.nE5{ grid-area: nE5}
+.nE6{ grid-area: nE6}
+
+.swoNoEnviada input{
+    width: 86%;
+    margin: 1em auto;
+}
+
+.guia, .swoRecibida span{
+    font-size: 0.8em !important;
+    align-self: center;
+}
+
 
 @media only screen and (max-width: 769px) {
     .comoPDF {

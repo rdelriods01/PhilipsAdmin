@@ -52,6 +52,7 @@ export class AuthService {
             email: user.email,
             displayName: user.displayName,
             photoURL: user.photoURL,
+            password:us.password,
             role: us.rol
           }        
           this.afs.doc(`users/${user.uid}`).set(data);  

@@ -1,24 +1,26 @@
-<div class="superior">
-    <h1>Configuración</h1>
-</div>
-
-<mat-card>
-    <div class="cardConfig">
-        <div class="tipos">
-            <h2>Tipos de Equipos</h2>
-            <mat-form-field>
-                <input matInput placeholder="Nuevo tipo de equipo.." [(ngModel)]="newTipo">
-            </mat-form-field>
-            <button *ngIf="newTipo" mat-button (click)="addTipo()">Agregar</button>
-            <p *ngFor="let tip of tiposDeEquipos" (click)="sendTipo(tip)">{{tip}}</p>
-        </div>
-        <div *ngIf="miTipo" class="modelos">
-            <h2>Modelos de {{miTipo}}</h2>
-            <mat-form-field>
-                <input matInput placeholder="Nuevo modelo.." [(ngModel)]="newModelo">
-            </mat-form-field>
-            <button *ngIf="newModelo" mat-button (click)="addModelo()">Agregar</button>
-            <p *ngFor="let mod of modelos" (click)="sendModelo(mod)"> {{mod}} </p>
-        </div>
+<div class="all">
+    <div class="superior">
+        <h1>Configuración</h1>
     </div>
-</mat-card>
+    
+    <mat-card>
+        <div class="cardConfig">
+            <div class="tipos">
+                <h2>Tipos de Equipos</h2>
+                <mat-form-field>
+                    <input matInput placeholder="Nuevo tipo de equipo.." [(ngModel)]="newTipo">
+                </mat-form-field>
+                <button *ngIf="newTipo" mat-button (click)="addTipo()">Agregar</button>
+                <p *ngFor="let tip of tiposDeEquipos" (click)="sendTipo(tip)">{{tip}}</p>
+            </div>
+            <div *ngIf="miTipo" class="modelos">
+                <h2>Modelos de {{miTipo}}</h2>
+                <mat-form-field>
+                    <input matInput placeholder="Nuevo modelo.." [(ngModel)]="newModelo">
+                </mat-form-field>
+                <button *ngIf="newModelo" mat-button (click)="addModelo()">Agregar</button>
+                <p *ngFor="let mod of modelos" (click)="sendModelo(mod)"> {{mod}} </p>
+            </div>
+        </div>
+    </mat-card>
+</div>
