@@ -13,8 +13,9 @@
                     </div>
             
                     <div class="mat-elevation-z8">
-                        <mat-table [dataSource]="dataSource" matSort matSortActive="fechaprog" matSortDirection="desc" matSortDisableClear >
-            
+                        <!-- <mat-table [dataSource]="dataSource" matSort matSortActive="fechaprog" matSortDirection="desc" matSortDisableClear > -->
+                        <mat-table [dataSource]="dataSource" matSort matSortDisableClear >
+
                             <!-- ID Column -->
                             <ng-container matColumnDef="fechaprog">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </mat-header-cell>

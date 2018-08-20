@@ -11,13 +11,3 @@ body {
 * {
     font-family: Product Sans;
 }
-
-/*Para los Dialogs*/
-
-div .mat-dialog-container {
-    border-radius: 30px;
-    zoom: 80%;
-}
-.cdk-overlay-pane {
-    zoom: 80% !important;
-}

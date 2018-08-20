@@ -44,6 +44,10 @@ mat-card{
     .mat-cell {
         font-size: 12px !important;
     }
+    .opGrid h3{
+        align-self: center;
+        font-size: 14px;
+    }
 }
 
 /* Datos del Equipo */
@@ -88,7 +92,7 @@ mat-card{
 /* INFERIOR */
 
 .tabla {
-    zoom: 80%;
+    font-size: 0.8em !important;
 }
 .tablaSup {
     box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
@@ -102,9 +106,6 @@ mat-card{
     flex: 1 1 auto;
     margin: auto;
     padding: 0.5em 2em 0 2em;
-}
-.tablaInputBuscar {
-    zoom: 100%;
 }
 .btnNewSwo {
     display: grid;
@@ -123,6 +124,7 @@ mat-card{
     overflow-x: auto;
     text-align: center;
     padding: 4px;
+    zoom: 80%;
 }
 .mat-header-row {
     min-height: 56px;
@@ -159,16 +161,11 @@ mat-card{
 .mat-cell, .mat-header-cell {
     flex: 1;
     overflow: hidden;
-    word-wrap: break-word;
     min-width: 7em;
+    word-wrap: break-word;
     text-align: center;
     margin: auto;
 }
-/* .exp {
-    padding: 0 1em;
-    text-align: center;
-    height: fit-content !important;
-} */
 .expan {
     background: #f0f0f0;
     padding: 1em;
@@ -183,11 +180,10 @@ mat-card{
     margin: auto;
 }
 
-::ng-deep .mat-expansion-panel-spacing {
-    border: 1px solid mediumturquoise;
-}
-
 .tablaInf {
     margin-top: 0.5em;
     display: grid;
+}
+::ng-deep .mat-expansion-panel-spacing {
+    border: 1px solid mediumturquoise;
 }

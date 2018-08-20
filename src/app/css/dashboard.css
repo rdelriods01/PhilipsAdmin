@@ -37,6 +37,7 @@ mat-card {
     .recientes{
         grid-area: recientes;
         padding: 0 1em;
+        margin-bottom: 2em;
     }
 }
 .pasado {

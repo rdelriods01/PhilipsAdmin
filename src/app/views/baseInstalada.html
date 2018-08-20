@@ -6,14 +6,14 @@
     <div class="main">
         <mat-card>
             <div class="izquierda">
-                <div class="tablaClientes">
+                <div class="tabla">
                     <div class="tablaSup">
                         <mat-form-field class="tablaBuscar">
                             <input matInput class="tablaInputBuscar" type="text" [(ngModel)]=clienteBuscado (keyup)="filtrarClientes()" placeholder="Buscar cliente...">
                         </mat-form-field>
                     </div>
 
-                    <mat-accordion displayMode="flat" class="mat-table">
+                    <mat-accordion class="mat-table">
                         <section matSort #sortClientes class="mat-elevation-z2 mat-header-row headerGrid">
                             <span class="mat-header-cell" mat-sort-header="nombre">Nombre</span>
                         </section>
@@ -48,10 +48,10 @@
                     <button mat-raised-button color="accent" (click)="agregarEquipo()">Agregar equipo</button>
                 </div>
                 <div class="derInferior">
-                    <div class="tablaEquipos">
-                        <div class="tablaSupE">
-                            <mat-form-field class="tablaBuscarE">
-                                <input matInput class="tablaInputBuscarE" type="text" [(ngModel)]=equipoBuscado (keyup)="filtrarEquipos()" placeholder="Filtrar o buscar equipo...">
+                    <div class="tabla">
+                        <div class="tablaSup">
+                            <mat-form-field class="tablaBuscar">
+                                <input matInput class="tablaInputBuscar" type="text" [(ngModel)]=equipoBuscado (keyup)="filtrarEquipos()" placeholder="Filtrar o buscar equipo...">
                             </mat-form-field>
                         </div>
 
@@ -69,7 +69,7 @@
                                     <span class="mat-cell">{{equipo.serie}}</span>
                                 </mat-expansion-panel-header>
                                 <div class="expan">
-                                    <div class="accionesE">
+                                    <div class="acciones">
                                         <button mat-raised-button [routerLink]="['/equipo',equipo.id]">Ver Equipo</button>
                                         <button mat-raised-button (click)="editarEquipo(equipo.id)">Editar</button>
                                         <button mat-button (click)="eliminarEquipo(equipo.serie)">Eliminar<mat-icon>delete</mat-icon></button>
@@ -78,7 +78,7 @@
                             </mat-expansion-panel>
                         </mat-accordion>
 
-                        <div class="tablaInfE">
+                        <div class="tablaInf">
                             <mat-paginator #paginatorE [length]="totalRowsEquipos$ | async" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
                         </div>
                     </div>

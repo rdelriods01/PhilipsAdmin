@@ -19,19 +19,19 @@ button {
     display: grid;
     grid-template-columns: 1fr;
 }
-::ng-deep .cdk-overlay-pane {
-    zoom: 80%;
-}
 ::ng-deep .mat-dialog-container {
-    zoom: 100% !important;
+    border-radius: 30px;
 }
 @media only screen and (max-width: 769px) {
      ::ng-deep .mat-form-field {
         width: 90%;
     }
      ::ng-deep .mat-dialog-container {
-        zoom: 80% !important;
-        height: fit-content;
+        max-height: 90vh;
+        font-size: 0.8em;
         text-align: center;
+    }
+    ::ng-deep .mat-option {
+        font-size: 0.8em;
     }
 }

@@ -1,3 +1,6 @@
+.main{
+    height: 92.4vh;
+}
 .superior {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -15,9 +18,13 @@
         width: 100vw;
         min-width: 100%;
     }
-}
-.main{
-    height: 92.4vh;
+    .mat-cell {
+        font-size: 12px !important;
+    }
+    .opGrid h3{
+        align-self: center;
+        font-size: 14px;
+    }
 }
 .datosCliente { 
     margin: 1em;
@@ -35,7 +42,7 @@ mat-card{
 /* IZQUIERDA */
 
 .tabla {
-    zoom: 80%;
+    font-size: 0.8em !important;
 }
 .tablaSup {
     box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
@@ -51,9 +58,7 @@ mat-card{
     margin: auto;
     padding: 0.5em 2em 0 2em;
 }
-.tablaInputBuscar {
-    zoom: 100%;
-}
+
 .mat-accordion .mat-header-row {
     padding-left: 1.5rem;
     padding-right: 2rem;
@@ -67,6 +72,7 @@ mat-card{
     overflow-x: auto;
     text-align: center;
     padding: 4px;
+    zoom: 80%;
 }
 .mat-header-row {
     min-height: 56px;

@@ -1,3 +1,6 @@
+.main{
+    height: 92.4vh;
+}
 .superior{
     display: grid;
     margin: 0 0 1em 0;
@@ -10,7 +13,7 @@
 .backSaveBtns{
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-end;
     height: 51px;
 }
 @media only screen and (max-width: 769px) {
@@ -29,11 +32,13 @@
     }
     .mainBtn{
         margin: 1em 0;
+        margin-left: 0;
     }
 }
 
 .mainBtn{
     width: 10em;
+    margin-left: 2em;
 }
 .tablaBuscar{
     width: 96%;

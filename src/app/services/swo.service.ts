@@ -99,10 +99,20 @@ export class SWOService{
             })
         })
     }
-    // Leer swos de un fse
+    // Leer swos de un fse , 
     getSWOsFSE(inge){
         return this.afs.collection('swos', ref => ref.where('fse', '==', inge)).snapshotChanges()
-        .map( arr => {
+        .map( arr => {           
+            return arr.map(a => {
+                const obj = a.payload.doc.data() as ISwo;
+                return obj;                
+            })
+        })
+    }
+    // Leer SWOs ordenadas
+    getOrderedSWOs(){
+        return this.afs.collection('swos', ref => ref.orderBy('fechainicio', "desc")).snapshotChanges()
+        .map( arr => {           
             return arr.map(a => {
                 const obj = a.payload.doc.data() as ISwo;
                 return obj;                
@@ -117,7 +127,7 @@ export class SWOService{
     // ==================================OP QUERYS==========================================
     // Leer las OPs de un FSE
     getOPsFSE(swo,inge){
-        return this.afs.collection('swos').doc(swo.id).collection('ops', ref => ref.where('fse', '==', inge)).snapshotChanges()
+        return this.afs.collection('swos').doc(swo.id).collection('ops', ref => ref.where('fse', '==', inge).where('status', '==', 'Concluido')).snapshotChanges()
         .map(arr=>{
             return arr.map(b=>{
                 let op=b.payload.doc.data();
@@ -125,23 +135,26 @@ export class SWOService{
                 op.falla=swo.falla;
                 op.swo=swo.swo;
                 op.equipoid=swo.equipo;
-                
-                // this._equipoService.getUnEquipo(op.equipoid).subscribe(eq=>{
-                //     op.equipoSerie=eq['serie'];
-                //     op.equipoModelo=eq['modelo'];
-                // })
-
                 op.clienteid=swo.cliente;
-
-                // this._clienteService.getUnCliente(op.clienteid).subscribe(cl=>{
-                //     op.cliente=cl['nombre'];
-                // })
                 return op;
             })
         })
     }
     getOPsToSend(swo){
         return this.afs.collection('swos').doc(swo.id).collection('ops', ref=> ref.where('firmada','==',true).where('enviada','==',false) ).snapshotChanges()
+        .map(arr=>{
+            return arr.map(b=>{
+                let op=b.payload.doc.data();
+                op.swo=swo.swo;
+                op.equipoid=swo.equipo;
+                op.clienteid=swo.cliente;
+                // console.log(op);
+                return op;
+            })
+        })
+    }
+    getOPsToReceive(swo){
+        return this.afs.collection('swos').doc(swo.id).collection('ops', ref=> ref.where('enviada','==',true).where('recibida','==',false) ).snapshotChanges()
         .map(arr=>{
             return arr.map(b=>{
                 let op=b.payload.doc.data();

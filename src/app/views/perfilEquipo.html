@@ -53,7 +53,7 @@
                                 <span class="mat-cell">{{orden.actividad}}</span>
                                 <span class="mat-cell">{{orden.falla}}</span>
                             </mat-expansion-panel-header>
-                            <div class="expan">
+                            <div  class="expan">
                                 <div>
                                     <mat-tab-group>
                                         <mat-tab *ngFor="let operacion of ops" label="Op {{operacion.op}}">
@@ -85,7 +85,7 @@
                                     </mat-tab-group>
                                 </div>
                             </div>
-                        </mat-expansion-panel>
+                        </mat-expansion-panel >
                     </mat-accordion>
                     <div class="tablaInf">
                         <mat-paginator #paginator [length]="totalRowsSWO$ | async" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

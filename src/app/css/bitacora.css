@@ -9,7 +9,7 @@
     color: #666;
 }
 .inferior {
-    zoom: 85%;
+    margin-bottom: 10em;
 }
 .hoverElement:hover {
     color: darkcyan;
@@ -45,4 +45,5 @@
     text-align: center;
     min-width: 6em;
     margin-bottom: -3.5em;
+    font-size: 12px !important;
 }

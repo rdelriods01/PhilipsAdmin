@@ -12,12 +12,7 @@ button {
     width: 100%;
     margin-top: 2em;
 }
-::ng-deep .cdk-overlay-pane {
-    zoom: 80%;
-}
-::ng-deep .mat-dialog-container {
-    zoom: 100% !important;
-}
+
 ::ng-deep .pickerNewOP div input.ng2-flatpickr-input.flatpickr-input {
     border-radius: 5px;
     height: 2em;
@@ -27,13 +22,19 @@ button {
     text-align: center;
     font-weight: bold;
 }
+::ng-deep .mat-dialog-container {
+    border-radius: 30px;
+}
 @media only screen and (max-width: 769px) {
      ::ng-deep .mat-form-field {
         width: 90%;
     }
      ::ng-deep .mat-dialog-container {
-        zoom: 80% !important;
-        height: 100%;
+        max-height: 90vh;
+        font-size: 0.8em;
         text-align: center;
+    }
+    ::ng-deep .mat-option {
+        font-size: 0.8em;
     }
 }

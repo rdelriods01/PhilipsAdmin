@@ -104,7 +104,9 @@ export class SwoComponent{
         oper.resultados=this.resultados;
         oper.observaciones=this.observaciones;
         oper.duracion=this.duracion;
-        oper.refacciones=this.refas;
+        if(this.showRefas){
+            oper.refacciones=this.refas; 
+        }
         this._swoService.updateOP(this.swo,oper);
     }
 

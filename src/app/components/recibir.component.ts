@@ -4,20 +4,21 @@ import { SWOService } from "../services/swo.service";
 
 import { LayoutComponent } from "../components/layout.component";
 
-import { IOperacion } from '../models/interfaces';
 
 @Component({
-   selector: 'setGuiaC',
-   templateUrl: '../views/setGuia.html',
-   styleUrls: ['../css/setGuia.css']
+   selector: 'recibirC',
+   templateUrl: '../views/recibir.html',
+   styleUrls: ['../css/recibir.css']
 })
-export class SetGuiaComponent{
+export class RecibirComponent{
 
-    @Input() inge;
+    // @Input() inge;
+    user;
     ops=[];
     saveOps=[];
-    ordenesAEnviar=[];
-    guia='';
+
+    ordenesARecibir=[];
+
     saveDisabled:Boolean=true;
     showProceedDetails;
     allChk=false;
@@ -28,11 +29,12 @@ export class SetGuiaComponent{
     constructor(public _swoService: SWOService,
                 public _layoutC:LayoutComponent
     ){
+        this.user=this._layoutC.user;
         let equipos=this._layoutC.equipos;
         let clientes=this._layoutC.clientes;
-        this._swoService.getSWOs().subscribe(swos=>{
+        this._swoService.getOrderedSWOs().subscribe(swos=>{
             for(let j=0;j<swos.length;j++){
-                this._swoService.getOPsToSend(swos[j]).subscribe(ops=>{
+                this._swoService.getOPsToReceive(swos[j]).subscribe(ops=>{
                     for(let i=0;i<ops.length;i++){
                         for(let k=0;k<equipos.length;k++){
                             if(ops[i].equipoid==equipos[k].id){
@@ -65,7 +67,7 @@ export class SetGuiaComponent{
             this.ops[i].checked=false;                
         }
         this.allChk=false;
-        this.ordenesAEnviar=[];
+        this.ordenesARecibir=[];
     }
     filterAllProperties(array,value){
         var filtrado = [];
@@ -81,16 +83,16 @@ export class SetGuiaComponent{
     setUnset(e, op){
         if(e.checked==true){
             op.checked=true;
-            this.ordenesAEnviar.push(op);
+            this.ordenesARecibir.push(op);
         }else{
             op.checked==false;
-            for(let i=0; i<this.ordenesAEnviar.length;i++){
-                if(op.id==this.ordenesAEnviar[i].id){
-                    this.ordenesAEnviar.splice(i,1);
+            for(let i=0; i<this.ordenesARecibir.length;i++){
+                if(op.id==this.ordenesARecibir[i].id){
+                    this.ordenesARecibir.splice(i,1);
                 }
             }
         }        
-        if(this.ordenesAEnviar.length>0){
+        if(this.ordenesARecibir.length>0){
             this.saveDisabled=false;
         }else{
             this.saveDisabled=true;
@@ -103,13 +105,13 @@ export class SetGuiaComponent{
             for(let i=0; i<this.ops.length;i++){
                 this.ops[i].checked=true;
             }
-            this.ordenesAEnviar=JSON.parse(JSON.stringify(this.ops));
+            this.ordenesARecibir=JSON.parse(JSON.stringify(this.ops));
             this.saveDisabled=false;
         }else{
             for(let i=0; i<this.ops.length;i++){
                 this.ops[i].checked=false;                
             }
-            this.ordenesAEnviar=[];
+            this.ordenesARecibir=[];
             this.saveDisabled=true;
         }
     }
@@ -119,24 +121,29 @@ export class SetGuiaComponent{
             this.ops[i].checked=false;                
         }
         this.allChk=false;
-        this.ordenesAEnviar=[];
+        this.ordenesARecibir=[];
         this.saveDisabled=true;
     }
 
     saveProceed(){
-        this.ordenesAEnviar.forEach(op=>{
+        let hoy=new Date();
+        console.log(hoy);
+        
+        this.ordenesARecibir.forEach(op=>{
             this._swoService.getOneOP(op.swoid,op.op).subscribe(miop=>{
-                miop['guia']=this.guia;
-                miop['enviada']=true;
+                miop['recibio']=this.user.displayName;
+                miop['recibida']=true;
+                miop['fecharecibida']=hoy;
                 console.log(miop);
+                
                 this._swoService.updateJustOP(miop['swoid'],miop);
             })
-        })
+        });
         for(let i=0; i<this.ops.length;i++){
             this.ops[i].checked=false;                
         }
         this.allChk=false;
-        this.ordenesAEnviar=[];
-    }
+        this.ordenesARecibir=[];
+    } 
 
 }

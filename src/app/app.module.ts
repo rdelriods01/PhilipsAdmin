@@ -50,16 +50,17 @@ import { NewOPComponent } from './components/newOP.component';
 import { UsersComponent } from './components/users.component';
 import { BitacoraComponent } from './components/bitacora.component';
 import { SetGuiaComponent } from './components/setGuia.component';
+import { RecibirComponent } from './components/recibir.component';
 
 
 // Rutas =============================
 const routes: Routes = [
   { path:'', component: LayoutComponent ,children:[
     { path:'', component: DashboardComponent},
-    { path:'test', component: TestComponent },
     { path:'config', component: ConfigComponent },
     { path:'users', component: UsersComponent },
     { path:'bitacora', component: BitacoraComponent },
+    { path:'recibidas', component: RecibirComponent },
     { path:'bi', component: BaseInstaladaComponent},
     { path:'equipo/:id', component: PerfilEquipoComponent },
     { path:'cliente/:id', component: PerfilClienteComponent },
@@ -88,7 +89,8 @@ const routes: Routes = [
     NewOPComponent, 
     UsersComponent,
     BitacoraComponent,
-    SetGuiaComponent
+    SetGuiaComponent,
+    RecibirComponent
   ],
   entryComponents:[
     NewClienteComponent, NewEquipoComponent, NewSwoComponent, NewOPComponent

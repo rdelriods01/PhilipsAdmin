@@ -28,7 +28,7 @@ export class BitacoraComponent {
         this.inge= this._layoutC.user.displayName;
         let equipos=this._layoutC.equipos;
         let clientes=this._layoutC.clientes;
-        this._swoService.getSWOsFSE(this.inge).subscribe(swos=>{
+        this._swoService.getOrderedSWOs().subscribe(swos=>{
           for(let j=0;j<swos.length;j++){
             this._swoService.getOPsFSE(swos[j],this.inge).subscribe(ops=>{
               for(let i=0;i<ops.length;i++){

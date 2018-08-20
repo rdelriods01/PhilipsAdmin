@@ -33,7 +33,7 @@
                                 <span class="mat-header-cell" mat-sort-header="serie">Serie</span>
                             </section>
     
-                            <mat-expansion-panel *ngFor="let equi of displayedEquipos$ | async" (destroyed)="displayDerecha='none'" (opened)="getSWOsdelEquipo(equi)">
+                            <mat-expansion-panel *ngFor="let equi of displayedEquipos$ | async" (destroyed)="displayDerecha='none'" (opened)="getSWOsdelEquipo(equi)"  >
                                 <mat-expansion-panel-header class="mat-row">
                                     <span class="mat-cell">{{equi.modelo}}</span>
                                     <span class="mat-cell">{{equi.serie}}</span>
@@ -55,7 +55,7 @@
                 </div>
             </mat-card>
             <!-- Derecha -->
-            <mat-card>
+            <mat-card id="equiposCard">
                 <div [style.display]="displayDerecha" class="derecha">
                     <div class="derSuperior">
                         <div class="equip">
@@ -72,7 +72,7 @@
                                 </mat-form-field>
                             </div>
     
-                            <mat-accordion class="mat-table">
+                            <mat-accordion  class="mat-table">
                                 <section matSort #sortSWOs="matSort" class="mat-elevation-z2 mat-header-row headerGrid6" matSortActive="fechaop" matSortDirection="desc" matSortDisableClear >
                                     <span class="mat-header-cell" mat-sort-header="swo">SWO</span>
                                     <span class="mat-header-cell" mat-sort-header="fechainicio">Fecha inicial</span>

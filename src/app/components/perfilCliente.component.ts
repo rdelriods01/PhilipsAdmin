@@ -48,6 +48,7 @@ export class PerfilClienteComponent {
     equipoActual = {} as IEquipo;
     displayDerecha='none';
 
+
     constructor(public _route:ActivatedRoute, 
                 public dialog: MatDialog,
                 public _equipoService:EquipoService,
@@ -67,6 +68,7 @@ export class PerfilClienteComponent {
             })
         })
     }
+    
   // Funcion para definir los datos de la tabla EQUIPOS
     datosTablaEquipos(data){
         const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
@@ -91,7 +93,9 @@ export class PerfilClienteComponent {
         this._swoService.getSWOsEquipo(miE.id).subscribe(res=>{
             this.swos=res;
             this.datosTablaSWOs(res);
+            document.getElementById("equiposCard").scrollIntoView({ behavior: 'smooth', block: 'end' });
         })
+
     }
 // Funcion para definir los datos de la tabla EQUIPOS
     datosTablaSWOs(data){    

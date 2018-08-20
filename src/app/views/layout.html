@@ -43,7 +43,11 @@
                 </li>
                 <li *ngIf="user.role=='fse'">
                     <a [routerLink]="['/bitacora']">
-                        <mat-icon class="icon">assignment_turned_in</mat-icon>Bitácora</a>
+                        <mat-icon class="icon">assignment</mat-icon>Bitácora</a>
+                </li>
+                <li *ngIf="user.role=='fse'">
+                    <a [routerLink]="['/recibidas']">
+                        <mat-icon class="icon">assignment_turned_in</mat-icon>Recibir SWOs</a>
                 </li>
                 <!-- <li>
                     <a [routerLink]="['/test']">
