@@ -13,6 +13,9 @@
 .logo {
     text-align: center;
 }
+.logo img{
+    width: 24em;
+}
 .loginCard {
     margin: 0 auto;
     margin-top: 2em;
@@ -56,4 +59,12 @@
         zoom: 95%;
         max-width: fit-content;
     }
+}
+footer{
+    text-align: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
 }

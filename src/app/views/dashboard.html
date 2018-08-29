@@ -13,7 +13,8 @@
                 </mat-expansion-panel-header> 
                 <div class="expan">
                     <p *ngIf="user.role!='fse'"> FSE: <span>{{pend.fse}}</span></p>
-                    <p> Status: <span>{{pend.status}}</span>  <span *ngIf="pend.status=='Programado'"> {{pend.fechaop | date: 'dd/MM/yyyy'}}  </span>     </p>
+                    <!-- <p> Ultima Actividad: <span>{{pend.}}</span></p> -->
+                    <p> Status: <span>{{pend.status}}</span>  <span > {{pend.fechaop | date: 'dd/MM/yyyy'}}  </span>     </p>
                     <p> Actividad: <span>{{pend.actividad}}</span></p>
                     <p *ngIf="pend.falla"> Falla: <span>{{pend.falla}}</span></p>
                     <div class="acciones">
