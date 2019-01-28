@@ -6,6 +6,7 @@ import { EquipoService } from '../services/equipo.service';
 import { SWOService } from '../services/swo.service';
 
 import { LayoutComponent } from "../components/layout.component";
+import { log } from 'util';
 
 @Component({
   selector: 'dashboardC',
@@ -48,10 +49,10 @@ export class DashboardComponent {
             this.arrPendientes = [];
             this.arrRecientes = [];
             el.forEach(sx => {
-              let fSWO = sx.fechaop.getTime();
+              let fSWO = sx['fechaop'].toMillis();
               if (fSWO >= hoyTS) {
                 if (fSWO < mañanaTS) {
-                  if (sx.status == 'Programado' || sx.status == 'Concluido') {
+                  if (sx['status'] == 'Programado' || sx['status'] == 'Concluido') {
                     this.arrToday.push(sx)
                   } else {
                     this.arrPendientes.push(sx)
@@ -60,7 +61,7 @@ export class DashboardComponent {
                   this.arrTomorrow.push(sx);
                 }
               } else {
-                if (sx.status != 'Concluido') {
+                if (sx['status'] != 'Concluido') {
                   this.arrPendientes.push(sx);
                 } else {
                   if (fSWO >= antiAntierTS) {
@@ -82,10 +83,10 @@ export class DashboardComponent {
             this.arrTomorrow = [];
             this.arrPendientes = [];
             el.forEach(sx => {
-              let fSWO = sx.fechaop.getTime();
+              let fSWO = sx['fechaop'].getTime();
               if (fSWO >= hoyTS) {
                 if (fSWO < mañanaTS) {
-                  if (sx.status == 'Programado' || sx.status == 'Concluido') {
+                  if (sx['status'] == 'Programado' || sx['status'] == 'Concluido') {
                     this.arrToday.push(sx)
                   } else {
                     this.arrPendientes.push(sx)
@@ -94,7 +95,7 @@ export class DashboardComponent {
                   this.arrTomorrow.push(sx);
                 }
               } else {
-                if (sx.status != 'Concluido') {
+                if (sx['status'] != 'Concluido') {
                   this.arrPendientes.push(sx);
                 } else {
                   if (fSWO >= antiAntierTS) {

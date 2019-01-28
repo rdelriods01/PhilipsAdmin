@@ -3,8 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 
 import { MatSort, Sort , MatPaginator, PageEvent, MatDialog, MAT_SORT_HEADER_INTL_PROVIDER} from '@angular/material';
-import { Observable  } from 'rxjs/Observable';
-import { of  } from 'rxjs/observable/of';
+import { Observable  ,  of  } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { fromMatSort, sortRows, fromMatPaginator, paginateRows } from './datasource-utils';
 
