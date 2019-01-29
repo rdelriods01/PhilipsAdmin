@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
+import * as firebase from 'firebase/app'
+import 'firebase/firestore';
 
 import { SWOService } from '../services/swo.service';
 import { ConfigService } from '../services/config.service';
@@ -30,7 +32,7 @@ export class NewSwoComponent {
   editFlag = false;
 
   pickerOptions: FlatpickrOptions = {
-    minDate: 'today'
+    // minDate: 'today'
   };
   pickerFormGroup: FormGroup;
 
@@ -47,7 +49,7 @@ export class NewSwoComponent {
 
   ngOnInit() {
     if (this.oper.fechaprog) {
-      this.pickerOptions.defaultDate = this.oper.fechaprog;
+      this.pickerOptions.defaultDate = this.oper.fechaprog.toDate();
     }
     // cargar ingenieros
     this._configService.getFSEs().subscribe(arr => {
@@ -60,7 +62,7 @@ export class NewSwoComponent {
   onSubmit() {
     let fecha = this.pickerFormGroup.controls['pickerForm'].value;
     if (fecha) {
-      this.oper.fechaprog = fecha[0];
+      this.oper.fechaprog = firebase.firestore.Timestamp.fromDate(fecha[0]);
       this.swo.status = this.oper.status;
       if (this.oper.actividad == 'PMAI') {
         this.swo.falla = 'Mantenimiento Preventivo';

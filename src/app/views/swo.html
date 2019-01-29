@@ -3,7 +3,7 @@
     <div class="superior">
       <div class="datosEquipo">
         <mat-card class="equipoCard">
-          <button mat-icon-button class="editButton">
+          <button mat-icon-button class="editButton" (click)="editarEquipo()">
             <mat-icon>edit </mat-icon>
           </button>
           <p> <strong>Modelo:</strong> {{equipo.modelo}} </p>
@@ -28,7 +28,7 @@
       </div>
       <div class="datosCliente">
         <mat-card class="clienteCard">
-          <button mat-icon-button class="editButton">
+          <button mat-icon-button class="editButton" (click)="editarCliente()">
             <mat-icon>edit </mat-icon>
           </button>
           <h3 [routerLink]="['/cliente',cliente.id]">{{cliente.nombre}} </h3>
@@ -50,7 +50,10 @@
               <div class="opGrid">
                 <div>
                   <p *ngIf="op.fse!=user.displayName"><strong>Ingeniero: &nbsp; </strong> {{op.fse}} </p>
-                  <p><strong>Fecha programada: &nbsp; </strong> {{op.fechaprog.toDate() | date: 'dd/MM/yyyy'}} </p>
+                  <p><strong>Fecha programada: &nbsp; </strong> {{op.fechaprog.toDate() | date: 'dd/MM/yyyy'}}
+                    <button mat-icon-button class="editFechaBtn" (click)="changeFecha(op)">
+                      <mat-icon>edit </mat-icon>
+                    </button></p>
                 </div>
                 <button class="proceedBtn" *ngIf="!showProceedDetails && op.fse==user.displayName " color="primary"
                   mat-raised-button (click)="showProceedDetails=!showProceedDetails; proceed()">Proceder</button>

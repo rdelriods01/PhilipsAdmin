@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
+import * as firebase from 'firebase/app'
+import 'firebase/firestore';
 
 import { SWOService } from '../services/swo.service';
 import { ConfigService } from '../services/config.service';
@@ -27,7 +29,7 @@ export class NewOPComponent {
   ingenieros = [];
 
   pickerOptions: FlatpickrOptions = {
-    minDate: 'today'
+    // minDate: 'today'
   };
   pickerFormGroup: FormGroup;
 
@@ -54,7 +56,7 @@ export class NewOPComponent {
   onSubmit() {
     let fecha = this.pickerFormGroup.controls['pickerForm'].value;
     if (fecha) {
-      this.oper.fechaprog = fecha[0];
+      this.oper.fechaprog = firebase.firestore.Timestamp.fromDate(fecha[0]);
       this.swo.fechaop = this.oper.fechaprog;
       this.swo.status = this.oper.status;
       if (this.oper.actividad == 'PMAI') {

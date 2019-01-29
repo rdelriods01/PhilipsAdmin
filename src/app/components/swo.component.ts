@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ActivatedRoute, Params } from '@angular/router';
@@ -17,6 +17,9 @@ import { EquipoService } from '../services/equipo.service';
 import { IOperacion } from '../models/interfaces';
 
 import { NewOPComponent } from '../components/newOP.component';
+import { NewSwoComponent } from '../components/newSwo.component';
+import { NewClienteComponent } from '../components/newCliente.component';
+import { NewEquipoComponent } from '../components/newEquipo.component';
 
 @Component({
   selector: 'SwoC',
@@ -87,7 +90,14 @@ export class SwoComponent {
       refa9: ['', '', '']
     };
   }
-
+  changeFecha(op) {
+    let dialogNewSwo = this.dialog.open(NewSwoComponent);
+    dialogNewSwo.componentInstance.oper = op;
+    dialogNewSwo.componentInstance.swo = this.swo;
+    dialogNewSwo.componentInstance.editFlag = true;
+    dialogNewSwo.componentInstance.equipo = this.equipo.serie;
+    dialogNewSwo.componentInstance.cliente = this.cliente.nombre;
+  }
   proceed() {
     if (this.swo.actividad == 'PMAI') {
       this.operando = true;
@@ -173,4 +183,19 @@ export class SwoComponent {
   verFoto(url) {
     window.open(url);
   }
+  editarEquipo() {
+    let dialogEditEquipos = this.dialog.open(NewEquipoComponent);
+    dialogEditEquipos.componentInstance.editFlag = true;
+    dialogEditEquipos.componentInstance.equipo = this.equipo;
+    if (this.equipo.accesorios) {
+      dialogEditEquipos.componentInstance.accesoriosBoolean = true;
+    }
+  }
+
+  editarCliente() {
+    let dialogEditCliente = this.dialog.open(NewClienteComponent);
+    dialogEditCliente.componentInstance.editFlag = true;
+    dialogEditCliente.componentInstance.cliente = this.cliente;
+  }
+
 }

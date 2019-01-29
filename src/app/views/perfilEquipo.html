@@ -5,7 +5,7 @@
         <div class="tituloArriba">
           <h1>{{equipo.modelo}} </h1>
           <h1 id="eqSerie">{{equipo.serie}}</h1>
-          <button mat-icon-button>
+          <button mat-icon-button (click)="editarEquipo()">
             <mat-icon>edit </mat-icon>
           </button>
         </div>
@@ -21,6 +21,9 @@
       </div>
       <div class="datosCliente">
         <mat-card class="clienteCard">
+          <button mat-icon-button class="editButton" (click)="editarCliente()">
+            <mat-icon>edit </mat-icon>
+          </button>
           <h3 [routerLink]="['/cliente',cliente.id]">{{cliente.nombre}} </h3>
           <p>{{cliente.direccion}} {{cliente.ciudad}}, {{cliente.estado}} </p>
           <p> <strong>Ubicación:</strong> {{equipo.ubicacion}} </p>

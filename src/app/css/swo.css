@@ -107,6 +107,10 @@ mat-card {
   grid-template-columns: 2fr 1fr;
   text-align: center;
 }
+.editFechaBtn {
+  color: dimgray;
+  vertical-align: super;
+}
 .proceedBtn {
   margin: auto 0;
 }
