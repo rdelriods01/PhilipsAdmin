@@ -1,25 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule, Validators, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
- 
+
 // Firebase ====================
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 // Angular Material ====================
-import { MatButtonModule, MatToolbarModule, MatIconModule, MatCardModule, 
-          MatInputModule, MatFormFieldModule, MatSidenavModule, MatListModule,
-          MatExpansionModule, MatPaginatorModule, MatSortModule,MatTabsModule,
-          MatDatepickerModule, MatNativeDateModule, MatDialogModule,MatSelectModule,
-          MatRadioModule, MatButtonToggleModule, MatSliderModule, MatAutocompleteModule,
-          MatTableModule, MatProgressBarModule, MatSlideToggleModule, MatCheckboxModule
-    } from '@angular/material';
+import {
+  MatButtonModule, MatToolbarModule, MatIconModule, MatCardModule,
+  MatInputModule, MatFormFieldModule, MatSidenavModule, MatListModule,
+  MatExpansionModule, MatPaginatorModule, MatSortModule, MatTabsModule,
+  MatDatepickerModule, MatNativeDateModule, MatDialogModule, MatSelectModule,
+  MatRadioModule, MatButtonToggleModule, MatSliderModule, MatAutocompleteModule,
+  MatTableModule, MatProgressBarModule, MatSlideToggleModule, MatCheckboxModule
+} from '@angular/material';
 
 // Flatpicker
 import { Ng2FlatpickrModule } from 'ng2-flatpickr';
@@ -55,19 +56,21 @@ import { RecibirComponent } from './components/recibir.component';
 
 // Rutas =============================
 const routes: Routes = [
-  { path:'', component: LayoutComponent ,children:[
-    { path:'', component: DashboardComponent},
-    { path:'config', component: ConfigComponent },
-    { path:'users', component: UsersComponent },
-    { path:'bitacora', component: BitacoraComponent },
-    { path:'recibidas', component: RecibirComponent },
-    { path:'bi', component: BaseInstaladaComponent},
-    { path:'equipo/:id', component: PerfilEquipoComponent },
-    { path:'cliente/:id', component: PerfilClienteComponent },
-    { path:'swo/:id', component: SwoComponent}
-  ]},
-  { path:'login', component: LoginComponent},
-  { path:'**', redirectTo: '', pathMatch: 'full'}
+  {
+    path: '', component: LayoutComponent, children: [
+      { path: '', component: DashboardComponent },
+      { path: 'config', component: ConfigComponent },
+      { path: 'users', component: UsersComponent },
+      { path: 'bitacora', component: BitacoraComponent },
+      { path: 'recibidas', component: RecibirComponent },
+      { path: 'bi', component: BaseInstaladaComponent },
+      { path: 'equipo/:id', component: PerfilEquipoComponent },
+      { path: 'cliente/:id', component: PerfilClienteComponent },
+      { path: 'swo/:id', component: SwoComponent }
+    ]
+  },
+  { path: 'login', component: LoginComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -79,20 +82,20 @@ const routes: Routes = [
     TestComponent,
     ConfigComponent,
     BaseInstaladaComponent,
-    NewClienteComponent, 
+    NewClienteComponent,
     NewEquipoComponent,
     PerfilEquipoComponent,
     PerfilClienteComponent,
     NewSwoComponent,
     SwoComponent,
     OrdenPDFComponent,
-    NewOPComponent, 
+    NewOPComponent,
     UsersComponent,
     BitacoraComponent,
     SetGuiaComponent,
     RecibirComponent
   ],
-  entryComponents:[
+  entryComponents: [
     NewClienteComponent, NewEquipoComponent, NewSwoComponent, NewOPComponent
   ],
   imports: [
@@ -109,18 +112,18 @@ const routes: Routes = [
     AngularFireAuthModule,
     AngularFireStorageModule,
     // Material
-    MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule,MatInputModule, MatFormFieldModule,
+    MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule, MatInputModule, MatFormFieldModule,
     MatSidenavModule, MatListModule, MatExpansionModule, MatPaginatorModule, MatSortModule, MatTabsModule,
-    MatDatepickerModule, MatNativeDateModule,MatDialogModule, MatSelectModule, MatRadioModule,
-    MatButtonToggleModule,MatSliderModule, MatAutocompleteModule,MatTableModule, MatProgressBarModule,
+    MatDatepickerModule, MatNativeDateModule, MatDialogModule, MatSelectModule, MatRadioModule,
+    MatButtonToggleModule, MatSliderModule, MatAutocompleteModule, MatTableModule, MatProgressBarModule,
     MatSlideToggleModule, MatCheckboxModule
   ],
   providers: [
     AuthService,
     ClienteService,
     EquipoService,
-    SWOService, 
-    ConfigService, 
+    SWOService,
+    ConfigService,
     LayoutComponent
   ],
   bootstrap: [AppComponent]

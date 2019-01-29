@@ -1,196 +1,222 @@
 <div class="aver" *ngIf='equipo && cliente && user'>
-    <div class="main">
-        <div class="superior">
-            <div class="datosEquipo">
-                <mat-card class="equipoCard">
-                    <p> <strong>Modelo:</strong> {{equipo.modelo}} </p>
-                    <h4 [routerLink]="['/equipo',equipo.id]">Serie: {{equipo.serie}}</h4>
-                    <p *ngIf="equipo.ubicacion"> <strong>Ubicación:</strong> {{equipo.ubicacion}} </p>
-                    <p *ngIf="equipo.sw"> <strong>SW:</strong> {{equipo.sw}} </p>
-
-                </mat-card>
-            </div>
-            <div class="datosSwo">
-                <div class="swo">
-                    <h1 id="swo">{{swo.swo}} </h1>
-                </div>
-                <div class="swoDetalles">
-                    <p><strong>Actividad:</strong> {{swo.actividad}} </p>
-                    <p><strong>Falla:</strong> {{swo.falla}} </p>
-                    <p><strong>Status:</strong> {{swo.status}} </p>
-                    <p *ngIf="swo.status=='Concluido'"><strong>Fecha inicio:</strong> {{swo.fechainicio | date: 'dd/MM/yyyy'}} </p>
-                    <p *ngIf="swo.status=='Concluido'"><strong>Fecha fin:</strong> {{swo.fechafin | date: 'dd/MM/yyyy'}} </p>
-                </div>
-            </div>
-            <div class="datosCliente">
-                <mat-card class="clienteCard">
-                    <h3 [routerLink]="['/cliente',cliente.id]">{{cliente.nombre}} </h3>
-                    <p>{{cliente.direccion}} {{cliente.ciudad}}, {{cliente.estado}} </p>
-                    <p *ngIf="cliente.zona"> <strong>Zona:</strong> {{cliente.zona}} </p>
-                    <p *ngIf="cliente.tipo"> <strong>Tipo:</strong> {{cliente.tipo}} </p>
-                </mat-card>
-            </div>
-        </div>
-        <mat-card *ngIf="swo.status=='En espera de refacción' || swo.status=='Pendiente'" class="otraOP">
-            <div></div>
-            <button color="primary" mat-raised-button (click)="nuevaOP()">Programar nueva OP</button>
+  <div class="main">
+    <div class="superior">
+      <div class="datosEquipo">
+        <mat-card class="equipoCard">
+          <button mat-icon-button class="editButton" (click)="editarEquipo()">
+            <mat-icon>edit </mat-icon>
+          </button>
+          <p> <strong>Modelo:</strong> {{equipo.modelo}} </p>
+          <h4 [routerLink]="['/equipo',equipo.id]">Serie: {{equipo.serie}}</h4>
+          <p *ngIf="equipo.ubicacion"> <strong>Ubicación:</strong> {{equipo.ubicacion}} </p>
+          <p *ngIf="equipo.sw"> <strong>SW:</strong> {{equipo.sw}} </p>
         </mat-card>
-        <div class="inferior">
-            <mat-card class="Ops">
-                <mat-tab-group>
-                    <mat-tab class="tab" *ngFor="let op of ops" label="Op {{op.op}}">
-                        <form *ngIf="op.status=='Programado'" #formNewSwo="ngForm">
-                            <div class="opGrid">
-                                <div>
-                                    <p *ngIf="op.fse!=user.displayName"><strong>Ingeniero: &nbsp; </strong> {{op.fse}} </p>
-                                    <p><strong>Fecha programada: &nbsp; </strong> {{op.fechaprog | date: 'dd/MM/yyyy'}} </p>
-                                </div>
-                                <button class="proceedBtn" *ngIf="!showProceedDetails && op.fse==user.displayName " color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails; proceed()">Proceder</button>
-                                <div class="backSaveBtns">
-                                    <button *ngIf="showProceedDetails" color="accent" mat-raised-button (click)="showProceedDetails=!showProceedDetails"> <mat-icon>arrow_back</mat-icon> </button>
-                                    <button *ngIf="showProceedDetails" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails; saveProceed(op)" [disabled]="!formNewSwo.form.valid">Guardar</button>
-                                </div>
-                            </div>
-                            <div *ngIf="showProceedDetails" class="proceedDetails">
-                                <p><strong>¿Equipo operando?</strong>
-                                    <mat-radio-group name="operando" [(ngModel)]="operando" required>
-                                        <mat-radio-button [value]=true>Si</mat-radio-button>
-                                        <mat-radio-button [value]=false>No</mat-radio-button>
-                                    </mat-radio-group>
-                                </p>
-                                <p class="statusP"><strong>Nuevo Status: &nbsp;</strong>
-                                    <mat-form-field>
-                                        <mat-select [(ngModel)]="status" name="status" required>
-                                            <mat-option *ngFor="let opStatus of statuses" [value]="opStatus">
-                                                {{opStatus}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </p>
-                                <div class="resObsGrid">
-                                    <p><strong>Resultados:</strong></p>
-                                    <mat-form-field>
-                                        <textarea matInput name="resultados" [(ngModel)]="resultados" matTextareaAutosize matAutosizeMinRows="4" required></textarea>
-                                    </mat-form-field>
-                                    <p><strong>Observaciones:</strong></p>
-                                    <mat-form-field>
-                                        <textarea matInput name="observaciones" [(ngModel)]="observaciones" matTextareaAutosize matAutosizeMinRows="4" required></textarea>
-                                    </mat-form-field>
-                                </div>
-                                <p><strong>Duración:</strong>
-                                    <mat-form-field class="hrs">
-                                        <input type="number" matInput name="duracion" [(ngModel)]="duracion" required><span matSuffix>hrs</span>
-                                    </mat-form-field>
-                                </p>
-                                <p><strong>Refacciones:</strong>
-                                    <mat-radio-group [(ngModel)]="showRefas" name="refasYN" required>
-                                        <mat-radio-button [value]="true">Si</mat-radio-button>
-                                        <mat-radio-button [value]="false">No</mat-radio-button>
-                                    </mat-radio-group>
-                                </p>
-                                <div *ngIf="showRefas" class="refasTable">
-                                    <span>Código</span>
-                                    <span>Descripción</span>
-                                    <span>Cantidad</span>
-                                    <input name="refas00" [(ngModel)]="refas.refa1[0]" type="text">
-                                    <input name="refas01" [(ngModel)]="refas.refa1[1]" type="text">
-                                    <input name="refas02" [(ngModel)]="refas.refa1[2]" type="text">
-                                    <input name="refas10" [(ngModel)]="refas.refa2[0]" type="text">
-                                    <input name="refas11" [(ngModel)]="refas.refa2[1]" type="text">
-                                    <input name="refas12" [(ngModel)]="refas.refa2[2]" type="text">
-                                    <input name="refas20" [(ngModel)]="refas.refa3[0]" type="text">
-                                    <input name="refas21" [(ngModel)]="refas.refa3[1]" type="text">
-                                    <input name="refas22" [(ngModel)]="refas.refa3[2]" type="text">
-                                    <input name="refas30" [(ngModel)]="refas.refa4[0]" type="text">
-                                    <input name="refas31" [(ngModel)]="refas.refa4[1]" type="text">
-                                    <input name="refas32" [(ngModel)]="refas.refa4[2]" type="text">
-                                    <input name="refas40" [(ngModel)]="refas.refa5[0]" type="text">
-                                    <input name="refas41" [(ngModel)]="refas.refa5[1]" type="text">
-                                    <input name="refas42" [(ngModel)]="refas.refa5[2]" type="text">
-                                    <input name="refas50" [(ngModel)]="refas.refa6[0]" type="text">
-                                    <input name="refas51" [(ngModel)]="refas.refa6[1]" type="text">
-                                    <input name="refas52" [(ngModel)]="refas.refa6[2]" type="text">
-                                    <input name="refas60" [(ngModel)]="refas.refa7[0]" type="text">
-                                    <input name="refas61" [(ngModel)]="refas.refa7[1]" type="text">
-                                    <input name="refas62" [(ngModel)]="refas.refa7[2]" type="text">
-                                    <input name="refas70" [(ngModel)]="refas.refa8[0]" type="text">
-                                    <input name="refas71" [(ngModel)]="refas.refa8[1]" type="text">
-                                    <input name="refas72" [(ngModel)]="refas.refa8[2]" type="text">
-                                    <input name="refas80" [(ngModel)]="refas.refa9[0]" type="text">
-                                    <input name="refas81" [(ngModel)]="refas.refa9[1]" type="text">
-                                    <input name="refas82" [(ngModel)]="refas.refa9[2]" type="text">
-                                </div>
-                            </div>
-                        </form>
-                        <div *ngIf="op.status!='Programado'" class="comoPDF">
-                            <div class="masDatos">
-                                <div *ngIf="op.fse==user.displayName" class="printBtn">
-                                    <h3>Imprimir</h3>
-                                    <button color="accent" mat-raised-button (click)="print()"> <mat-icon>print</mat-icon> </button>
-                                </div>
-                                <div  *ngIf="op.fotoSwoURL" class="printBtn">
-                                    <h3>Ver foto</h3>
-                                    <button color="primary" mat-raised-button (click)="verFoto(op.fotoSwoURL)"> <mat-icon>wallpaper</mat-icon> </button>
-                                </div>
-                                <div *ngIf="!op.fotoSwoURL && op.fse==user.displayName" class="subirFoto">
-                                    <div class="printBtn">
-                                        <h3>Subir foto</h3>
-                                        <input type="file" name="file" id="file" class="inputfile" (change)="subirFoto($event, op)" />
-                                        <label class="labelFile mat-raised-button mat-primary" for="file"><mat-icon>photo_camera</mat-icon></label>
-                                    </div>
-                                    <div *ngIf="showProgressBar" style="width: 94%" >
-                                        <mat-progress-bar mode="determinate" [value]="uploadPercent | async"></mat-progress-bar> <span>{{uploadPercent | async | number:'1.0-0'}}%</span>
-                                    </div>
-                                </div>
-                                <div class="administrativos">
-                                    <div class="adminItm" >
-                                        <div *ngIf="!op.firmada" class="swoFirmada">
-                                            <p>Firmada </p>
-                                            <mat-icon *ngIf="op.fse!=user.displayName">close</mat-icon>
-                                            <mat-slide-toggle *ngIf="op.fse==user.displayName" class="slide" labelPosition="before" color="primary" [(ngModel)]="firmada"></mat-slide-toggle>
-                                            <button *ngIf="firmada" mat-raised-button (click)="firmarOP(op)"> Guardar </button>
-                                        </div>
-                                        <div *ngIf="op.firmada" class="swoFirmada">
-                                            <p>Firmada </p>
-                                            <mat-icon>done</mat-icon>
-                                            <div></div>
-                                        </div>
-                                    </div>
-                                    <div class="adminItm" >
-                                        <div *ngIf="!op.enviada" class="swoNoEnviada ">
-                                            <p class="nE1" >Enviada</p>
-                                            <mat-icon *ngIf="op.fse!=user.displayName">close</mat-icon>
-                                            <mat-slide-toggle *ngIf="op.fse==user.displayName" class="slide nE2" labelPosition="before" color="primary" [(ngModel)]="enviada"></mat-slide-toggle>
-                                            <div class="nE3"></div>
-                                            <p class="nE4" *ngIf="enviada" >No. de Guía:</p>
-                                            <button class="nE5" *ngIf="guia && enviada" mat-raised-button (click)="enviarOP(op)"> Guardar </button>
-                                            <input class="nE6" *ngIf="enviada" type="text" [(ngModel)]="guia" >
-                                        </div>
-                                        <div *ngIf="op.enviada" class="swoEnviada">
-                                            <p>Enviada </p> 
-                                            <mat-icon>done</mat-icon>
-                                            <p class="guia" > Guía: {{op.guia}} </p>
-                                        </div>
-                                    </div>
-                                    <div class="adminItm" >
-                                        <div *ngIf="!op.recibida" class="swoRecibida">
-                                            <p>Recibida</p>
-                                            <mat-icon>close</mat-icon>
-                                            <div></div>
-                                        </div>
-                                        <div *ngIf="op.recibida" class="swoRecibida">
-                                            <p>Recibida</p> 
-                                            <mat-icon>done</mat-icon>
-                                            <span> {{op.recibio}} el {{op.fecharecibida | date: 'dd/MM/yyyy'}} </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <ordenpdfC [swo]="swo" [op]="op" [cliente]="cliente" [equipo]="equipo"></ordenpdfC>
-                        </div>
-                    </mat-tab>
-                </mat-tab-group>
-            </mat-card>
+      </div>
+      <div class="datosSwo">
+        <div class="swo">
+          <h1 id="swo">{{swo.swo}} </h1>
         </div>
+        <div class="swoDetalles">
+          <p><strong>Actividad:</strong> {{swo.actividad}} </p>
+          <p><strong>Falla:</strong> {{swo.falla}} </p>
+          <p><strong>Status:</strong> {{swo.status}} </p>
+          <p *ngIf="swo.status=='Concluido'"><strong>Fecha inicio:</strong> {{swo.fechainicio.toDate() | date:
+            'dd/MM/yyyy'}} </p>
+          <p *ngIf="swo.status=='Concluido'"><strong>Fecha fin:</strong> {{swo.fechafin.toDate() | date: 'dd/MM/yyyy'}}
+          </p>
+        </div>
+      </div>
+      <div class="datosCliente">
+        <mat-card class="clienteCard">
+          <button mat-icon-button class="editButton" (click)="editarCliente()">
+            <mat-icon>edit </mat-icon>
+          </button>
+          <h3 [routerLink]="['/cliente',cliente.id]">{{cliente.nombre}} </h3>
+          <p>{{cliente.direccion}} {{cliente.ciudad}}, {{cliente.estado}} </p>
+          <p *ngIf="cliente.zona"> <strong>Zona:</strong> {{cliente.zona}} </p>
+          <p *ngIf="cliente.tipo"> <strong>Tipo:</strong> {{cliente.tipo}} </p>
+        </mat-card>
+      </div>
     </div>
+    <mat-card *ngIf="swo.status=='En espera de refacción' || swo.status=='Pendiente'" class="otraOP">
+      <div></div>
+      <button color="primary" mat-raised-button (click)="nuevaOP()">Programar nueva OP</button>
+    </mat-card>
+    <div class="inferior">
+      <mat-card class="Ops">
+        <mat-tab-group>
+          <mat-tab class="tab" *ngFor="let op of ops" label="Op {{op.op}}">
+            <form *ngIf="op.status=='Programado'" #formNewSwo="ngForm">
+              <div class="opGrid">
+                <div>
+                  <p *ngIf="op.fse!=user.displayName"><strong>Ingeniero: &nbsp; </strong> {{op.fse}} </p>
+                  <p><strong>Fecha programada: &nbsp; </strong> {{op.fechaprog.toDate() | date: 'dd/MM/yyyy'}}
+                    <button mat-icon-button class="editFechaBtn" (click)="changeFecha(op)">
+                      <mat-icon>edit </mat-icon>
+                    </button></p>
+                </div>
+                <button class="proceedBtn" *ngIf="!showProceedDetails && op.fse==user.displayName " color="primary"
+                  mat-raised-button (click)="showProceedDetails=!showProceedDetails; proceed()">Proceder</button>
+                <div class="backSaveBtns">
+                  <button *ngIf="showProceedDetails" color="accent" mat-raised-button (click)="showProceedDetails=!showProceedDetails">
+                    <mat-icon>arrow_back</mat-icon>
+                  </button>
+                  <button *ngIf="showProceedDetails" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails; saveProceed(op)"
+                    [disabled]="!formNewSwo.form.valid">Guardar</button>
+                </div>
+              </div>
+              <div *ngIf="showProceedDetails" class="proceedDetails">
+                <p><strong>¿Equipo operando?</strong>
+                  <mat-radio-group name="operando" [(ngModel)]="operando" required>
+                    <mat-radio-button [value]=true>Si</mat-radio-button>
+                    <mat-radio-button [value]=false>No</mat-radio-button>
+                  </mat-radio-group>
+                </p>
+                <p class="statusP"><strong>Nuevo Status: &nbsp;</strong>
+                  <mat-form-field>
+                    <mat-select [(ngModel)]="status" name="status" required>
+                      <mat-option *ngFor="let opStatus of statuses" [value]="opStatus">
+                        {{opStatus}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </p>
+                <div class="resObsGrid">
+                  <p><strong>Resultados:</strong></p>
+                  <mat-form-field>
+                    <textarea matInput name="resultados" [(ngModel)]="resultados" matTextareaAutosize
+                      matAutosizeMinRows="4" required></textarea>
+                  </mat-form-field>
+                  <p><strong>Observaciones:</strong></p>
+                  <mat-form-field>
+                    <textarea matInput name="observaciones" [(ngModel)]="observaciones" matTextareaAutosize
+                      matAutosizeMinRows="4" required></textarea>
+                  </mat-form-field>
+                </div>
+                <p><strong>Duración:</strong>
+                  <mat-form-field class="hrs">
+                    <input type="number" matInput name="duracion" [(ngModel)]="duracion" required><span matSuffix>hrs</span>
+                  </mat-form-field>
+                </p>
+                <p><strong>Refacciones:</strong>
+                  <mat-radio-group [(ngModel)]="showRefas" name="refasYN" required>
+                    <mat-radio-button [value]="true">Si</mat-radio-button>
+                    <mat-radio-button [value]="false">No</mat-radio-button>
+                  </mat-radio-group>
+                </p>
+                <div *ngIf="showRefas" class="refasTable">
+                  <span>Código</span>
+                  <span>Descripción</span>
+                  <span>Cantidad</span>
+                  <input name="refas00" [(ngModel)]="refas.refa1[0]" type="text">
+                  <input name="refas01" [(ngModel)]="refas.refa1[1]" type="text">
+                  <input name="refas02" [(ngModel)]="refas.refa1[2]" type="text">
+                  <input name="refas10" [(ngModel)]="refas.refa2[0]" type="text">
+                  <input name="refas11" [(ngModel)]="refas.refa2[1]" type="text">
+                  <input name="refas12" [(ngModel)]="refas.refa2[2]" type="text">
+                  <input name="refas20" [(ngModel)]="refas.refa3[0]" type="text">
+                  <input name="refas21" [(ngModel)]="refas.refa3[1]" type="text">
+                  <input name="refas22" [(ngModel)]="refas.refa3[2]" type="text">
+                  <input name="refas30" [(ngModel)]="refas.refa4[0]" type="text">
+                  <input name="refas31" [(ngModel)]="refas.refa4[1]" type="text">
+                  <input name="refas32" [(ngModel)]="refas.refa4[2]" type="text">
+                  <input name="refas40" [(ngModel)]="refas.refa5[0]" type="text">
+                  <input name="refas41" [(ngModel)]="refas.refa5[1]" type="text">
+                  <input name="refas42" [(ngModel)]="refas.refa5[2]" type="text">
+                  <input name="refas50" [(ngModel)]="refas.refa6[0]" type="text">
+                  <input name="refas51" [(ngModel)]="refas.refa6[1]" type="text">
+                  <input name="refas52" [(ngModel)]="refas.refa6[2]" type="text">
+                  <input name="refas60" [(ngModel)]="refas.refa7[0]" type="text">
+                  <input name="refas61" [(ngModel)]="refas.refa7[1]" type="text">
+                  <input name="refas62" [(ngModel)]="refas.refa7[2]" type="text">
+                  <input name="refas70" [(ngModel)]="refas.refa8[0]" type="text">
+                  <input name="refas71" [(ngModel)]="refas.refa8[1]" type="text">
+                  <input name="refas72" [(ngModel)]="refas.refa8[2]" type="text">
+                  <input name="refas80" [(ngModel)]="refas.refa9[0]" type="text">
+                  <input name="refas81" [(ngModel)]="refas.refa9[1]" type="text">
+                  <input name="refas82" [(ngModel)]="refas.refa9[2]" type="text">
+                </div>
+              </div>
+            </form>
+            <div *ngIf="op.status!='Programado'" class="comoPDF">
+              <div class="masDatos">
+                <div *ngIf="op.fse==user.displayName" class="printBtn">
+                  <h3>Imprimir</h3>
+                  <button color="accent" mat-raised-button (click)="print()">
+                    <mat-icon>print</mat-icon>
+                  </button>
+                </div>
+                <div *ngIf="op.fotoSwoURL" class="printBtn">
+                  <h3>Ver foto</h3>
+                  <button color="primary" mat-raised-button (click)="verFoto(op.fotoSwoURL)">
+                    <mat-icon>wallpaper</mat-icon>
+                  </button>
+                </div>
+                <div *ngIf="!op.fotoSwoURL && op.fse==user.displayName" class="subirFoto">
+                  <div class="printBtn">
+                    <h3>Subir foto</h3>
+                    <input type="file" name="file" id="file" class="inputfile" (change)="subirFoto($event, op)" />
+                    <label class="labelFile mat-raised-button mat-primary" for="file">
+                      <mat-icon>photo_camera</mat-icon>
+                    </label>
+                  </div>
+                  <div *ngIf="showProgressBar" style="width: 94%">
+                    <mat-progress-bar mode="determinate" [value]="uploadPercent | async"></mat-progress-bar> <span>{{uploadPercent
+                      | async | number:'1.0-0'}}%</span>
+                  </div>
+                </div>
+                <div class="administrativos">
+                  <div class="adminItm">
+                    <div *ngIf="!op.firmada" class="swoFirmada">
+                      <p>Firmada </p>
+                      <mat-icon *ngIf="op.fse!=user.displayName">close</mat-icon>
+                      <mat-slide-toggle *ngIf="op.fse==user.displayName" class="slide" labelPosition="before" color="primary"
+                        [(ngModel)]="firmada"></mat-slide-toggle>
+                      <button *ngIf="firmada" mat-raised-button (click)="firmarOP(op)"> Guardar </button>
+                    </div>
+                    <div *ngIf="op.firmada" class="swoFirmada">
+                      <p>Firmada </p>
+                      <mat-icon>done</mat-icon>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="adminItm">
+                    <div *ngIf="!op.enviada" class="swoNoEnviada ">
+                      <p class="nE1">Enviada</p>
+                      <mat-icon *ngIf="op.fse!=user.displayName">close</mat-icon>
+                      <mat-slide-toggle *ngIf="op.fse==user.displayName" class="slide nE2" labelPosition="before" color="primary"
+                        [(ngModel)]="enviada"></mat-slide-toggle>
+                      <div class="nE3"></div>
+                      <p class="nE4" *ngIf="enviada">No. de Guía:</p>
+                      <button class="nE5" *ngIf="guia && enviada" mat-raised-button (click)="enviarOP(op)"> Guardar
+                      </button>
+                      <input class="nE6" *ngIf="enviada" type="text" [(ngModel)]="guia">
+                    </div>
+                    <div *ngIf="op.enviada" class="swoEnviada">
+                      <p>Enviada </p>
+                      <mat-icon>done</mat-icon>
+                      <p class="guia"> Guía: {{op.guia}} </p>
+                    </div>
+                  </div>
+                  <div class="adminItm">
+                    <div *ngIf="!op.recibida" class="swoRecibida">
+                      <p>Recibida</p>
+                      <mat-icon>close</mat-icon>
+                      <div></div>
+                    </div>
+                    <div *ngIf="op.recibida" class="swoRecibida">
+                      <p>Recibida</p>
+                      <mat-icon>done</mat-icon>
+                      <span> {{op.recibio}} el {{op.fecharecibida.toDate() | date: 'dd/MM/yyyy'}} </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ordenpdfC [swo]="swo" [op]="op" [cliente]="cliente" [equipo]="equipo"></ordenpdfC>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+    </div>
+  </div>
 </div>

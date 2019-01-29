@@ -1,102 +1,103 @@
 <div class="main">
-    <mat-card class="pasado">
-        <div class="cardSup">
-            <h2>Pendientes</h2>
+  <mat-card class="pasado">
+    <div class="cardSup">
+      <h2>Pendientes</h2>
+    </div>
+    <mat-accordion displayMode="flat" class="cardInf">
+      <mat-expansion-panel class="swoItem swoItemPend" *ngFor="let pend of arrPendientes">
+        <mat-expansion-panel-header class="swoItemHeader">
+          <h3 class="numSWO"> {{pend.swo}} </h3>
+          <p class="cliente">{{pend.cliente}} </p>
+          <p class="modelo"> {{pend.modelo}} </p>
+          <p class="serie"> {{pend.serie}} </p>
+        </mat-expansion-panel-header>
+        <div class="expan">
+          <p *ngIf="user.role!='fse'"> FSE: <span>{{pend.fse}}</span></p>
+          <!-- <p> Ultima Actividad: <span>{{pend.}}</span></p> -->
+          <p> Status: <span>{{pend.status}}</span> <span> {{pend.fechaop.toDate() | date: 'dd/MM/yyyy'}} </span> </p>
+          <p> Actividad: <span>{{pend.actividad}}</span></p>
+          <p *ngIf="pend.falla"> Falla: <span>{{pend.falla}}</span></p>
+          <div class="acciones">
+            <button mat-raised-button class="btnDetalles" [routerLink]="['/swo', pend.id]">Ver SWO</button>
+          </div>
         </div>
-        <mat-accordion displayMode="flat" class="cardInf">
-            <mat-expansion-panel class="swoItem swoItemPend" *ngFor="let pend of arrPendientes">
-                <mat-expansion-panel-header class="swoItemHeader">
-                    <h3 class="numSWO"> {{pend.swo}} </h3>
-                    <p class="cliente">{{pend.cliente}} </p>
-                    <p class="modelo"> {{pend.modelo}} </p>
-                    <p class="serie"> {{pend.serie}} </p>
-                </mat-expansion-panel-header> 
-                <div class="expan">
-                    <p *ngIf="user.role!='fse'"> FSE: <span>{{pend.fse}}</span></p>
-                    <!-- <p> Ultima Actividad: <span>{{pend.}}</span></p> -->
-                    <p> Status: <span>{{pend.status}}</span>  <span > {{pend.fechaop | date: 'dd/MM/yyyy'}}  </span>     </p>
-                    <p> Actividad: <span>{{pend.actividad}}</span></p>
-                    <p *ngIf="pend.falla"> Falla: <span>{{pend.falla}}</span></p>
-                    <div class="acciones">
-                        <button mat-raised-button class="btnDetalles" [routerLink]="['/swo', pend.id]">Ver SWO</button>
-                    </div>
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion>
-    </mat-card>
-    <mat-card class="presente">
-        <div class="cardSup">
-            <h2 id="presenteH2">Hoy</h2>
-            <span> {{today | date: 'dd/MM/yyyy'}} </span>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+  <mat-card class="presente">
+    <div class="cardSup">
+      <h2 id="presenteH2">Hoy</h2>
+      <span> {{today | date: 'dd/MM/yyyy'}} </span>
+    </div>
+    <mat-accordion displayMode="flat" class="cardInf">
+      <mat-expansion-panel class="swoItem swoItemHoy" *ngFor="let today of arrToday; let i = index" [expanded]="i==0"
+        [ngClass]="{'swoComplete':today.status === 'Concluido'}">
+        <mat-expansion-panel-header class="swoItemHeader">
+          <h3 class="numSWO"> {{today.swo}} </h3>
+          <p class="cliente">{{today.cliente}} </p>
+          <p class="modelo"> {{today.modelo}} </p>
+          <p class="serie"> {{today.serie}} </p>
+        </mat-expansion-panel-header>
+        <div class="expan">
+          <p *ngIf="user.role!='fse'"> FSE: <span>{{today.fse}}</span></p>
+          <p> Status: <span>{{today.status}}</span></p>
+          <p> Actividad: <span>{{today.actividad}}</span></p>
+          <p *ngIf="today.falla"> Falla: <span>{{today.falla}}</span></p>
+          <div class="acciones">
+            <button mat-raised-button class="btnDetalles" [routerLink]="['/swo', today.id]">Ver SWO</button>
+          </div>
         </div>
-        <mat-accordion displayMode="flat" class="cardInf">
-            <mat-expansion-panel class="swoItem swoItemHoy" *ngFor="let today of arrToday; let i = index" [expanded]="i==0" [ngClass]="{'swoComplete':today.status === 'Concluido'}">
-                <mat-expansion-panel-header class="swoItemHeader">
-                    <h3 class="numSWO"> {{today.swo}} </h3>
-                    <p class="cliente">{{today.cliente}} </p>
-                    <p class="modelo"> {{today.modelo}} </p>
-                    <p class="serie"> {{today.serie}} </p>
-                </mat-expansion-panel-header>
-                <div class="expan">
-                    <p *ngIf="user.role!='fse'"> FSE: <span>{{today.fse}}</span></p>
-                    <p> Status: <span>{{today.status}}</span></p>
-                    <p> Actividad: <span>{{today.actividad}}</span></p>
-                    <p *ngIf="today.falla"> Falla: <span>{{today.falla}}</span></p>
-                    <div class="acciones">
-                        <button mat-raised-button class="btnDetalles" [routerLink]="['/swo', today.id]">Ver SWO</button>
-                    </div>
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion>
-    </mat-card>
-    <mat-card class="futuro">
-        <div class="cardSup">
-            <h2>Próximos</h2>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+  <mat-card class="futuro">
+    <div class="cardSup">
+      <h2>Próximos</h2>
+    </div>
+    <mat-accordion displayMode="flat" class="cardInf">
+      <mat-expansion-panel class="swoItem swoItemMa" *ngFor="let swoMa of arrTomorrow">
+        <mat-expansion-panel-header class="swoItemHeader">
+          <h3 class="numSWO"> {{swoMa.swo}} </h3>
+          <p class="cliente">{{swoMa.cliente}} </p>
+          <p class="modelo"> {{swoMa.modelo}} </p>
+          <p class="serie"> {{swoMa.serie}} </p>
+        </mat-expansion-panel-header>
+        <div class="expan">
+          <p *ngIf="user.role!='fse'"> FSE: <span>{{swoMa.fse}}</span></p>
+          <p> Status: <span>{{swoMa.status}}</span> <span> {{swoMa.fechaop.toDate() | date: 'dd/MM/yyyy'}} </span> </p>
+          <p> Actividad: <span>{{swoMa.actividad}}</span></p>
+          <p *ngIf="swoMa.falla"> Falla: <span>{{swoMa.falla}}</span></p>
+          <div class="acciones">
+            <button mat-raised-button class="btnDetalles" [routerLink]="['/swo', swoMa.id]">Ver SWO</button>
+          </div>
         </div>
-        <mat-accordion displayMode="flat" class="cardInf">
-            <mat-expansion-panel class="swoItem swoItemMa" *ngFor="let swoMa of arrTomorrow">
-                <mat-expansion-panel-header class="swoItemHeader">
-                    <h3 class="numSWO"> {{swoMa.swo}} </h3>
-                    <p class="cliente">{{swoMa.cliente}} </p>
-                    <p class="modelo"> {{swoMa.modelo}} </p>
-                    <p class="serie"> {{swoMa.serie}} </p>
-                </mat-expansion-panel-header>
-                <div class="expan">
-                    <p *ngIf="user.role!='fse'"> FSE: <span>{{swoMa.fse}}</span></p>
-                    <p> Status: <span>{{swoMa.status}}</span> <span> {{swoMa.fechaop | date: 'dd/MM/yyyy'}}  </span>   </p>
-                    <p> Actividad: <span>{{swoMa.actividad}}</span></p>
-                    <p *ngIf="swoMa.falla"> Falla: <span>{{swoMa.falla}}</span></p>
-                    <div class="acciones">
-                        <button mat-raised-button class="btnDetalles" [routerLink]="['/swo', swoMa.id]">Ver SWO</button>
-                    </div>
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion>
-    </mat-card>
-    <div></div>
-    <mat-card class="recientes">
-        <div class="cardSup">
-            <h2>Recientes</h2>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+  <div></div>
+  <mat-card class="recientes">
+    <div class="cardSup">
+      <h2>Recientes</h2>
+    </div>
+    <mat-accordion displayMode="flat" class="cardInf">
+      <mat-expansion-panel class="swoItem swoItemReciente" *ngFor="let recis of arrRecientes">
+        <mat-expansion-panel-header class="swoItemHeader">
+          <h3 class="numSWO"> {{recis.swo}} </h3>
+          <p class="cliente">{{recis.cliente}} </p>
+          <p class="modelo"> {{recis.modelo}} </p>
+          <p class="serie"> {{recis.serie}} </p>
+        </mat-expansion-panel-header>
+        <div class="expan">
+          <p *ngIf="user.role!='fse'"> FSE: <span>{{recis.fse}}</span></p>
+          <p> Status: <span>{{recis.status}}</span> <span> {{recis.fechaop.toDate() | date: 'dd/MM/yyyy'}} </span> </p>
+          <p> Actividad: <span>{{recis.actividad}}</span></p>
+          <p *ngIf="recis.falla"> Falla: <span>{{recis.falla}}</span></p>
+          <div class="acciones">
+            <button mat-raised-button class="btnDetalles" [routerLink]="['/swo', recis.id]">Ver SWO</button>
+          </div>
         </div>
-        <mat-accordion displayMode="flat" class="cardInf">
-            <mat-expansion-panel class="swoItem swoItemReciente" *ngFor="let recis of arrRecientes">
-                <mat-expansion-panel-header class="swoItemHeader">
-                    <h3 class="numSWO"> {{recis.swo}} </h3>
-                    <p class="cliente">{{recis.cliente}} </p>
-                    <p class="modelo"> {{recis.modelo}} </p>
-                    <p class="serie"> {{recis.serie}} </p>
-                </mat-expansion-panel-header>
-                <div class="expan">
-                    <p *ngIf="user.role!='fse'"> FSE: <span>{{recis.fse}}</span></p>
-                    <p> Status: <span>{{recis.status}}</span> <span> {{recis.fechaop | date: 'dd/MM/yyyy'}}  </span>   </p>
-                    <p> Actividad: <span>{{recis.actividad}}</span></p>
-                    <p *ngIf="recis.falla"> Falla: <span>{{recis.falla}}</span></p>
-                    <div class="acciones">
-                        <button mat-raised-button class="btnDetalles" [routerLink]="['/swo', recis.id]">Ver SWO</button>
-                    </div>
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion>
-    </mat-card>
-    <div></div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+  <div></div>
 </div>
