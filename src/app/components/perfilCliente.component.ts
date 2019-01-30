@@ -47,7 +47,7 @@ export class PerfilClienteComponent {
 
   equipoActual = {} as IEquipo;
   displayDerecha = 'none';
-
+  verServicios: Boolean = false;
 
   constructor(public _route: ActivatedRoute,
     public dialog: MatDialog,
@@ -138,6 +138,12 @@ export class PerfilClienteComponent {
     let dialogEditCliente = this.dialog.open(NewClienteComponent);
     dialogEditCliente.componentInstance.editFlag = true;
     dialogEditCliente.componentInstance.cliente = this.cliente;
+  }
+
+  tabChanged(e) {
+    if (e.index == 1) {
+      this.verServicios = true;
+    }
   }
 
   // FUNCIONES UTILES

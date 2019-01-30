@@ -54,7 +54,8 @@
             <mat-expansion-panel *ngFor="let orden of displayedSWO$ | async" (opened)="leerOps(orden.id)">
               <mat-expansion-panel-header class="mat-row" [ngStyle]="{'background-color':getColor(orden.status)}">
                 <span class="mat-cell">{{orden.swo}}</span>
-                <span *ngIf="orden.fechainicio" class="mat-cell">{{orden.fechainicio.toDate() | date: 'dd/MM/yyyy'}}</span>
+                <span *ngIf="orden.fechainicio" class="mat-cell">{{orden.fechainicio.toDate() | date:
+                  'dd/MM/yyyy'}}</span>
                 <span class="mat-cell">{{orden.status}}</span>
                 <span *ngIf="orden.fechafin" class="mat-cell">{{orden.fechafin.toDate() | date: 'dd/MM/yyyy'}}</span>
                 <span *ngIf="!orden.fechafin" class="mat-cell"></span>

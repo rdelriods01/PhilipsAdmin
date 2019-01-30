@@ -8,7 +8,7 @@ import { environment } from '../environments/environment';
 
 // Firebase ====================
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
@@ -52,7 +52,7 @@ import { UsersComponent } from './components/users.component';
 import { BitacoraComponent } from './components/bitacora.component';
 import { SetGuiaComponent } from './components/setGuia.component';
 import { RecibirComponent } from './components/recibir.component';
-
+import { serviciosClienteComponent } from './components/serviciosCliente.component'
 
 // Rutas =============================
 const routes: Routes = [
@@ -93,7 +93,8 @@ const routes: Routes = [
     UsersComponent,
     BitacoraComponent,
     SetGuiaComponent,
-    RecibirComponent
+    RecibirComponent,
+    serviciosClienteComponent
   ],
   entryComponents: [
     NewClienteComponent, NewEquipoComponent, NewSwoComponent, NewOPComponent
@@ -124,7 +125,8 @@ const routes: Routes = [
     EquipoService,
     SWOService,
     ConfigService,
-    LayoutComponent
+    LayoutComponent,
+    { provide: FirestoreSettingsToken, useValue: {} }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,12 +1,5 @@
-.superior {
-  text-align: center;
-}
 .main {
   height: 92.4vh;
-}
-.superior h1 {
-  margin-top: 0;
-  color: #666;
 }
 .inferior {
   margin-bottom: 10em;
@@ -21,10 +14,6 @@
   flex-direction: column;
   min-width: 300px;
 }
-.header {
-  min-height: 64px;
-  padding: 8px 24px 0;
-}
 .mat-form-field {
   font-size: 14px;
   width: 100%;
@@ -33,14 +22,14 @@
   overflow: auto;
   display: grid;
 }
-.bitacora ::ng-deep .mat-sort-header-container {
+.serviciosC ::ng-deep .mat-sort-header-container {
   justify-content: center;
   margin: auto;
 }
 .mat-row {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(12, 1fr);
 }
 .mat-cell {
   text-align: center;

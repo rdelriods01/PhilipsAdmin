@@ -70,8 +70,8 @@ export class SWOService {
     return this.afs.collection('swos').valueChanges()
   }
   // Leer swos de un cliente
-  getSWOsCliente(idS) {
-    return this.afs.collection('swos', ref => ref.where('cliente', '==', idS)).valueChanges()
+  getSWOsCliente(idC) {
+    return this.afs.collection('swos', ref => ref.where('cliente', '==', idC).orderBy('fechainicio', "desc")).valueChanges()
     // .map( arr => {
     //     return arr.map(a => {
     //         const obj = a.payload.doc.data() as ISwo;
@@ -167,8 +167,8 @@ export class SWOService {
 
 
   // Leer las OPs de una SWO
-  getOPs(idSWO) {
-    return this.afs.collection('swos').doc(idSWO).collection('ops').valueChanges()
+  getOPs(swoid) {
+    return this.afs.collection('swos').doc(swoid).collection('ops').valueChanges()
     // .map(arr => {
     // return arr.map(snap => {
     //     const obj = snap.payload.doc.data() as IOperacion;
@@ -178,6 +178,22 @@ export class SWOService {
     // .map(res=>{
     //     return res;
     // })
+  }
+  getOPsforClient(swo) {
+    return this.afs.collection('swos').doc(swo.id).collection('ops').snapshotChanges()
+      .pipe(
+        map(arr => {
+          return arr.map(b => {
+            let op = b.payload.doc.data();
+            // this.updateOP(swo,op)
+            op.falla = swo.falla;
+            op.swo = swo.swo;
+            op.equipoid = swo.equipo;
+            op.clienteid = swo.cliente;
+            return op;
+          })
+        })
+      )
   }
 
   // Obtener los datos de una OP en especifico de una SWO

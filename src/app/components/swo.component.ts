@@ -3,6 +3,8 @@ import { FormsModule, FormControl, FormGroup, FormBuilder, Validators } from '@a
 
 import { ActivatedRoute, Params } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
+import * as firebase from 'firebase/app'
+import 'firebase/firestore';
 
 import { Observable, of } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -110,11 +112,12 @@ export class SwoComponent {
 
   saveProceed(oper) {
     this.swo.status = this.status;
+    let newDate = new Date();
     if (this.status == 'Concluido') {
-      this.swo.fechafin = new Date();
+      this.swo.fechafin = firebase.firestore.Timestamp.fromDate(newDate);
     }
     oper.status = 'Concluido';
-    oper.fechafin = new Date();
+    oper.fechafin = firebase.firestore.Timestamp.fromDate(newDate);
     oper.operando = this.operando;
     oper.resultados = this.resultados;
     oper.observaciones = this.observaciones;
