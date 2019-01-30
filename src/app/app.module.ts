@@ -45,7 +45,7 @@ import { NewEquipoComponent } from './components/newEquipo.component';
 import { PerfilEquipoComponent } from './components/perfilEquipo.component';
 import { PerfilClienteComponent } from './components/perfilCliente.component';
 import { NewSwoComponent } from './components/newSwo.component';
-import { SwoComponent } from './components/Swo.component';
+import { SwoComponent } from './components/swo.component';
 import { OrdenPDFComponent } from './components/ordenpdf.component';
 import { NewOPComponent } from './components/newOP.component';
 import { UsersComponent } from './components/users.component';
