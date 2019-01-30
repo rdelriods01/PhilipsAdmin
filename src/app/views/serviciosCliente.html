@@ -1,6 +1,12 @@
 <div class="main serviciosC">
   <div class="inferior">
     <mat-card>
+      <div class="header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </div>
+
       <div class="mat-elevation-z8">
         <!-- <mat-table [dataSource]="dataSource" matSort matSortActive="fechaprog" matSortDirection="desc" matSortDisableClear > -->
         <mat-table [dataSource]="dataSource" matSort matSortActive="fechaprog" matSortDirection="desc"
@@ -23,13 +29,6 @@
           <ng-container matColumnDef="op">
             <mat-header-cell *matHeaderCellDef mat-sort-header> OP </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.op}} </mat-cell>
-          </ng-container>
-
-          <!-- Color Column -->
-          <ng-container matColumnDef="cliente">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </mat-header-cell>
-            <mat-cell *matCellDef="let row" class="hoverElement" [routerLink]="['/cliente',row.clienteid]">
-              {{row.cliente}} </mat-cell>
           </ng-container>
 
           <!-- Color Column -->

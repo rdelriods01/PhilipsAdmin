@@ -17,7 +17,7 @@ export class serviciosClienteComponent {
   equipos;
   clientes;
 
-  displayedColumns: string[] = ['fechaprog', 'swo', 'op', 'cliente', 'equipoModelo', 'equipoSerie', 'actividad', 'falla', 'status', 'firmada', 'enviada', 'recibida'];
+  displayedColumns: string[] = ['fechaprog', 'swo', 'op', 'equipoModelo', 'equipoSerie', 'actividad', 'falla', 'status', 'firmada', 'enviada', 'recibida'];
 
   dataSource = new MatTableDataSource();
 
@@ -59,4 +59,11 @@ export class serviciosClienteComponent {
       }
     })
   }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
 }

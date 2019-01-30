@@ -1,8 +1,13 @@
-.main {
-  height: 92.4vh;
-}
 .inferior {
   margin-bottom: 10em;
+}
+.header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
 }
 .hoverElement:hover {
   color: darkcyan;
@@ -29,7 +34,7 @@
 .mat-row {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(11, 1fr);
 }
 .mat-cell {
   text-align: center;
