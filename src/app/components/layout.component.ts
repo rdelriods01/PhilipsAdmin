@@ -37,9 +37,16 @@ export class LayoutComponent {
     public _swoService: SWOService,
     public _clienteService: ClienteService
   ) {
-    if (window.innerWidth < 769) {
+    if (window.innerWidth < 1300) {
       this.showSideNav = false;
     }
+    window.addEventListener("resize", () => {
+      if (window.innerWidth < 1350) {
+        this.showSideNav = false;
+      } else {
+        this.showSideNav = true;
+      }
+    })
     this.auth.user.subscribe(us => {
       this.user = us;
       // console.log(this.user);

@@ -54,7 +54,7 @@ export interface IOperacion {
   swoid: string;
   actividad: string;
   fechaprog: any;
-  fechafin?: Date;
+  fechafin?: any;
   horainicio?: string;
   horafin?: string;
   status: string;
