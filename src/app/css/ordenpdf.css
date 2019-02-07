@@ -38,10 +38,16 @@
   }
 }
 @media only screen and (max-width: 540px) {
+  .ordenpdfCard {
+    margin: auto 0;
+    padding: 1em 0;
+  }
   .all {
-    height: 111vh;
+    height: 149vh;
     zoom: 50%;
     box-shadow: none;
+    padding: 1em;
+    min-width: fit-content;
   }
 }
 @media print {
