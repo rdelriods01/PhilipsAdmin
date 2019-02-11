@@ -62,6 +62,7 @@ const routes: Routes = [
       { path: 'config', component: ConfigComponent },
       { path: 'users', component: UsersComponent },
       { path: 'bitacora', component: BitacoraComponent },
+      { path: 'enviar', component: SetGuiaComponent },
       { path: 'recibidas', component: RecibirComponent },
       { path: 'bi', component: BaseInstaladaComponent },
       { path: 'equipo/:id', component: PerfilEquipoComponent },

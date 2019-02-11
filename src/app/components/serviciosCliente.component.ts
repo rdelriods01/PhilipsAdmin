@@ -51,7 +51,6 @@ export class serviciosClienteComponent {
 
             this.ops.push(ops[i]);
           }
-          console.log(this.ops);
           this.dataSource.data = this.ops;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;

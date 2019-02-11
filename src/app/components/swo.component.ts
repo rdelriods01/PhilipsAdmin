@@ -22,6 +22,7 @@ import { NewOPComponent } from '../components/newOP.component';
 import { NewSwoComponent } from '../components/newSwo.component';
 import { NewClienteComponent } from '../components/newCliente.component';
 import { NewEquipoComponent } from '../components/newEquipo.component';
+import { log } from 'util';
 
 @Component({
   selector: 'SwoC',
@@ -45,6 +46,7 @@ export class SwoComponent {
   resultados: string = '';
   observaciones: string = '';
   duracion: number;
+  limitTime;
   fechafin: Date;
   refas: any;
   firmada: Boolean = false;
@@ -79,6 +81,8 @@ export class SwoComponent {
         })
       })
     })
+    let limitT = new Date(this.getMañana())
+    this.limitTime = limitT.getTime() - 1;
     this.fechafin = new Date();
     this.refas = {
       refa1: ['', '', ''],
@@ -129,7 +133,6 @@ export class SwoComponent {
   }
 
   firmarOP(operF) {
-    console.log(this.firmada);
     console.log(operF);
     operF.firmada = this.firmada;
     this._swoService.updateOP(this.swo, operF);
@@ -152,8 +155,11 @@ export class SwoComponent {
     dialogNewSwo.componentInstance.swo = this.swo;
   }
 
-  print() {
+  print(op) {
+    const titule = document.title;
+    document.title = this.swo.swo + '-' + op.op;
     window.print();
+    document.title = titule;
   }
 
 
@@ -199,6 +205,17 @@ export class SwoComponent {
     let dialogEditCliente = this.dialog.open(NewClienteComponent);
     dialogEditCliente.componentInstance.editFlag = true;
     dialogEditCliente.componentInstance.cliente = this.cliente;
+  }
+
+  getMañana() {
+    var d = new Date()
+    d.setDate(d.getDate() + 1);
+    let miFecha: any[] = [];
+    miFecha[0] = d.getFullYear();
+    miFecha[1] = d.getMonth() + 1;
+    miFecha[2] = d.getDate();
+    let mañana = miFecha[0] + '-' + miFecha[1] + '-' + miFecha[2];
+    return mañana;
   }
 
 }

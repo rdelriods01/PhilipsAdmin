@@ -56,6 +56,11 @@
           </a>
         </li>
         <li *ngIf="user.role=='fse'">
+          <a [routerLink]="['/enviar']">
+            <mat-icon class="icon">send</mat-icon>Enviar SWOs
+          </a>
+        </li>
+        <li *ngIf="user.role!='fse'">
           <a [routerLink]="['/recibidas']">
             <mat-icon class="icon">assignment_turned_in</mat-icon>Recibir SWOs
           </a>

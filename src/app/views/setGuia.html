@@ -1,55 +1,64 @@
-<mat-card>
-  <div class="superior">
-    <p>Escribir guía y seleccionar a que SWOs se les asignará la misma</p>
-    <div class="supDer">
-      <button class="mainBtn" *ngIf="!showProceedDetails" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails">Seleccionar</button>
-      <div *ngIf="showProceedDetails" class="backSaveBtns">
-        <p> <strong> Numero de guía:</strong> <input type="text" [(ngModel)]="guia"> </p>
-        <button color="accent" mat-raised-button (click)="showProceedDetails=!showProceedDetails; back()">
-          <mat-icon>arrow_back</mat-icon>
-        </button>
-        <button class="mainBtn" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails; saveProceed()"
-          [disabled]="guia=='' || saveDisabled">Guardar</button>
+<div class="main">
+  <mat-card>
+    <div class="superior">
+      <p>Escribir guía y seleccionar a que SWOs se les asignará la misma</p>
+      <div class="supDer">
+        <button class="mainBtn" *ngIf="!showProceedDetails" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails">Seleccionar</button>
+        <div *ngIf="showProceedDetails" class="backSaveBtns">
+          <p> <strong> Numero de guía:</strong> <input type="text" [(ngModel)]="guia"> </p>
+          <div class="pickerdiv" [formGroup]="pickerFormGroup">
+            <ng2-flatpickr class="pickerSetGuia" [config]="pickerOptions" formControlName="pickerForm" placeholder="Fecha.."
+              required></ng2-flatpickr>
+          </div>
+          <button color="accent" mat-raised-button (click)="showProceedDetails=!showProceedDetails; back()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <button class="mainBtn" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails; saveProceed()"
+            [disabled]="guia=='' || saveDisabled">Guardar</button>
+        </div>
       </div>
     </div>
-  </div>
-  <mat-form-field class="tablaBuscar">
-    <input matInput class="tablaInputBuscar" type="text" [(ngModel)]="opBuscada" (keyup)="filtrarOPs()" placeholder="Buscar...">
-  </mat-form-field>
-  <table>
-    <thead>
-      <tr class="rowHeader">
-        <th *ngIf="!showProceedDetails"></th>
-        <th *ngIf="showProceedDetails" (click)="toggleAllChecked()" style="cursor: pointer;">
-          <mat-icon *ngIf="allChk">check_box</mat-icon>
-          <mat-icon *ngIf="!allChk">check_box_outline_blank</mat-icon>
-        </th>
-        <th>Fecha</th>
-        <th>SWO</th>
-        <th>OP</th>
-        <th>Cliente</th>
-        <th>Equipo</th>
-        <th>Serie</th>
-        <th>FSE</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let op of ops" class="rowData">
-        <td *ngIf="!showProceedDetails"></td>
-        <td *ngIf="showProceedDetails">
-          <mat-checkbox (change)="setUnset($event, op)" [checked]="op.checked"></mat-checkbox>
-        </td>
-        <td> {{op.fechafin.toDate() | date:'dd/MM/yyyy' }}</td>
-        <td class="hoverElement" [routerLink]="['/swo',op.swoid]"> {{op.swo}} </td>
-        <td> {{op.op}}</td>
-        <td class="hoverElement" [routerLink]="['/cliente',op.clienteid]"> {{op.cliente}} </td>
-        <td class="hoverElement" [routerLink]="['/equipo',op.equipoid]"> {{op.equipoModelo}} </td>
-        <td class="hoverElement" [routerLink]="['/equipo',op.equipoid]"> {{op.equipoSerie}} </td>
-        <td> {{op.fse}} </td>
-        <td> {{op.status}}</td>
-      </tr>
-      <p> Invisible</p>
-    </tbody>
-  </table>
-</mat-card>
+    <mat-form-field class="tablaBuscar">
+      <input matInput class="tablaInputBuscar" type="text" [(ngModel)]="opBuscada" (keyup)="filtrarOPs()" placeholder="Buscar...">
+    </mat-form-field>
+    <table>
+      <thead>
+        <tr class="rowHeader">
+          <th *ngIf="!showProceedDetails"></th>
+          <th *ngIf="showProceedDetails" (click)="toggleAllChecked()" style="cursor: pointer;">
+            <mat-icon *ngIf="allChk">check_box</mat-icon>
+            <mat-icon *ngIf="!allChk">check_box_outline_blank</mat-icon>
+          </th>
+          <th>Fecha</th>
+          <th>SWO</th>
+          <th>OP</th>
+          <th>Cliente</th>
+          <th>Equipo</th>
+          <th>Serie</th>
+          <th>Actividad</th>
+          <th>FSE</th>
+          <th>Firmada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let op of ops" class="rowData">
+          <td *ngIf="!showProceedDetails"></td>
+          <td *ngIf="showProceedDetails">
+            <mat-checkbox (change)="setUnset($event, op)" [checked]="op.checked"></mat-checkbox>
+          </td>
+          <td> {{op.fechafin.toDate() | date:'dd/MM/yyyy' }}</td>
+          <td class="hoverElement" [routerLink]="['/swo',op.swoid]"> {{op.swo}} </td>
+          <td> {{op.op}}</td>
+          <td class="hoverElement" [routerLink]="['/cliente',op.clienteid]"> {{op.cliente}} </td>
+          <td class="hoverElement" [routerLink]="['/equipo',op.equipoid]"> {{op.equipoModelo}} </td>
+          <td class="hoverElement" [routerLink]="['/equipo',op.equipoid]"> {{op.equipoSerie}} </td>
+          <td> {{op.actividad}} </td>
+          <td> {{op.fse}} </td>
+          <td *ngIf="op.firmada">Si</td>
+          <td *ngIf="!op.firmada">No</td>
+        </tr>
+        <p> Invisible</p>
+      </tbody>
+    </table>
+  </mat-card>
+</div>

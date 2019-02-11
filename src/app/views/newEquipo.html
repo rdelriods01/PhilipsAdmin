@@ -1,66 +1,76 @@
 <form #formNewEquipo="ngForm">
-    <div style="margin-top: 1em">
-        <h2 *ngIf="editFlag==false">Agregar nuevo Equipo</h2>
-        <h2 *ngIf="editFlag==true">Editar Equipo</h2>
-        <div class="main">
-            <div class="serieDiv">
-                <mat-form-field>
-                    <input matInput class="serie" #serie="ngModel" name="serie" [(ngModel)]="equipo.serie" placeholder="Serie.." required>
-                </mat-form-field>
-            </div>
-            <div class="tipoDiv">
-                <mat-form-field>
-                    <input matInput [formControl]="miTipo" [matAutocomplete]="auto" name="tipo" [(ngModel)]="equipo.tipo" placeholder="Tipo..." (keyup)="filtrarTipos(equipo.tipo)" required>
-                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getTipo($event.option.value)'>
-                        <mat-option *ngFor="let opTipo of filteredTipo" [value]="opTipo">
-                            {{ opTipo }}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput [formControl]="miModelo" [matAutocomplete]="auto2" name="modelo" [(ngModel)]="equipo.modelo" placeholder="Modelo..." (keyup)="filtrarModelos(equipo.modelo)" required>
-                    <mat-autocomplete #auto2="matAutocomplete" (optionSelected)='getModelo($event.option.value)'>
-                        <mat-option *ngFor="let opModelo of filteredModelo" [value]="opModelo">
-                            {{ opModelo }}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-            </div>
+  <div style="margin-top: 1em">
+    <h2 *ngIf="editFlag==false">Agregar nuevo Equipo</h2>
+    <h2 *ngIf="editFlag==true">Editar Equipo</h2>
+    <div class="main">
+      <div class="serieDiv">
+        <mat-form-field>
+          <input matInput class="serie" #serie="ngModel" name="serie" [(ngModel)]="equipo.serie" placeholder="Serie.."
+            required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput class="eqid" #eqid="ngModel" name="eqid" [(ngModel)]="equipo.eqid" placeholder="Equipo ID..">
+        </mat-form-field>
+      </div>
+      <div class="tipoDiv">
+        <mat-form-field>
+          <input matInput [formControl]="miTipo" [matAutocomplete]="auto" name="tipo" [(ngModel)]="equipo.tipo"
+            placeholder="Tipo..." (keyup)="filtrarTipos(equipo.tipo)" required>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getTipo($event.option.value)'>
+            <mat-option *ngFor="let opTipo of filteredTipo" [value]="opTipo">
+              {{ opTipo }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [formControl]="miModelo" [matAutocomplete]="auto2" name="modelo" [(ngModel)]="equipo.modelo"
+            placeholder="Modelo..." (keyup)="filtrarModelos(equipo.modelo)" required>
+          <mat-autocomplete #auto2="matAutocomplete" (optionSelected)='getModelo($event.option.value)'>
+            <mat-option *ngFor="let opModelo of filteredModelo" [value]="opModelo">
+              {{ opModelo }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
 
-            <div class="otrosDiv">
-                <mat-form-field>
-                    <input matInput class="sw" #sw="ngModel" name="sw" [(ngModel)]="equipo.sw" placeholder="Version de Software..">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput class="ubicacion" #ubicacion="ngModel" name="ubicacion" [(ngModel)]="equipo.ubicacion" placeholder="Ubicación..">
-                </mat-form-field>
-            </div>
+      <div class="otrosDiv">
+        <mat-form-field>
+          <input matInput class="sw" #sw="ngModel" name="sw" [(ngModel)]="equipo.sw" placeholder="Version de Software..">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput class="ubicacion" #ubicacion="ngModel" name="ubicacion" [(ngModel)]="equipo.ubicacion"
+            placeholder="Ubicación..">
+        </mat-form-field>
+      </div>
 
-            <div *ngIf="equipo.tipo=='Monitor de signos vitales'" class="conModulo">
-                <mat-form-field>
-                    <input matInput class="modModelo" #moduloModelo="ngModel" name="moduloModelo" [(ngModel)]="equipo.moduloModelo" placeholder="Modelo del Módulo...">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput class="modSerie" #moduloSerie="ngModel" name="moduloSerie" [(ngModel)]="equipo.moduloSerie" placeholder="Serie del Módulo...">
-                </mat-form-field>
-            </div>
+      <div *ngIf="equipo.tipo=='Monitor de signos vitales'" class="conModulo">
+        <mat-form-field>
+          <input matInput class="modModelo" #moduloModelo="ngModel" name="moduloModelo" [(ngModel)]="equipo.moduloModelo"
+            placeholder="Modelo del Módulo...">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput class="modSerie" #moduloSerie="ngModel" name="moduloSerie" [(ngModel)]="equipo.moduloSerie"
+            placeholder="Serie del Módulo...">
+        </mat-form-field>
+      </div>
 
-            <div class="accesorios">
-                <p><strong>¿Tiene más accesorios?</strong>
-                    <mat-radio-group name="accesoriosBoolean" [(ngModel)]="accesoriosBoolean" required>
-                        <mat-radio-button [value]=true>Si</mat-radio-button>
-                        <mat-radio-button [value]=false>No</mat-radio-button>
-                    </mat-radio-group>
-                </p>
-                <mat-form-field class="conAccesorios" *ngIf="accesoriosBoolean==true">
-                    <textarea matInput matTextareaAutosize matAutosizeMinRows="3" #accesorios="ngModel" name="accesorios" [(ngModel)]="equipo.accesorios" placeholder="Otros accesorios..." required></textarea>
-                </mat-form-field>
-            </div>
+      <div class="accesorios">
+        <p><strong>¿Tiene más accesorios?</strong>
+          <mat-radio-group name="accesoriosBoolean" [(ngModel)]="accesoriosBoolean" required>
+            <mat-radio-button [value]=true>Si</mat-radio-button>
+            <mat-radio-button [value]=false>No</mat-radio-button>
+          </mat-radio-group>
+        </p>
+        <mat-form-field class="conAccesorios" *ngIf="accesoriosBoolean==true">
+          <textarea matInput matTextareaAutosize matAutosizeMinRows="3" #accesorios="ngModel" name="accesorios"
+            [(ngModel)]="equipo.accesorios" placeholder="Otros accesorios..." required></textarea>
+        </mat-form-field>
+      </div>
 
-        </div>
-
-        <div class="guardar">
-            <button mat-raised-button color="accent" id="btn-newEquipo-guardar" (click)="onSubmit()" [disabled]="!formNewEquipo.form.valid">Guardar</button>
-        </div>
     </div>
+
+    <div class="guardar">
+      <button mat-raised-button color="accent" id="btn-newEquipo-guardar" (click)="onSubmit()" [disabled]="!formNewEquipo.form.valid">Guardar</button>
+    </div>
+  </div>
 </form>

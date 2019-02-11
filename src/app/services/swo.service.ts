@@ -204,7 +204,7 @@ export class SWOService {
     return this.afs.collection('swos').doc(swoId).collection('ops').doc(op).valueChanges();
   }
   updateJustOP(swoId, op) {
-    this.afs.collection('swos').doc(swoId).collection('ops').doc(op.op).update(op);
+    return this.afs.collection('swos').doc(swoId).collection('ops').doc(op.op).update(op);
   }
 
 

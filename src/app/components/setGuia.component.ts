@@ -1,8 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { SWOService } from "../services/swo.service";
+import * as firebase from 'firebase/app'
 
 import { LayoutComponent } from "../components/layout.component";
+import { FlatpickrOptions } from 'ng2-flatpickr';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'setGuiaC',
@@ -21,12 +25,21 @@ export class SetGuiaComponent {
 
   opBuscada = "";
 
+  pickerOptions: FlatpickrOptions = {
+    // minDate: 'today'
+  };
+  pickerFormGroup: FormGroup;
+
   constructor(public _swoService: SWOService,
-    public _layoutC: LayoutComponent
+    public _layoutC: LayoutComponent,
+    public router: Router
   ) {
     let equipos = this._layoutC.equipos;
     let clientes = this._layoutC.clientes;
-    this._swoService.getSWOs().subscribe(swos => {
+    this.pickerFormGroup = new FormGroup({
+      pickerForm: new FormControl()
+    });
+    this._swoService.getOrderedSWOs().subscribe(swos => {
       for (let j = 0; j < swos.length; j++) {
         this._swoService.getOPsToSend(swos[j]).subscribe(ops => {
           for (let i = 0; i < ops.length; i++) {
@@ -41,14 +54,8 @@ export class SetGuiaComponent {
                 ops[i].cliente = clientes[k].nombre;
               }
             }
-            // Revisar si ya existe la OP
-            for (let k = 0; k < this.ops.length; k++) {
-              if (ops[i].id == this.ops[k].id) {
-                this.ops.splice(k, 1)
-              }
-            }
             this.ops.push(ops[i]);
-            this.saveOps = JSON.parse(JSON.stringify(this.ops));
+            this.saveOps = [...this.ops];
           }
         });
       }
@@ -66,9 +73,12 @@ export class SetGuiaComponent {
   filterAllProperties(array, value) {
     var filtrado = [];
     for (var i = 0; i < array.length; i++) {
+      const fecfin = array[i].fechafin;
       var obj = JSON.stringify(array[i]);
       if (obj.toLowerCase().indexOf(value) >= 0) {
-        filtrado.push(JSON.parse(obj));
+        let newobj = JSON.parse(obj)
+        newobj.fechafin = fecfin;
+        filtrado.push(newobj);
       }
     }
     return filtrado;
@@ -92,7 +102,6 @@ export class SetGuiaComponent {
       this.saveDisabled = true;
     }
   }
-
   toggleAllChecked() {
     this.allChk = !this.allChk;
     if (this.allChk == true) {
@@ -120,19 +129,39 @@ export class SetGuiaComponent {
   }
 
   saveProceed() {
-    this.ordenesAEnviar.forEach(op => {
-      this._swoService.getOneOP(op.swoid, op.op).subscribe(miop => {
-        miop['guia'] = this.guia;
-        miop['enviada'] = true;
-        console.log(miop);
-        this._swoService.updateJustOP(miop['swoid'], miop);
+    let fecha = this.pickerFormGroup.controls['pickerForm'].value;
+    if (fecha) {
+      this.ordenesAEnviar.map(op => {
+        delete op.checked
+        delete op.cliente
+        delete op.clienteid
+        delete op.equipoModelo
+        delete op.equipoSerie
+        delete op.equipoid
+        delete op.swo
+        op['guia'] = this.guia;
+        op['enviada'] = true;
+        op['fechaenviada'] = firebase.firestore.Timestamp.fromDate(fecha[0]);
+        this._swoService.updateJustOP(op['swoid'], op).then(res => {
+          console.log(op);
+        })
+        // this._swoService.getOneOP(op.swoid, op.op).subscribe(miop => {
+        //   miop['guia'] = this.guia;
+        //   miop['enviada'] = true;
+        //   miop['fechaenviada'] = firebase.firestore.Timestamp.fromDate(fecha[0]);
+        //   this._swoService.updateJustOP(miop['swoid'], miop).then(res => {
+        //     console.log(op['swo'] + '-' + op['op'] + ' enviada');
+        //   })
+        // })
       })
-    })
-    for (let i = 0; i < this.ops.length; i++) {
-      this.ops[i].checked = false;
+      for (let i = 0; i < this.ops.length; i++) {
+        this.ops[i].checked = false;
+      }
+      this.allChk = false;
+      this.ordenesAEnviar = [];
+      this.router.navigate(['/']);
+    } else {
+      alert('Por favor seleccione la fecha');
     }
-    this.allChk = false;
-    this.ordenesAEnviar = [];
   }
-
 }

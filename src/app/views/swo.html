@@ -10,6 +10,7 @@
           <h4 [routerLink]="['/equipo',equipo.id]">Serie: {{equipo.serie}}</h4>
           <p *ngIf="equipo.ubicacion"> <strong>Ubicación:</strong> {{equipo.ubicacion}} </p>
           <p *ngIf="equipo.sw"> <strong>SW:</strong> {{equipo.sw}} </p>
+          <p *ngIf="equipo.eqid"> <strong>ID Equipo:</strong> {{equipo.eqid}} </p>
         </mat-card>
       </div>
       <div class="datosSwo">
@@ -55,14 +56,16 @@
                       <mat-icon>edit </mat-icon>
                     </button></p>
                 </div>
-                <button class="proceedBtn" *ngIf="!showProceedDetails && op.fse==user.displayName " color="primary"
-                  mat-raised-button (click)="showProceedDetails=!showProceedDetails; proceed()">Proceder</button>
-                <div class="backSaveBtns">
-                  <button *ngIf="showProceedDetails" color="accent" mat-raised-button (click)="showProceedDetails=!showProceedDetails">
-                    <mat-icon>arrow_back</mat-icon>
-                  </button>
-                  <button *ngIf="showProceedDetails" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails; saveProceed(op)"
-                    [disabled]="!formNewSwo.form.valid">Guardar</button>
+                <div class="proceedBtn" *ngIf="op.fechaprog.toMillis() <= limitTime">
+                  <button *ngIf="!showProceedDetails && op.fse==user.displayName " color="primary" mat-raised-button
+                    (click)="showProceedDetails=!showProceedDetails; proceed()">Proceder</button>
+                  <div class="backSaveBtns">
+                    <button *ngIf="showProceedDetails" color="accent" mat-raised-button (click)="showProceedDetails=!showProceedDetails">
+                      <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <button *ngIf="showProceedDetails" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails; saveProceed(op)"
+                      [disabled]="!formNewSwo.form.valid">Guardar</button>
+                  </div>
                 </div>
               </div>
               <div *ngIf="showProceedDetails" class="proceedDetails">
@@ -142,7 +145,7 @@
               <div class="masDatos">
                 <div *ngIf="op.fse==user.displayName" class="printBtn">
                   <h3>Imprimir</h3>
-                  <button color="accent" mat-raised-button (click)="print()">
+                  <button color="accent" mat-raised-button (click)="print(op)">
                     <mat-icon>print</mat-icon>
                   </button>
                 </div>

@@ -113,6 +113,7 @@ mat-card {
 }
 .proceedBtn {
   margin: auto 0;
+  display: inherit;
 }
 .backSaveBtns {
   margin: auto;
@@ -263,9 +264,6 @@ mat-card {
   .comoPDF {
     margin: 0;
     grid-template-columns: 1fr;
-  }
-  .comoPDF button {
-    /* width: 90vw; */
   }
 }
 @media print {

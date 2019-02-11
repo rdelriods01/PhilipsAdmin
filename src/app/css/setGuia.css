@@ -1,82 +1,131 @@
-.superior{
-    display: grid;
-    margin: 0 0 1em 0;
-    grid-template-columns: 1fr 1fr;
+.main {
+  height: 92.4vh;
 }
-.supDer{
-    display: flex;
-    flex-direction: row-reverse;
+
+.superior {
+  display: grid;
+  margin: 0 0 1em 0;
+  grid-template-columns: 1fr 2fr;
 }
-.backSaveBtns{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    height: 51px;
+
+.superior p {
+  margin: auto 1em;
 }
+
+.supDer {
+  margin: 0;
+  align-self: center;
+  text-align: center;
+}
+
+.pickerdiv {
+  align-self: center;
+}
+
+::ng-deep .pickerSetGuia div input.ng2-flatpickr-input.flatpickr-input {
+  border-radius: 5px;
+  height: 2em;
+  border: 2px solid cornflowerblue;
+  color: cornflowerblue;
+  text-align: center;
+  font-weight: bold;
+}
+
+.backSaveBtns {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  height: 51px;
+}
+
+.backSaveBtns * {
+  margin: auto;
+}
+
 @media only screen and (max-width: 769px) {
-    .superior p{
-        align-self: center;
-    }
-    .backSaveBtns{
-        display: block;
-        height: auto;
-    }
-    .backSaveBtns p{
-        text-align: center;
-    }
-    .backSaveBtns button{
-        width: 100%;
-    }
-    .mainBtn{
-        margin: 1em 0;
-    }
-}
+  .superior {
+    grid-template-columns: 1fr;
+  }
 
-.mainBtn{
-    width: 10em;
-}
-.tablaBuscar{
-    width: 96%;
-    font-size: 0.8em;
-    margin: 0 2%;
-}
-
-table{
-    width: 100%;
-    font-size: 0.8em;
-}
-.rowHeader, .rowData{
-    display: grid;
-    grid-template-columns: 60px repeat(8, 1fr);
+  .superior p {
+    margin: 1em;
     text-align: center;
-    align-items: center;
+  }
+
+  .backSaveBtns {
+    display: block;
+    height: auto;
+  }
+
+  .backSaveBtns button {
+    width: 100%;
+  }
+
+  .mainBtn {
+    margin: 1em 0;
+  }
+
+  ::ng-deep .pickerSetGuia div input.ng2-flatpickr-input.flatpickr-input {
+    width: 99%;
+  }
 }
-td, th{
-    margin: auto;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    min-width: 6em;
-    justify-content: center;
+
+.mainBtn {
+  width: 10em;
 }
-table{
-    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
-    overflow-x: auto;
-    display: grid;
+
+.tablaBuscar {
+  width: 96%;
+  font-size: 0.8em;
+  margin: 0 2%;
 }
-thead tr{
-    border-bottom: 1px solid #0000001f;
-    color: #0000008a;
-    min-height: 56px;
+
+table {
+  width: 100%;
+  font-size: 0.8em;
 }
-tbody tr{
-    border-bottom: 1px solid #0000001f;
+
+.rowHeader,
+.rowData {
+  display: grid;
+  grid-template-columns: 60px repeat(9, 1fr);
+  text-align: center;
+  align-items: center;
 }
+
+td,
+th {
+  margin: auto;
+  min-height: 40px;
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  min-width: 6em;
+  justify-content: center;
+}
+
+table {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+  overflow-x: auto;
+  display: grid;
+}
+
+thead tr {
+  border-bottom: 1px solid #0000001f;
+  color: #0000008a;
+  min-height: 56px;
+}
+
+tbody tr {
+  border-bottom: 1px solid #0000001f;
+}
+
 .hoverElement:hover {
-    color: darkcyan;
-    font-weight: bold;
-    cursor: pointer;
+  color: darkcyan;
+  font-weight: bold;
+  cursor: pointer;
 }
-tbody p{
-    color: white;
+
+tbody p {
+  color: white;
 }

@@ -26,6 +26,7 @@ export interface IEquipo {
   serie: string,
   tipo: string,
   modelo: string,
+  eqid?: string,
   sw?: string,
   marca?: string,
   ubicacion: string,
@@ -67,6 +68,7 @@ export interface IOperacion {
   firmada?: Boolean;
   enviada?: Boolean;
   guia?: string;
+  fechaenviada?: Date;
   recibida?: Boolean;
   recibio?: string;
   fecharecibida?: Date;
