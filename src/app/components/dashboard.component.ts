@@ -83,7 +83,7 @@ export class DashboardComponent {
             this.arrTomorrow = [];
             this.arrPendientes = [];
             el.forEach(sx => {
-              let fSWO = sx['fechaop'].getTime();
+              let fSWO = sx['fechaop'].toMillis();
               if (fSWO >= hoyTS) {
                 if (fSWO < mañanaTS) {
                   if (sx['status'] == 'Programado' || sx['status'] == 'Concluido') {
@@ -173,7 +173,7 @@ export class DashboardComponent {
   }
   get3dias() {
     var d = new Date();
-    d.setDate(d.getDate() - 3);
+    d.setDate(d.getDate() - 4);
     let miFecha: any[] = [];
     miFecha[0] = d.getFullYear();
     miFecha[1] = d.getMonth() + 1;
