@@ -4,46 +4,72 @@
   grid-gap: 1em;
   grid-template-rows: 1fr 2fr;
 }
+
 *:not(mat-icon) {
   font-family: Product Sans;
 }
+
 mat-card {
   border-radius: 10px;
 }
+
 .superior {
   display: grid;
   grid-template-columns: 2fr 1fr;
 }
+
 @media only screen and (max-width: 769px) {
   .superior {
     grid-template-columns: 1fr;
+    width: 93vw;
   }
+
+  .inferior {
+    width: 93vw;
+  }
+
   .titulo {
     display: grid;
     grid-template-columns: 1fr;
     margin: 0 !important;
     text-align: center;
   }
+
   .tituloArriba {
     display: grid !important;
     grid-template-columns: 1fr;
   }
+
+  .tituloArriba button {
+    position: absolute;
+    right: 5px;
+  }
+
   #eqSerie {
     margin: 0 !important;
   }
+
   .datosCliente {
     margin-top: 1em;
   }
+
   .tituloAbajo h3 {
     margin: 0 !important;
   }
+
+  .btnNewSwo {
+    padding: 0 7px;
+  }
+
   .mat-table {
     width: 100vw;
     min-width: 100%;
   }
+
   .mat-cell {
     font-size: 12px !important;
   }
+
   .opGrid h3 {
     align-self: center;
     font-size: 14px;
@@ -55,26 +81,32 @@ mat-card {
 .titulo {
   margin-left: 2em;
 }
+
 .tituloArriba {
   display: flex;
 }
+
 .tituloArriba h1 {
   margin: 0;
 }
+
 .tituloArriba button {
   color: dimgray;
 }
+
 #eqSerie {
   margin-left: 1em;
   font-size: 1.6em;
   align-self: center;
   color: #0079c2;
 }
+
 .tituloAbajo h3 {
   margin: 0;
   margin-left: 2em;
   color: dimgray;
 }
+
 .modulo,
 .accesorios {
   color: dimgray;
@@ -92,9 +124,11 @@ mat-card {
 .clienteCard {
   zoom: 80%;
 }
+
 .clienteCard h3 {
   color: darkcyan;
 }
+
 .clienteCard h3:hover {
   cursor: pointer;
 }
@@ -104,6 +138,7 @@ mat-card {
 .tabla {
   font-size: 0.8em !important;
 }
+
 .tablaSup {
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
     0px 1px 5px 0px rgba(0, 0, 0, 0.12);
@@ -111,6 +146,7 @@ mat-card {
   background-color: white;
   margin-bottom: 0.5em;
 }
+
 .tablaBuscar {
   background-color: white;
   font-size: 0.8em;
@@ -118,18 +154,22 @@ mat-card {
   margin: auto;
   padding: 0.5em 2em 0 2em;
 }
+
 .btnNewSwo {
   display: grid;
   justify-content: center;
 }
+
 .mat-accordion .mat-header-row {
   padding-left: 1.5rem;
   padding-right: 2rem;
   border-bottom: none;
 }
+
 .mat-expansion-panel-header.mat-row {
   border-bottom: none;
 }
+
 .mat-table {
   display: grid;
   overflow-x: auto;
@@ -137,15 +177,19 @@ mat-card {
   padding: 4px;
   zoom: 80%;
 }
+
 .mat-header-row {
   min-height: 56px;
 }
+
 .mat-row {
   min-height: 48px;
 }
+
 ::ng-deep .mat-sort-header-container {
   justify-content: center;
 }
+
 .mat-row,
 .mat-header-row {
   display: flex;
@@ -155,6 +199,7 @@ mat-card {
   padding: 0 24px;
   box-sizing: border-box;
 }
+
 .headerGrid {
   display: grid !important;
   grid-template-columns: repeat(6, 1fr);
@@ -162,15 +207,18 @@ mat-card {
   grid-auto-flow: column;
   padding: 0 1em !important;
 }
+
 .headerGrid span {
   justify-self: center;
 }
+
 .mat-row::after,
 .mat-header-row::after {
   display: inline-block;
   min-height: inherit;
   content: "";
 }
+
 .mat-cell,
 .mat-header-cell {
   flex: 1;
@@ -180,10 +228,12 @@ mat-card {
   text-align: center;
   margin: auto;
 }
+
 .expan {
   background: #f0f0f0;
   padding: 1em;
 }
+
 .opGrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr) 2fr 2fr 1fr;
@@ -198,6 +248,7 @@ mat-card {
   margin-top: 0.5em;
   display: grid;
 }
+
 ::ng-deep .mat-expansion-panel-spacing {
   border: 1px solid mediumturquoise;
 }
