@@ -183,11 +183,15 @@ export class SwoComponent {
     // new download url
     task.snapshotChanges().pipe(
       finalize(() => {
-        op.fotoSwoURL = fileRef.getDownloadURL();
-        this._swoService.updateOP(this.swo, op);
-        this.showProgressBar = false;
+        console.log('done upload');
+        fileRef.getDownloadURL().subscribe(url => {
+          op.fotoSwoURL = url;
+          console.log(op);
+          this._swoService.updateOP(this.swo, op);
+          this.showProgressBar = false;
+        })
       })
-    )
+    ).subscribe();
   }
   verFoto(url) {
     window.open(url);
