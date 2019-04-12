@@ -49,11 +49,11 @@ export class RecibirComponent {
               }
             }
             // Revisar si ya existe la OP
-            for (let k = 0; k < this.ops.length; k++) {
-              if (ops[i].id == this.ops[k].id) {
-                this.ops.splice(k, 1)
-              }
-            }
+            // for (let k = 0; k < this.ops.length; k++) {
+            //   if (ops[i].id == this.ops[k].id) {
+            //     this.ops.splice(k, 1)
+            //   }
+            // }
             this.ops.push(ops[i]);
             this.saveOps = JSON.parse(JSON.stringify(this.ops));
           }
