@@ -282,14 +282,7 @@ mat-card {
   ::ng-deep mat-card {
     box-shadow: none !important;
   }
-  .comoPDF {
-    height: 100vh;
-  }
   .inferior {
     margin: 0 !important;
-  }
-  .aver {
-    margin: 0 3.6em;
-    zoom: 92% !important;
   }
 }
