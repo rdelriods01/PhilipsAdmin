@@ -13,7 +13,7 @@ body {
 @media print {
   @page {
     size: 612pt 792pt;
-    margin: 14pt;
+    margin: 14pt 0;
   }
   body {
     font-size: 12pt;
