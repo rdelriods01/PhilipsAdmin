@@ -17,5 +17,6 @@ body {
   }
   body {
     font-size: 12pt;
+    -webkit-print-color-adjust:exact;
   }
 }
