@@ -47,6 +47,7 @@ import { PerfilClienteComponent } from './components/perfilCliente.component';
 import { NewSwoComponent } from './components/newSwo.component';
 import { SwoComponent } from './components/swo.component';
 import { OrdenPDFComponent } from './components/ordenpdf.component';
+import { ChecklistComponent } from './components/checklist.component';
 import { NewOPComponent } from './components/newOP.component';
 import { UsersComponent } from './components/users.component';
 import { BitacoraComponent } from './components/bitacora.component';
@@ -90,6 +91,7 @@ const routes: Routes = [
     NewSwoComponent,
     SwoComponent,
     OrdenPDFComponent,
+    ChecklistComponent,
     NewOPComponent,
     UsersComponent,
     BitacoraComponent,

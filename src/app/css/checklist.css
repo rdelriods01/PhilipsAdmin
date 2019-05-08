@@ -1,0 +1,182 @@
+.ordenpdfCard {
+  margin: 1em;
+  box-shadow: none;
+}
+.all {
+  display: grid;
+  max-width: 43em;
+  min-width: 40em;
+  margin: 0 auto;
+  padding: 2em 5em;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+}
+@media only screen and (max-width: 1200px) {
+  .all {
+    zoom: 90%;
+    box-shadow: none;
+  }
+}
+@media only screen and (max-width: 1025px) {
+  .all {
+    zoom: 80%;
+    box-shadow: none;
+  }
+}
+@media only screen and (max-width: 769px) {
+  .all {
+    zoom: 70%;
+    box-shadow: none;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .all {
+    zoom: 60%;
+    box-shadow: none;
+  }
+}
+@media only screen and (max-width: 540px) {
+  .ordenpdfCard {
+    margin: auto 0;
+    padding: 1em 0;
+  }
+  .all {
+    height: 149vh;
+    zoom: 50%;
+    box-shadow: none;
+    padding: 1em;
+    min-width: fit-content;
+  }
+}
+@media print {
+  .ordenpdfCard {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .all {
+    padding: 0 !important;
+    border: none !important;
+    zoom: 88%;
+    max-width: 48em;
+  }
+  .section1,
+  .section2,
+  .section3,
+  .section7 {
+    font-size: 0.8em !important;
+  }
+}
+
+/* Header */
+
+.header {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  height: fit-content;
+  margin-top: 4em;
+  margin-bottom: 1em;
+}
+.header .filled {
+  display: grid;
+  font-size: 1.2em !important;
+  align-content: center;
+  background-color: #7272ff;
+  color: white;
+  height: 2.2em;
+  margin: 0;
+  text-align: center;
+}
+.philips {
+  width: 6em;
+  margin: auto;
+}
+
+/* Section 1 (Datos del equipo y swo) */
+
+.section1 {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 0.7em;
+}
+.section1L {
+  border: 1px solid black;
+  display: grid;
+  padding: 2px 0 0 0.4em;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: repeat(5, 1fr);
+}
+.section1 span{
+  font-weight: bold;
+}
+.line {
+  text-align: center;
+}
+.section1R {
+  border: 1px solid black;
+  display: grid;
+  padding: 2px 0 0 0.4em;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: repeat(5, 1fr);
+}
+
+/* Section 2 (Cliente) */
+
+.section2 {
+  border: 2px solid black;
+  font-size: 0.7em;
+  margin-bottom: 1em;
+  border-top: none;
+  padding-left: 0.4em;
+}
+.section2 p {
+  margin-top: 1px;
+  margin-bottom: 2em;
+}
+.section2 strong{
+  margin-right: 3em;
+}
+
+/* Section 3 (Falla, Resultados y Observaciones) */
+
+.section3 {
+  border: 2px solid black;
+  display: grid;
+  grid-template-columns: 8fr 1fr 1fr 1fr 2fr 8fr;
+  grid-template-rows: 3fr 6fr 3fr;
+  font-size: 0.7em;
+  margin-bottom: 2em;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 3px solid black;
+}
+.section3 .title{
+  background-color: #ffff57;
+  font-weight: bold;
+}
+.section3 span {
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  text-align: center;
+  display: grid;
+  padding: 6px 0;
+  align-content: center;
+}
+/* Section 7 (Firmas) */
+
+.section7 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 8em;
+  font-size: 0.7em;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 5em;
+}
+.section7L, .section7R{
+  display: grid;
+}
+.section7 .sign {
+  border-top: 2px solid black;
+  color: black;
+}

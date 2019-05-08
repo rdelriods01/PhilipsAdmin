@@ -1,0 +1,119 @@
+<mat-card class="ordenpdfCard">
+  <div class="all">
+    <div class="header">
+      <p class="filled">Check List MP - MA & TC</p>
+      <img class="philips" src="../../assets/philips.png" />
+    </div>
+    <div class="section1">
+      <div class="section1L">
+        <span>Cliente:</span>
+        <div class="line"> {{cliente.nombre}} </div>
+        <span>Dirección:</span>
+        <div class="line">{{ cliente.direccion }}</div>
+        <span>Ciudad:</span>
+        <div class="line">{{ cliente.ciudad }} {{cliente.estado}} </div>
+        <span>No. de Orden:</span>
+        <div class="line"> {{swo.swo}} - {{op.op}} </div>
+        <span>Specialist Name:</span>
+        <div class="line">Ing. {{ op.fse }} </div>
+      </div>
+      <div class="section1R">
+        <span>Teléfono:</span>
+        <div class="line"></div>
+        <span>Fecha:</span>
+        <div class="line"> {{ op.fechafin.toDate() | date: "dd/MM/yyyy" }} </div>
+        <span>N/S:</span>
+        <div class="line"> {{ equipo.serie }} </div>
+        <span>Modelo:</span>
+        <div class="line"> {{ equipo.modelo }} </div>
+        <span></span>
+        <div class="line"> </div>
+      </div>
+    </div>
+    <div class="section2">
+      <p> <strong>Reporte del Cliente: </strong> Requiere mantenimiento preventivo</p>
+      <p> <strong>Resultados de MP vs Reporte Cliente: </strong> El equipo opera correctamente</p>
+    </div>
+    <div class="section3">
+      <span class="title">Actividad</span>
+      <span class="title">Si</span>
+      <span class="title">No</span>
+      <span class="title">N/A</span>
+      <span class="title">Resultados</span>
+      <span class="title">Observaciones</span>
+      <span>Revisión de condiciones externas (cables, conexiones, estado físico)</span>
+      <span>X</span>
+      <span></span>
+      <span></span>
+      <span>OK</span>
+      <span></span>
+      <span>Pruebas de funcionamiento del equipo</span>
+      <span>X</span>
+      <span></span>
+      <span></span>
+      <span>OK</span>
+      <span></span>
+      <span>Limpieza interna y externa</span>
+      <span>X</span>
+      <span></span>
+      <span></span>
+      <span>OK</span>
+      <span></span>
+      <span>Ajuste a aquellos equipos que requieran ajustes mecánicos</span>
+      <span></span>
+      <span></span>
+      <span>X</span>
+      <span></span>
+      <span></span>
+      <span>Pruebas de seguridad eléctrica</span>
+      <span>X</span>
+      <span></span>
+      <span></span>
+      <span>OK</span>
+      <span></span>
+      <span>Pruebas de descarga (desfibriladores)</span>
+      <span *ngIf="equipo.tipo==='Desfibrilador'">X</span>
+      <span *ngIf="equipo.tipo!=='Desfibrilador'"></span>
+      <span></span>
+      <span *ngIf="equipo.tipo==='Desfibrilador'"></span>
+      <span *ngIf="equipo.tipo!=='Desfibrilador'">X</span>
+      <span *ngIf="equipo.tipo==='Desfibrilador'">OK</span>
+      <span *ngIf="equipo.tipo!=='Desfibrilador'"></span>
+      <span></span>
+      <span>Revisión de condiciones externas (cables, conexiones, estado físico)</span>
+      <span>X</span>
+      <span></span>
+      <span></span>
+      <span>OK</span>
+      <span></span>
+      <span>Comprobación de códigos de errores</span>
+      <span>X</span>
+      <span></span>
+      <span></span>
+      <span>OK</span>
+      <span></span>
+      <span>Diagnóstico de posibles fallas</span>
+      <span>X</span>
+      <span></span>
+      <span></span>
+      <span>OK</span>
+      <span></span>
+      <span>Pruebas de transductores y sensores</span>
+      <span>X</span>
+      <span></span>
+      <span></span>
+      <span>OK</span>
+      <span></span>
+    </div>
+    <div class="section7">
+      <div class="section7L">
+        <span>Ing. {{ op.fse }} </span>
+        <span class="sign">Nombre FSE</span>
+      </div>
+      <div class="section7R">
+        <span style="color:white">Hide</span>
+        <span class="sign">Cliente</span>
+      </div>
+    </div>
+  </div>
+</mat-card>
