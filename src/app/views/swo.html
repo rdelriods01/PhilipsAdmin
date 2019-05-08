@@ -60,10 +60,12 @@
                   <button *ngIf="!showProceedDetails && op.fse==user.displayName " color="primary" mat-raised-button
                     (click)="showProceedDetails=!showProceedDetails; proceed()">Proceder</button>
                   <div class="backSaveBtns">
-                    <button *ngIf="showProceedDetails" color="accent" mat-raised-button (click)="showProceedDetails=!showProceedDetails">
+                    <button *ngIf="showProceedDetails" color="accent" mat-raised-button
+                      (click)="showProceedDetails=!showProceedDetails">
                       <mat-icon>arrow_back</mat-icon>
                     </button>
-                    <button *ngIf="showProceedDetails" color="primary" mat-raised-button (click)="showProceedDetails=!showProceedDetails; saveProceed(op)"
+                    <button *ngIf="showProceedDetails" color="primary" mat-raised-button
+                      (click)="showProceedDetails=!showProceedDetails; saveProceed(op)"
                       [disabled]="!formNewSwo.form.valid">Guardar</button>
                   </div>
                 </div>
@@ -98,7 +100,8 @@
                 </div>
                 <p><strong>Duración:</strong>
                   <mat-form-field class="hrs">
-                    <input type="number" matInput name="duracion" [(ngModel)]="duracion" required><span matSuffix>hrs</span>
+                    <input type="number" matInput name="duracion" [(ngModel)]="duracion" required><span
+                      matSuffix>hrs</span>
                   </mat-form-field>
                 </p>
                 <p><strong>Refacciones:</strong>
@@ -173,8 +176,8 @@
                     <div *ngIf="!op.firmada" class="swoFirmada">
                       <p>Firmada </p>
                       <mat-icon *ngIf="op.fse!=user.displayName">close</mat-icon>
-                      <mat-slide-toggle *ngIf="op.fse==user.displayName" class="slide" labelPosition="before" color="primary"
-                        [(ngModel)]="firmada"></mat-slide-toggle>
+                      <mat-slide-toggle *ngIf="op.fse==user.displayName" class="slide" labelPosition="before"
+                        color="primary" [(ngModel)]="firmada"></mat-slide-toggle>
                       <button *ngIf="firmada" mat-raised-button (click)="firmarOP(op)"> Guardar </button>
                     </div>
                     <div *ngIf="op.firmada" class="swoFirmada">
@@ -187,8 +190,8 @@
                     <div *ngIf="!op.enviada" class="swoNoEnviada ">
                       <p class="nE1">Enviada</p>
                       <mat-icon *ngIf="op.fse!=user.displayName">close</mat-icon>
-                      <mat-slide-toggle *ngIf="op.fse==user.displayName" class="slide nE2" labelPosition="before" color="primary"
-                        [(ngModel)]="enviada"></mat-slide-toggle>
+                      <mat-slide-toggle *ngIf="op.fse==user.displayName" class="slide nE2" labelPosition="before"
+                        color="primary" [(ngModel)]="enviada"></mat-slide-toggle>
                       <div class="nE3"></div>
                       <p class="nE4" *ngIf="enviada">No. de Guía:</p>
                       <button class="nE5" *ngIf="guia && enviada" mat-raised-button (click)="enviarOP(op)"> Guardar
@@ -215,7 +218,14 @@
                   </div>
                 </div>
               </div>
-              <ordenpdfC [swo]="swo" [op]="op" [cliente]="cliente" [equipo]="equipo"></ordenpdfC>
+              <mat-tab-group>
+                <mat-tab class="tab" label="swo">
+                  <ordenpdfC [swo]="swo" [op]="op" [cliente]="cliente" [equipo]="equipo"></ordenpdfC>
+                </mat-tab>
+                <mat-tab *ngIf="op.actividad==='PMAI'" class="tab" label="checklist">
+                  <checklistC [swo]="swo" [op]="op" [cliente]="cliente" [equipo]="equipo"></checklistC>
+                </mat-tab>
+              </mat-tab-group>
             </div>
           </mat-tab>
         </mat-tab-group>
